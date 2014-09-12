@@ -41,12 +41,13 @@ end
 group :development do
   gem 'guard'
   gem 'guard-rspec', require: false
+  gem 'better_errors'
+  gem 'binding_of_caller'
+
 end
 
 gem "slim-rails"
 gem 'simple_form', '>= 3.0.0.rc'
-gem 'better_errors'
-gem 'binding_of_caller'
 gem 'russian'
 gem 'bootstrap-sass', '~> 3.2.0'
 
