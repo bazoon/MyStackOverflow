@@ -21,3 +21,8 @@
 
 en:
   hello: "Hello world"
+  save: "Save"
+  questions:
+    new:
+      title: "Titl2"
+      body: "Body of question"
