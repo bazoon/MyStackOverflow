@@ -1,0 +1,20 @@
+.content.row
+  .col-lg-12
+    header.clearfix
+      section#branding
+        = link_to "Logo", root_path
+      /! branding
+      section.navbar.navbar-inverse
+        .navbar-header
+          button.navbar-toggle data-target=".navbar-collapse" data-toggle="collapse" type="button" 
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+        .navbar-collapse.collapse
+          ul.nav.navbar-nav
+            = render 'layouts/navigation'
+          ul.nav.navbar-nav.navbar-right
+    /! header
+  /! column
+/! content
+
