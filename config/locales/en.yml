@@ -24,5 +24,7 @@ en:
   save: "Save"
   questions:
     new:
-      title: "Titl2"
+      header: "Questions"
       body: "Body of question"
+    index:
+      header: "Questions"
