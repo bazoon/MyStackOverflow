@@ -57,4 +57,3 @@ gem "slim-rails"
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
-g
