@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   get 'home/index'
 
   resources :questions do
-    resources :answers
+    resources :answers, shallow: :true
   end
   
   get "/" => "home#index", :as => "root"

@@ -10,7 +10,7 @@ RSpec.describe QuestionsController, type: :controller do
     controller.stub(:current_user).and_return current_user
   end
 
-
+  
 
   describe 'GET #index' do
     let(:questions) { create_list(:question, 2) }
