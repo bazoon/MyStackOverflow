@@ -9,9 +9,9 @@ FactoryGirl.define do
   end
 
   factory :user_question, class: Question do
-    title "title"
+    title "user title"
     body "body"
-    association :user, factory: :user
+    # association :user, factory: :user
   end
 
 
