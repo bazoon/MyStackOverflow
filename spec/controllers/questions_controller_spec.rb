@@ -4,6 +4,8 @@ RSpec.describe QuestionsController, type: :controller do
 
   let(:question) {  create(:question) }
 
+
+
   describe 'GET #index' do
     let(:questions) { create_list(:question, 2) }
     before { get :index }
@@ -47,15 +49,33 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'GET #edit' do
-    before { get :edit, id: question }
 
-    it 'assigns the requested question to @question' do
-      expect(assigns(:question)).to eq question
+
+    context 'User try to edit his own question' do
+      let(:current_user) { create(:user) }
+      let(:user_question) { create(:user_question) }
+
+
+      before do
+        sign_in current_user
+        # controller.stub(:current_user).and_return current_user
+        get :edit, id: user_question
+
+      end
+      
+
+      it 'assigns the requested question to @question' do
+        expect(assigns(:question)).to eq question
+      end
+
+      it 'renders edit view' do
+        expect(response).to render_template :edit
+      end
+
     end
 
-    it 'renders edit view' do
-      expect(response).to render_template :edit
-    end
+    
+
   end
 
   describe 'POST #create' do
