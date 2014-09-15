@@ -1,6 +1,5 @@
-li = link_to "Задать вопрос", new_question_path
+li = link_to "Задать вопрос", new_question_path if can? :ask, Question
 li = link_to "Посмотреть вопросы", questions_path
-li = link_to "что-то еще", ""
 - unless user_signed_in?
   li = link_to "Войти", new_user_session_path
   li = link_to "Зарегестрироваться", new_user_registration_path

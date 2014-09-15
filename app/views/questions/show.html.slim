@@ -7,8 +7,9 @@
   - @answers.each do |answer|
       #answer.panel.panel-default
         = answer.body
-
-
+        br
+        = link_to edit_icon, edit_answer_path(answer) if can? :manage, answer
+        = link_to del_icon, answer_path(answer), method: :delete, data: { confirm: 'Are you sure?' } if can? :manage, answer
 
 = render partial: 'answers/form', locals: { question: @question, answer: @answer }
 

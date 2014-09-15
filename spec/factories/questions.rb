@@ -5,6 +5,7 @@ FactoryGirl.define do
   factory :question do
     title "title"
     body "body"
+    association :user
 
   end
 

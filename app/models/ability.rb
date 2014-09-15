@@ -31,6 +31,8 @@ class Ability
 
     if user
 
+      can :ask, Question
+
       can :manage, Question do |question|
         question.user_id == user.id
       end

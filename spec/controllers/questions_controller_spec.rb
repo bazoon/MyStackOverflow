@@ -7,7 +7,7 @@ RSpec.describe QuestionsController, type: :controller do
   let(:user_question) { create(:user_question, user_id: current_user.id) }
 
   before do
-    controller.stub(:current_user).and_return current_user
+    allow(controller).to receive(:current_user).and_return current_user
   end
 
   
