@@ -28,5 +28,19 @@ class Ability
     #
     # See the wiki for details:
     # https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
+
+    if user
+
+      can :manage, Question do |question|
+        question.user_id == user.id
+      end
+
+      can :manage, Answer do |answer|
+        answer.user_id == user.id
+      end
+
+
+    end
+
   end
 end

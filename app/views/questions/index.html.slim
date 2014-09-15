@@ -3,4 +3,7 @@ ul.list-group
 - @questions.each do |question|
   li.list-group-item
     = link_to question.title, question
+    span.pull-right 
+      = link_to(edit_icon, edit_question_path(question))
+      = link_to del_icon, question_path(question), method: :delete, data: { confirm: 'Are you sure?' } 
 
