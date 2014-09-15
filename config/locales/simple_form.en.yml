@@ -20,6 +20,11 @@ en:
           body: "Body"
         edit:
           email: 'E-mail.'
+      answer:
+        new:
+          body: "Answer"
+        show:
+          body: "Answer"
     # hints:
     #   defaults:
     #     username: 'User name to sign in.'

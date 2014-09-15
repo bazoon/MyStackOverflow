@@ -2,3 +2,13 @@
   = @question.title
   .well
       = @question.body
+
+#answers
+  - @answers.each do |answer|
+      #answer.panel.panel-default
+        = answer.body
+
+
+
+= render partial: 'answers/form', locals: { question: @question, answer: @answer }
+

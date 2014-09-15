@@ -28,3 +28,6 @@ en:
       body: "Body of question"
     index:
       header: "Questions"
+  answers:
+    new:
+      body: "Answer"
