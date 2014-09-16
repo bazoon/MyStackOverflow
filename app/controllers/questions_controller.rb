@@ -1,5 +1,5 @@
 class QuestionsController < ApplicationController
-
+  before_action :authenticate_user!, except: [:index, :show]
   before_action :set_question, except: [:index, :new, :create]
 
   def index
@@ -41,7 +41,7 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-
+    
     if @question.user_id == current_user.id
       @question.destroy
       redirect_to questions_path
