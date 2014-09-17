@@ -1,7 +1,7 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, except: [:show]
   before_action :set_question, only: [:new, :create]
-  before_action :set_answer, only: [:edit, :show, :update, :destroy]
+  before_action :set_answer, only: [:edit, :show, :update, :destroy, :select]
 
   
   def show
@@ -51,6 +51,15 @@ class AnswersController < ApplicationController
     end
   end
 
+  def select
+    
+    @answer.set_as_selected if can? :select, @answer
+    redirect_to @answer.question 
+    # respond_to do |format|
+    #   format.js
+
+    # end
+  end
 
   private
   

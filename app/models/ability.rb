@@ -37,8 +37,12 @@ class Ability
         question.user_id == user.id
       end
 
-      can :manage, Answer do |answer|
+      can :update, Answer do |answer|
         answer.user_id == user.id
+      end
+
+      can :select, Answer do |answer|
+        answer.question.user.id == user.id
       end
 
 

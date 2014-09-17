@@ -89,6 +89,22 @@ RSpec.describe AnswersController, type: :controller do
    
     end
 
+
+    describe 'PATCH #select' do
+        
+      it 'can not select a question' do
+        patch :select, id: answer.id
+        expect(answer.selected).to eq(false)
+      end
+
+      it 'redirects to sign_in path' do
+        patch :select, id: answer.id
+        expect(response).to redirect_to(new_user_session_path)
+      end
+
+    end
+
+
   end
   
 
@@ -215,6 +231,42 @@ RSpec.describe AnswersController, type: :controller do
       end
 
     end
+
+    describe 'PATCH #select' do
+        
+      context "User selects answer for his question" do
+        let(:user_question) { create(:question, user_id: current_user.id) }
+        let(:question_answer) { create(:answer, question_id: user_question.id) }
+
+        it 'question author can select a question' do
+          patch :select, id: question_answer
+          question_answer.reload
+          expect(question_answer.selected).to eq(true)
+        end
+
+        it 'redirects to question path' do
+          patch :select, id: question_answer.id
+          expect(response).to redirect_to user_question
+        end
+
+      end
+
+
+      context "User tries to select somebody s else question" do
+        
+        it 'question author can select a question' do
+          patch :select, id: answer.id
+          answer.reload
+          expect(answer.selected).to eq(false)
+        end
+
+       
+      end
+
+      
+
+    end
+
 
     describe 'DELETE #destroy' do
 

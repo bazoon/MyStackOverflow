@@ -5,7 +5,12 @@ Rails.application.routes.draw do
   get 'home/index'
 
   resources :questions do
-    resources :answers, shallow: :true
+    resources :answers, shallow: :true do 
+      member do
+        patch 'select', as: :select
+      end
+
+    end
   end
   
   get "/" => "home#index", :as => "root"

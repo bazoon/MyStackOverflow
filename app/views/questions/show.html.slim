@@ -1,17 +1,16 @@
-#question
-  = @question.title
-  .well
-      = @question.body
+.panel.panel-primary
+  .panel-heading 
+    h3.panel-title
+      = @question.title
+  .panel.body
+    = @question.body
 
 #answers
-  - @answers.each do |answer|
-      #answer.panel.panel-default
-        = answer.body
-        br
-        = link_to edit_icon, edit_answer_path(answer) if can? :manage, answer
-        = link_to del_icon, answer_path(answer), method: :delete, data: { confirm: 'Are you sure?' } if can? :manage, answer
-        .pull-right
-          = answer.user.email
+  = render @question.answers
 
-= render partial: 'answers/form', locals: { question: @question, answer: @answer }
+.panel.panel-info
+  .panel-heading
+    ' Ответить
+  .panel-body
+    = render partial: 'answers/form', locals: { question: @question, answer: @answer }
 

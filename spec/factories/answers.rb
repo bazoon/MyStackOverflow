@@ -6,6 +6,7 @@ FactoryGirl.define do
     body "MyText"
     association :question
     association :user
+    selected false
   end
 
   factory :invalid_answer, class: Answer do
