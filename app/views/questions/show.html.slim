@@ -4,6 +4,10 @@
       = @question.title
   .panel.body
     = @question.body
+  .panel-footer 
+    ' &nbsp
+    .pull-right 
+      = @question.user.email
 
 #answers
   = render @question.answers
