@@ -10,7 +10,7 @@ class QuestionsController < ApplicationController
     @answers = @question.answers
     
     @answer = Answer.new
-    @answer.question_id = @question.id
+    @answer.question = @question
   end
 
   def new
@@ -23,7 +23,7 @@ class QuestionsController < ApplicationController
   def create
     @question = current_user.questions.new(question_params)
     if @question.save
-      redirect_to @question, notice: I18n.t(:created)
+      redirect_to @question, notice: I18n.t(:created) #t
     else
       render :new
     end
@@ -31,7 +31,7 @@ class QuestionsController < ApplicationController
 
   def update
     
-    if @question.user_id != current_user.id
+    if @question.user != current_user
       redirect_to root_path
     elsif @question.update(question_params)
       redirect_to @question, notice: I18n.t(:updated)
@@ -42,7 +42,7 @@ class QuestionsController < ApplicationController
 
   def destroy
     
-    if @question.user_id == current_user.id
+    if @question.user == current_user
       @question.destroy
       redirect_to questions_path, notice: I18n.t(:destroyed)
     else

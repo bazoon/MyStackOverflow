@@ -19,12 +19,12 @@ feature 'Update question', %q{
     
 
     expect(page).to have_content t('updated')
-    expect(page).to have_content 'updated title'
+    expect(page).to have_content 'updated title' #create also!
     expect(page).to have_content 'updated body'
   end
 
   scenario 'Authenticated user try to update somebody"s question' do
-    sign_in(user)
+    sign_in(user) #не видит ссылки
     visit edit_question_path(user_question)
     expect(page).to_not have_field('questions.title')
     expect(page).to_not have_field('questions.body')

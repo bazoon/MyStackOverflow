@@ -36,17 +36,17 @@ class Ability
 
       can :manage, Question do |question|
         
-        question.user_id == user.id
+        question.user == user #можно короче
       end
 
       can :ask, Question
 
       can :update, Answer do |answer|
-        answer.user_id == user.id
+        answer.user == user
       end
 
       can :select, Answer do |answer|
-        answer.question.user.id == user.id
+        answer.question.user == user
       end
 
 

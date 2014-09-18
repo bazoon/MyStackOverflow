@@ -181,12 +181,12 @@ RSpec.describe QuestionsController, type: :controller do
         context 'valid attributes' do
         
           it 'asssign the requested question to @question' do
-            patch :update, id: user_question, question: attributes_for(:user_question, user_id: current_user)
+            patch :update, id: user_question, question: attributes_for(:user_question, user_id: current_user) #del
             expect(assigns(:question)).to eq user_question
           end
           
           it 'changes question attributes' do
-            patch :update, id: user_question, question: { title: 'new title', body: 'new body', user_id: current_user }
+            patch :update, id: user_question, question: { title: 'new title', body: 'new body' }
             user_question.reload
             expect(user_question.title).to eq 'new title'
             expect(user_question.body).to eq 'new body'
@@ -229,11 +229,12 @@ RSpec.describe QuestionsController, type: :controller do
         expect { delete :destroy, id: user_question }.to change(Question, :count).by(-1)
       end
 
-      it 'can not delete other user question' do
+      it 'can not delete other user question' do #!
         question
         expect { delete :destroy, id: question }.to change(Question, :count).by(0)
       end
 
+      
       it 'tries to delete other user question' do
         question
         delete :destroy, id: question

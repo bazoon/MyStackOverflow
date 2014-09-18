@@ -7,7 +7,7 @@ feature 'Create question', %q{
 } do
 
   given(:user) { create(:user) }
-  given!(:user_question) { create(:question, user: user) }
+  given!(:user_question) { create(:question, user: user) } #наоборот
   given!(:question) { create(:question) }
 
   scenario 'Authenticated user destroys his own question' do

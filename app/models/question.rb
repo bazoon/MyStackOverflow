@@ -7,7 +7,7 @@ class Question < ActiveRecord::Base
   belongs_to :user
 
   def user_email
-    user && user.email
+    user.email if user
   end
   
 end
