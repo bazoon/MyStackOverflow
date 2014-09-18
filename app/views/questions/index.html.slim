@@ -5,5 +5,5 @@ ul.list-group
     = link_to question.title, question
     span.pull-right 
       = link_to(edit_icon, edit_question_path(question)) if can? :manage, question
-      = link_to del_icon, question_path(question), method: :delete, data: { confirm: 'Are you sure?' } if can? :manage, question
+      = link_to del_icon, question_path(question), id: "delete#{question.id}", method: :delete, data: { confirm: 'Are you sure?' } if can? :manage, question
 

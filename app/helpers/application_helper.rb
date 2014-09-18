@@ -15,7 +15,7 @@ module ApplicationHelper
   end
 
   def del_icon
-    content_tag(:span,"",class: "glyphicon glyphicon-trash")
+    content_tag(:span,"",class: "glyphicon glyphicon-trash", alt: "delete")
   end
 
 
