@@ -29,10 +29,10 @@ RSpec.configure do |config|
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
   config.include FactoryGirl::Syntax::Methods
   config.include Devise::TestHelpers, type: :controller
-  config.include AcceptanceMacros, type: :feature
-   config.include AbstractController::Translation
-  
   config.extend ControllerMacros, type: :controller
+  config.include AcceptanceMacros, type: :feature
+  config.include AbstractController::Translation
+
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false

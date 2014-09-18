@@ -26,6 +26,7 @@ en:
   updated: "Successfuly updated !"
   destroyed: "Successfuly destroyed !"
   ask_question: "Ask question"
+
   questions:
     title: "Title"
     body: "You question"
@@ -35,5 +36,6 @@ en:
     index:
       header: "Questions"
   answers:
+    body: "Your answer"
     new:
       body: "Answer"

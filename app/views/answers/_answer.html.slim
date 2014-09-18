@@ -4,9 +4,10 @@ div class = (answer.selected ? 'panel panel-success' : 'panel panel-default')
   .panel-body
     = answer.body
   .panel-footer
-    = link_to edit_icon, edit_answer_path(answer) if can? :update, answer
-    = link_to del_icon, answer_path(answer), method: :delete, data: { confirm: 'Are you sure?' } if can? :update, answer
+    = link_to edit_icon, edit_answer_path(answer), id: "edit#{answer.id}" if can? :update, answer
+    = link_to del_icon, answer_path(answer), method: :delete, id: "delete#{answer.id}", data: { confirm: 'Are you sure?' } if can? :update, answer
     = link_to select_icon, select_answer_path(answer), method: :patch if can? :select, answer
     .pull-right = answer.user.email
+    ' &nbsp
 
     

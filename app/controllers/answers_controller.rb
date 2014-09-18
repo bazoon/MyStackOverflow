@@ -22,7 +22,7 @@ class AnswersController < ApplicationController
     @answer.user = current_user
 
     if @answer.save
-      redirect_to @answer.question
+      redirect_to @answer.question, notice: t(:created)
     else
       render :new
     end
@@ -33,7 +33,7 @@ class AnswersController < ApplicationController
     if @answer.user_id != current_user.id
       redirect_to root_path
     elsif @answer.update(answer_params)
-      redirect_to @answer.question
+      redirect_to @answer.question, notice: t(:updated)
     else
       render :edit
     end
@@ -45,7 +45,7 @@ class AnswersController < ApplicationController
     question = @answer.question
     if @answer.user_id == current_user.id
       @answer.destroy
-      redirect_to question
+      redirect_to question, notice: t(:destroyed)
     else
       redirect_to root_path
     end

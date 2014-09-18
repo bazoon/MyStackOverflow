@@ -39,6 +39,8 @@ class Ability
         question.user_id == user.id
       end
 
+      can :ask, Question
+
       can :update, Answer do |answer|
         answer.user_id == user.id
       end

@@ -11,10 +11,10 @@
 
 #answers
   = render @question.answers
-
-.panel.panel-info
-  .panel-heading
-    ' Ответить
-  .panel-body
-    = render partial: 'answers/form', locals: { question: @question, answer: @answer }
+- if can? :ask, Question
+  .panel.panel-info
+    .panel-heading
+      ' Ответить
+    .panel-body
+      = render( partial: 'answers/form', locals: { question: @question, answer: @answer }) 
 
