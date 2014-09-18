@@ -5,5 +5,9 @@ class Question < ActiveRecord::Base
   
   has_many :answers
   belongs_to :user
+
+  def user_email
+    user && user.email
+  end
   
 end

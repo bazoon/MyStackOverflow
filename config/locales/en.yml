@@ -26,6 +26,7 @@ en:
   updated: "Successfuly updated !"
   destroyed: "Successfuly destroyed !"
   ask_question: "Ask question"
+  can_not_save_answer: "There was en error saving your answer !"
 
   questions:
     title: "Title"

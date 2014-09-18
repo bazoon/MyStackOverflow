@@ -5,45 +5,7 @@ RSpec.describe AnswersController, type: :controller do
   let(:question) {  create(:question) }
   let(:answer) { create(:answer, question_id: question.id) }
   
-
-  shared_examples "show" do 
-
-    describe 'GET #show' do
-      before { get :show, id: answer.id }
-
-      it 'assigns a requested answer to @answer' do
-        expect(assigns(:answer)).to eq answer
-      end
-
-      it 'renders show view' do
-        expect(response).to render_template(:show)
-      end
-
-    end
-
-  end
-
   context 'Unauthorized user' do
-
-    include_examples 'show'
-
-    describe 'GET #new' do
-      
-      it 'redirects to sign_in path' do
-        get :new, question_id: question.id
-        expect(response).to redirect_to(new_user_session_path)
-      end
-
-    end
-
-    describe 'GET #edit' do
- 
-      it 'redirects to sign_in path' do
-        get :edit, id: answer.id 
-        expect(response).to redirect_to(new_user_session_path)
-      end
-
-    end
 
     describe 'POST #create' do
       
@@ -121,39 +83,6 @@ RSpec.describe AnswersController, type: :controller do
       sign_in(current_user)
     end
 
-    include_examples 'show'
-
-    describe 'GET #new' do
-      
-      before { get :new, question_id: question.id }
-
-      it 'assigns a answer question to @question' do
-        expect(assigns(:question)).to eq question
-      end
-
-      it 'assigns a new answer to @answer' do
-        expect(assigns(:answer)).to be_a_new(Answer)
-      end
-
-      it 'renders new view' do
-        expect(response).to render_template(:new)
-      end
-
-    end
-
-    describe 'GET #edit' do
-      before { get :edit, id: answer.id }
-
-      it 'assigns the requested answer to @answer' do
-        expect(assigns(:answer)).to eq answer
-      end
-
-      it 'renders edit view' do
-        expect(response).to render_template :edit
-      end
-
-    end
-
     describe 'POST #create' do
       
       context 'with valids attributes' do
@@ -174,9 +103,9 @@ RSpec.describe AnswersController, type: :controller do
           expect { post :create, answer: attributes_for(:invalid_answer), question_id: question.id }.to_not change(Answer, :count)
         end
 
-        it 're-renders new view' do
+        it 're-renders question view' do
           post :create, answer: attributes_for(:invalid_question), question_id: question.id
-          expect(response).to render_template :new
+          expect(response).to redirect_to(question)
         end
       end
 
@@ -259,14 +188,9 @@ RSpec.describe AnswersController, type: :controller do
           answer.reload
           expect(answer.selected).to eq(false)
         end
-
        
       end
-
-      
-
     end
-
 
     describe 'DELETE #destroy' do
 

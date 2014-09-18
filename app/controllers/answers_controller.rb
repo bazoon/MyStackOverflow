@@ -3,18 +3,6 @@ class AnswersController < ApplicationController
   before_action :set_question, only: [:new, :create]
   before_action :set_answer, only: [:edit, :show, :update, :destroy, :select]
 
-  
-  def show
-    
-  end
-
-  def new
-    @answer = @question.answers.new
-    @answer.user = current_user
-  end
-
-  def edit
-  end
 
   def create
     # binding.pry
@@ -24,7 +12,7 @@ class AnswersController < ApplicationController
     if @answer.save
       redirect_to @answer.question, notice: t(:created)
     else
-      render :new
+      redirect_to @answer.question, flash: { error: t(:can_not_save_answer) }
     end
   end
 

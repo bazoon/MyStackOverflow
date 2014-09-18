@@ -7,4 +7,9 @@ class User < ActiveRecord::Base
   has_many :questions
   has_many :answers
   validates :email, :name, presence: true
+
+  def user_email
+    email
+  end
+
 end
