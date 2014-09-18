@@ -1,4 +1,4 @@
-li = link_to "Задать вопрос", new_question_path if can? :ask, Question
+li = link_to t('ask_question'), new_question_path if can? :ask, Question
 li = link_to "Посмотреть вопросы", questions_path
 - unless user_signed_in?
   li = link_to "Войти", new_user_session_path

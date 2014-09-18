@@ -32,6 +32,8 @@ group :test, :development do
     gem 'rspec-rails'
     gem 'factory_girl_rails'
     gem 'jazz_hands'
+    gem 'capybara'
+    gem 'launchy'
 end
 
 group :test do

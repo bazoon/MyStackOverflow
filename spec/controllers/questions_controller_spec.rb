@@ -110,10 +110,7 @@ RSpec.describe QuestionsController, type: :controller do
     let(:current_user) { create(:user) }
     let(:user_question) { create(:user_question, user_id: current_user.id) }
     
-    before do
-      sign_in(current_user)
-      allow(controller).to receive(:current_user).and_return current_user
-    end
+    sign_in_user
 
     include_examples 'index show'
 

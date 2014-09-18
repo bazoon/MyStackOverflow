@@ -22,7 +22,13 @@
 en:
   hello: "Hello world"
   save: "Save"
+  created: "Successfuly created !"
+  updated: "Successfuly updated !"
+  destroyed: "Successfuly destroyed !"
+  ask_question: "Ask question"
   questions:
+    title: "Title"
+    body: "You question"
     new:
       header: "Questions"
       body: "Body of question"
