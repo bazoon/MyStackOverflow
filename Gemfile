@@ -33,11 +33,14 @@ group :test, :development do
     gem 'factory_girl_rails'
     gem 'jazz_hands'
     gem 'capybara'
+    gem 'selenium-webdriver'
     gem 'launchy'
+    gem 'database_cleaner'
 end
 
 group :test do
     gem 'shoulda-matchers'
+
 end
 
 group :development do

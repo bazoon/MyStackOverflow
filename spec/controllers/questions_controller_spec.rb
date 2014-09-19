@@ -55,8 +55,6 @@ RSpec.describe QuestionsController, type: :controller do
       
     end
 
-
-
     describe 'POST #create' do
 
       it 'redirects to sign_in path' do
@@ -248,16 +246,8 @@ RSpec.describe QuestionsController, type: :controller do
       end
 
     end
-    
-    
   end
   
-
-
-  
-
-  
-
 end
 
 

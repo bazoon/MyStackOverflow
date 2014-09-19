@@ -117,7 +117,7 @@ RSpec.describe AnswersController, type: :controller do
 
         context 'valid attributes' do
 
-          it 'asssign the requested question to @question' do
+          it 'asssign the requested anser to @answer' do
             patch :update, id: user_answer, answer: attributes_for(:answer, user_id: current_user.id)
             expect(assigns(:answer)).to eq user_answer
           end

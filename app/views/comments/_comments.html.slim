@@ -6,6 +6,6 @@
       = render commentable.comments
   .panel-footer
 
-    = link_to 'comment', comments_new_path(commentable: commentable.class.to_s.underscore, commentable_id: commentable.id), remote: true
+    = link_to 'comment', comments_new_path(commentable: commentable.class.to_s.underscore, commentable_id: commentable.id), remote: true, id: "comment#{commentable.id}"
     div id = ("comment_form_#{commentable.id}")
     

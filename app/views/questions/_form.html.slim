@@ -1,6 +1,6 @@
 = simple_form_for @question do |f|
   = f.input :title, label: t('questions.title')
-  = f.input :body, as: :text, label: t('questions.body'), input_html: { class: 'question-input-body', cols: 5, rows: 5 }
+  = f.input :body, as: :text, label: t('questions.body')
 
   .form-actions.center
     = f.submit t('save'), class: "btn btn-primary"

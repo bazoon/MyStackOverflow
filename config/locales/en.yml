@@ -29,6 +29,8 @@ en:
   ask_question: "Ask question"
   can_not_save_answer: "There was en error saving your answer !"
   can_not_save_comment: "There was an error saving your commen !"
+  can_not_update_comment: "You can not update this comment"
+  write_comment: 'Comment'
 
   questions:
     title: "Title"

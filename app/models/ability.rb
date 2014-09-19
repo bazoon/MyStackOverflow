@@ -34,6 +34,11 @@ class Ability
       can :ask, Question
 
       can :write, Comment
+      
+
+      can :update, Comment do |comment|
+        comment.user == user
+      end  
 
       can :manage, Question do |question|
         

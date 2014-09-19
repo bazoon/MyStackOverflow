@@ -1,3 +1,7 @@
 p
+  = link_to edit_icon, edit_comment_path(comment), remote: true
+  = link_to del_icon, comment_path(comment), method: :delete, data: { confirm: 'Are you sure?' } if can? :update,comment
+  
   = comment.body
+  div id = ("comment_update_form_#{comment.id}")
   hr
