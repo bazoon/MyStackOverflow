@@ -1,0 +1,7 @@
+= simple_form_for [commentable, comment] do |f|
+  = f.input :body, as: :text, label: "Write comment:"
+  = f.input :commentable_type, :as => :hidden, :input_html => { :value => commentable.class.to_s } 
+  .form-actions.center
+    = f.submit "Сохранить", class: "btn btn-primary"
+    '
+    

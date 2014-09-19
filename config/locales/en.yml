@@ -20,6 +20,7 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
+  sign_in: "sign_in"
   hello: "Hello world"
   save: "Save"
   created: "Successfuly created !"
@@ -27,6 +28,7 @@ en:
   destroyed: "Successfuly destroyed !"
   ask_question: "Ask question"
   can_not_save_answer: "There was en error saving your answer !"
+  can_not_save_comment: "There was an error saving your commen !"
 
   questions:
     title: "Title"

@@ -1,0 +1,2 @@
+
+$("#comment_form_" + <%=escape_javascript "#{@commentable.id}" %>).html("<%= escape_javascript render partial: 'form', locals: { commentable: @commentable, comment: @commentable.comments.new } %>")

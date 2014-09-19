@@ -33,6 +33,7 @@ class Ability
 
       can :ask, Question
 
+      can :write, Comment
 
       can :manage, Question do |question|
         

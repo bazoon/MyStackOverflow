@@ -1,6 +1,6 @@
 div class = (answer.selected ? 'panel panel-success' : 'panel panel-default')
   .panel-heading 
-    h3.panel-title
+    h3.panel-title = l(answer.created_at)
   .panel-body
     = answer.body
   .panel-footer
@@ -9,5 +9,5 @@ div class = (answer.selected ? 'panel panel-success' : 'panel panel-default')
     = link_to select_icon, select_answer_path(answer), method: :patch if can? :select, answer
     .pull-right = answer.user.email
     ' &nbsp
-
-    
+  - if can? :write, Comment
+    = render partial: 'comments/comments', locals: { commentable: answer }

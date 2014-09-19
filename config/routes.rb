@@ -1,12 +1,17 @@
 Rails.application.routes.draw do
 
+  get 'comments/new'
+
+  get 'comments/create'
+
   devise_for :users, :controllers => { registrations: 'registrations' }
 
   get 'home/index'
 
-  resources :questions do
-    resources :answers, except: [:show, :new], shallow: :true do
+  resources :questions, shallow: true do
+    resources :answers, except: [:show, :new] do
       patch 'select', on: :member
+      resources :comments
     end
   end
   

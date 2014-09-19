@@ -2,6 +2,7 @@ class Answer < ActiveRecord::Base
   belongs_to :question
   belongs_to :user
   validates :body, :user_id, :question_id, presence: true
+  has_many :comments, as: :commentable
 
 
   def set_as_selected
