@@ -1,7 +1,9 @@
-p
-  = link_to edit_icon, edit_comment_path(comment), remote: true
-  = link_to del_icon, comment_path(comment), method: :delete, data: { confirm: 'Are you sure?' } if can? :update,comment
-  
+p.small
   = comment.body
+  br
+  = link_to edit_icon, edit_comment_path(comment), id: "edit_comment#{comment.id}", remote: true
+  = link_to del_icon, comment_path(comment), id: "destroy_comment#{comment.id}", method: :delete, data: { confirm: 'Are you sure?' } if can? :update,comment
+  
+  
   div id = ("comment_update_form_#{comment.id}")
   hr

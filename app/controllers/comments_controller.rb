@@ -37,6 +37,16 @@ class CommentsController < ApplicationController
     end
   end
 
+  def destroy
+    comment = Comment.find(params[:id])
+    if cannot? :update, comment
+      redirect_to root_path, flash: { error: t('can_not_destroy_comment') }
+    else
+      comment.destroy
+      redirect_to :back, notice: t('destroyed')
+    end
+
+  end
 
   private
 

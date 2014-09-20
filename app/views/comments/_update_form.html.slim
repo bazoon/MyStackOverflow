@@ -1,6 +1,6 @@
 = simple_form_for comment do |f|
-  = f.input :body, as: :text, label: "Write comment:"
+  = f.input :body, as: :text, label: t('update_comment')
   .form-actions.center
-    = f.submit "Сохранить", class: "btn btn-primary"
+    = f.submit 'submit', class: "btn btn-primary"
     '
     

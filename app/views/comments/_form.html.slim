@@ -2,6 +2,6 @@
   = f.input :body, as: :text, label: t('write_comment')
   = f.input :commentable_type, :as => :hidden, :input_html => { :value => commentable.class.to_s } 
   .form-actions.center
-    = f.submit 'sav', class: "btn btn-primary"
+    = f.submit 'submit', class: "btn btn-primary"
     '
     

@@ -30,7 +30,9 @@ en:
   can_not_save_answer: "There was en error saving your answer !"
   can_not_save_comment: "There was an error saving your commen !"
   can_not_update_comment: "You can not update this comment"
+  can_not_destroy_comment: "You can not remove this comment"
   write_comment: 'Comment'
+  update_comment: 'Update comment'
 
   questions:
     title: "Title"
