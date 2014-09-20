@@ -5,7 +5,8 @@ class CommentsController < ApplicationController
     prefix = params[:commentable]
     @model = prefix.camelize.constantize
     @commentable = @model.find(params["commentable_id"])
-
+    @form_id = "#{@commentable.class.to_s.underscore}_#{@commentable.id}"
+    # # @form_id=123
   end
 
   def edit

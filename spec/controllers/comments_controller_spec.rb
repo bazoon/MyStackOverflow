@@ -60,7 +60,7 @@ RSpec.describe CommentsController, type: :controller do
         it 'can not update other user"s comment' do
           patch :update, id: other_comment.id, comment: { body: 'Hello', commentable_type: 'Answer' }
           comment.reload
-          expect(comment.body).to eq('MyText')
+          expect(comment.body).to eq('MyComment')
         end
 
         
@@ -71,7 +71,7 @@ RSpec.describe CommentsController, type: :controller do
         it 'can not update comment' do
           patch :update, id: comment.id, comment: { body: nil, commentable_type: 'Answer' }
           comment.reload
-          expect(comment.body).to eq('MyText')
+          expect(comment.body).to eq('MyComment')
         end       
 
       end

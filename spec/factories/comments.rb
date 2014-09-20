@@ -2,9 +2,19 @@
 
 FactoryGirl.define do
   factory :comment do
-    body "MyComment"
+    body 'MyComment'
     association :commentable, factory: :answer
-    commentable_type "Answer"
+    commentable_type 'Answer'
     
   end
+
+
+
+  factory :question_comment, class: Comment do
+    body 'MyComment'
+    association :commentable, factory: :question
+    commentable_type 'Question'
+  end
+
+
 end

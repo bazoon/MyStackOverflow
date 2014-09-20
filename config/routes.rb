@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   get 'home/index'
 
   resources :questions, shallow: true do
+    resources :comments
     resources :answers, except: [:show, :new] do
       patch 'select', on: :member
       resources :comments

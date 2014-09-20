@@ -8,7 +8,10 @@
     ' &nbsp
     .pull-right 
       = @question.user_email
-
+  - if can? :write, Comment
+    = render partial: 'comments/comments', locals: { commentable: @question }
+  
+  
 #answers
   = render @question.answers
 - if can? :ask, Question
