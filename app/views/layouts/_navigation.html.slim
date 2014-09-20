@@ -1,8 +1,8 @@
 li = link_to t('ask_question'), new_question_path if can? :ask, Question
-li = link_to "Посмотреть вопросы", questions_path
+li = link_to 'Questions', questions_path
 - unless user_signed_in?
-  li = link_to "Войти", new_user_session_path
-  li = link_to "Зарегестрироваться", new_user_registration_path
+  li = link_to "Sign in", new_user_session_path
+  li = link_to "Sign up", new_user_registration_path
 - else
-  li = link_to "Выйти", destroy_user_session_path, method: :delete
+  li = link_to "Sign out", destroy_user_session_path, method: :delete
 
