@@ -1,4 +1,5 @@
 class CommentsController < ApplicationController
+  before_action :authenticate_user!
   before_action :load_commentable, only: [:create]
 
   def new
@@ -16,7 +17,7 @@ class CommentsController < ApplicationController
 
   def create
 
-    comment = @commentable.comments.create(comment_params.merge({ user_id: current_user.id }))
+    comment = @commentable.comments.create(comment_params.merge({ user_id: current_user }))
     if comment.save
       redirect_to :back, notice: t('created')
     else

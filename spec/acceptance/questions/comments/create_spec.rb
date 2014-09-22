@@ -10,7 +10,9 @@ feature 'Create comment', %q{
   given!(:question) { create(:question) }
 
   scenario 'Authenticated user creates a comment', js: true do
+    # save_and_open_page
     sign_in(user)
+
     
     visit question_path(question)
     click_link "comment_question#{question.id}"

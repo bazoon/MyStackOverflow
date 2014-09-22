@@ -2,37 +2,36 @@ require 'rails_helper'
 
 RSpec.describe CommentsController, type: :controller do
 
-  let(:current_user) { create(:user) } 
+  
   let(:question) {  create(:question) }
   let(:answer) { create(:answer, question_id: question.id) }
+  let(:other_comment) { create(:comment, commentable: answer) } 
   
   before { request.env['HTTP_REFERER'] = question_path(question) }
 
   context 'Authorized user' do
     sign_in_user
-    
-    describe '#POST create' do
+    let(:comment) { create(:comment, commentable: answer, user_id: @user.id) }
 
-      before { request.env['HTTP_REFERER'] = question_path(question) }
+    describe '#POST create' do
 
       context 'with valids attributes' do
 
         it 'saves the new comment in the database' do
-          expect { post :create, answer_id: answer.id, comment: attributes_for(:comment) }.to change(Comment, :count).by(1)
+          expect_to_create({ answer_id: answer.id, comment: attributes_for(:comment)}, Comment)
         end
 
         it 'redirects to question show view' do
           post :create, answer_id: answer.id, comment: attributes_for(:comment)
-          expect(response).to redirect_to question_path(question)
+          expect(response).to redirect_to(question)
         end
 
       end
-      
 
       context 'with invalid attributes' do
         
         it 'does not save the new comment in the database' do
-          expect { post :create, answer_id: answer.id, comment: { body: nil, commentable_type: 'Answer' } }.to change(Comment, :count).by(0)
+          expect_to_not_create({ answer_id: answer, comment: { body: nil, commentable_type: 'Answer' }}, Comment)
         end
 
       end
@@ -41,9 +40,6 @@ RSpec.describe CommentsController, type: :controller do
 
     describe '#PATCH update' do
       
-      let(:comment) { create(:comment, commentable: answer, user_id: current_user.id) }
-      let(:other_comment) { create(:comment, commentable: answer) } 
-
       context 'with valid attributes' do
         
         it 'updates user own comment' do
@@ -53,16 +49,9 @@ RSpec.describe CommentsController, type: :controller do
         end
 
         it 'redirects to question show view' do
-            patch :update, id: comment.id, comment: { body: 'Hello', commentable_type: 'Answer' }
-          expect(response).to redirect_to question_path(question)
+          patch :update, id: comment.id, comment: { body: 'Hello', commentable_type: 'Answer' }
+          expect(response).to redirect_to(question)
         end
-
-        it 'can not update other user"s comment' do
-          patch :update, id: other_comment.id, comment: { body: 'Hello', commentable_type: 'Answer' }
-          comment.reload
-          expect(comment.body).to eq('MyComment')
-        end
-
         
       end
 
@@ -78,16 +67,77 @@ RSpec.describe CommentsController, type: :controller do
 
     end
 
+    describe '#DELETE destroy' do
+      
+      it 'deletes the requested comment' do
+        expect_to_delete(comment, id: comment)
+      end
 
+      it 'redirect to question path' do
+        delete :destroy, id: comment
+        expect(response).to redirect_to(question)
+      end
 
+    end
 
+    context 'Forbidden actions' do
 
+      describe '#PATCH update' do
+        it 'can not update other user"s comment' do
+          patch :update, id: other_comment.id, comment: { body: 'Hello', commentable_type: 'Answer' }
+          comment.reload
+          expect(comment.body).to eq('MyComment')
+        end
+      end
 
+      describe '#DELETE destroy' do
+      
+        it 'can not delete the requested comment' do
+          expect_to_not_delete(other_comment, id: other_comment)
+        end
+
+      end
+
+    end
 
 
   end
 
+  context 'Unauthorized user' do
+     
+    describe '#POST create' do
 
+      it 'It does not save the new comment in the database' do
+        expect_to_not_create({ answer_id: answer.id, comment: attributes_for(:comment) }, Comment)
+      end
+
+      it 'redirects to sign_in path' do
+        post :create, answer_id: answer.id, comment: attributes_for(:comment)
+        expect(response).to redirect_to(new_user_session_path)
+      end
+
+    end
+
+
+    describe '#DELETE destroy' do
+      
+      it 'does not delete requested comment' do
+       expect_to_not_delete(other_comment, id: other_comment)
+      end
+
+      it 'redirect to question path' do
+        delete :destroy, id: other_comment
+        expect(response).to redirect_to(new_user_session_path)
+      end
+
+    end
+
+  end
+
+  
+
+
+  
 
 
 

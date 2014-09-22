@@ -1,10 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
-
-  let(:question) {  create(:question) }
+  let(:attributes) { attributes_for(:question) } 
+  let(:other_question) {  create(:question, attributes) }
   
-
   
   shared_examples 'index show' do
     
@@ -23,10 +22,10 @@ RSpec.describe QuestionsController, type: :controller do
     end
 
     describe 'GET #show' do
-      before { get :show, id: question }
+      before { get :show, id: other_question }
 
-      it 'assigns the requested question to @question' do
-        expect(assigns(:question)).to eq question
+      it 'assigns the requested other_question to @other_question' do
+        expect(assigns(:question)).to eq other_question
       end
 
       it 'renders show view' do
@@ -41,15 +40,15 @@ RSpec.describe QuestionsController, type: :controller do
     include_examples 'index show'
 
     describe 'GET #new' do
-      it 'can not ask a new question' do
+      it 'can not ask a new other_question' do
         get :new
         expect(response).to redirect_to(new_user_session_path)
       end
     end
 
     describe 'GET #edit' do
-      it 'can not ask a new question' do
-        get :edit, id: question
+      it 'can not ask a new other_question' do
+        get :edit, id: other_question
         expect(response).to redirect_to(new_user_session_path)
       end
       
@@ -62,7 +61,7 @@ RSpec.describe QuestionsController, type: :controller do
         expect(response).to redirect_to(new_user_session_path)
       end
       
-      it 'it does not save question in the database' do
+      it 'it does not save other_question in the database' do
         expect { post :create, question: attributes_for(:question) }.to change(Question, :count).by(0)
       end
 
@@ -72,15 +71,15 @@ RSpec.describe QuestionsController, type: :controller do
     describe 'PATCH #update' do
 
       it 'redirects to sign_in path' do
-        patch :update, id: question, question: attributes_for(:question)
+        patch :update, id: other_question, question: attributes_for(:question)
         expect(response).to redirect_to(new_user_session_path)
       end
 
-      it 'does not change question attributes' do
-        patch :update, id: question, question: { title: 'new title', body: 'new body' }
-        question.reload
-        expect(question.title).to eq 'title'
-        expect(question.body).to eq 'body'
+      it 'does not change other_question attributes' do
+        patch :update, id: other_question, question: { title: 'new title', body: 'new body' }
+        other_question.reload
+        expect(other_question.title).to eq attributes[:title]
+        expect(other_question.body).to eq attributes[:body]
       end
     
     end
@@ -88,38 +87,31 @@ RSpec.describe QuestionsController, type: :controller do
     describe 'DELETE #destroy' do
 
       it 'redirects to sign_in path' do
-        delete :destroy, id: question
+        delete :destroy, id: other_question
         expect(response).to redirect_to(new_user_session_path)
       end
 
 
-      it 'does not delete requested question' do
-        question
-        expect { delete :destroy, id: question }.to change(Question, :count).by(0)
+      it 'does not delete requested other_question' do
+        other_question
+        expect { delete :destroy, id: other_question }.to change(Question, :count).by(0)
       end
 
     end
 
-
   end
 
   context 'Authorized user' do
-
-    let(:current_user) { create(:user) }
-    let(:user_question) { create(:user_question, user_id: current_user.id) }
-    
     sign_in_user
-
+    let(:question) { create(:question, user_id: @user.id) }
+    
     include_examples 'index show'
 
     describe 'GET #new' do
 
-      before do
-        
-        get :new
-      end
-
-      it 'assigns a new question to @question' do
+      before { get :new }
+      
+      it 'assigns a new other_question to @other_question' do
         expect(assigns(:question)).to be_a_new(Question)
       end
 
@@ -131,12 +123,12 @@ RSpec.describe QuestionsController, type: :controller do
 
     describe 'GET #edit' do
 
-      context 'User tries to edit his own question' do
+      context 'User tries to edit his own other_question' do
         
-        before { get :edit, id: user_question }
+        before { get :edit, id: question }
 
-        it 'assigns the requested question to @question' do
-          expect(assigns(:question)).to eq user_question
+        it 'assigns the requested other_question to @other_question' do
+          expect(assigns(:question)).to eq question
         end
 
         it 'renders edit view' do
@@ -149,7 +141,7 @@ RSpec.describe QuestionsController, type: :controller do
     describe 'POST #create' do
 
       context 'with valid attributes' do
-        it 'saves the new question in the database' do
+        it 'saves the new other_question in the database' do
           expect { post :create, question: attributes_for(:question) }.to change(Question, :count).by(1)
         end
 
@@ -160,7 +152,7 @@ RSpec.describe QuestionsController, type: :controller do
       end
 
       context 'with invalid attributes' do
-        it 'does not save the question' do
+        it 'does not save the other_question' do
           expect { post :create, question: attributes_for(:invalid_question) }.to_not change(Question, :count)
         end
 
@@ -174,35 +166,35 @@ RSpec.describe QuestionsController, type: :controller do
 
     describe 'PATCH #update' do
     
-      context 'user updates his own question' do
+      context 'user updates his own other_question' do
 
         context 'valid attributes' do
         
-          it 'asssign the requested question to @question' do
-            patch :update, id: user_question, question: attributes_for(:user_question, user_id: current_user) #del
-            expect(assigns(:question)).to eq user_question
+          it 'asssign the requested other_question to @question' do
+            patch :update, id: question, question: attributes_for(:question, user_id: @user) #del
+            expect(assigns(:question)).to eq question
           end
           
           it 'changes question attributes' do
-            patch :update, id: user_question, question: { title: 'new title', body: 'new body' }
-            user_question.reload
-            expect(user_question.title).to eq 'new title'
-            expect(user_question.body).to eq 'new body'
+            patch :update, id: question, question: { title: 'new title', body: 'new body' }
+            question.reload
+            expect(question.title).to eq 'new title'
+            expect(question.body).to eq 'new body'
           end
 
           it 'redirects to updated question' do
-            patch :update, id: user_question, question: attributes_for(:question, user_id: current_user)
-            expect(response).to redirect_to user_question
+            patch :update, id: question, question: attributes_for(:question, user_id: @user)
+            expect(response).to redirect_to question
           end
         end  
 
         context 'invalid attributes' do
-          before { patch :update, id: user_question, question: {title: 'new title', body: nil, user_id: current_user } }
+          before { patch :update, id: question, question: {title: 'new title', body: nil, user_id: @user } }
 
           it 'does not change question attributes' do
-            user_question.reload
-            expect(user_question.title).to eq 'user title'
-            expect(user_question.body).to eq 'body'
+            question.reload
+            expect(question.title).to eq attributes[:title]
+            expect(question.body).to eq attributes[:body]
           end
 
           it 're-renders edit view' do
@@ -212,40 +204,56 @@ RSpec.describe QuestionsController, type: :controller do
         end
       end
 
-      context 'user updates other user question' do
-        it 'redirects to root path' do
-          patch :update, id: question, question: attributes_for(:question, user_id: current_user)
-          expect(response).to redirect_to root_path
-        end
-      end
+
     end
 
     describe 'DELETE #destroy' do
 
       it 'deletes requested question' do
-        user_question
-        expect { delete :destroy, id: user_question }.to change(Question, :count).by(-1)
-      end
-
-      it 'can not delete other user question' do #!
         question
-        expect { delete :destroy, id: question }.to change(Question, :count).by(0)
-      end
-
-      
-      it 'tries to delete other user question' do
-        question
-        delete :destroy, id: question
-        expect(response).to redirect_to root_path
+        expect { delete :destroy, id: question }.to change(Question, :count).by(-1)
       end
 
       it 'redirects to index view' do
-        user_question
-        delete :destroy, id: user_question
+        question
+        delete :destroy, id: question
         expect(response).to redirect_to questions_path
       end
 
     end
+
+    context 'Forbiden actions' do
+    
+      describe 'DELETE #destroy' do
+      
+        it 'can not delete other user question' do
+          expect_to_not_delete(other_question, id: other_question)
+        end
+        
+        it 'tries to delete other user question' do
+          expect_after_action_redirect_to(root_path) { delete :destroy, id: other_question }
+        end
+
+      end  
+
+      describe 'PATCH #update' do
+        
+        it 'can not update other user question attributes' do
+          patch :update, id: other_question, question: attributes_for(:question, body: "New body")
+          other_question.reload
+          expect(other_question.body).to eq attributes[:body]
+
+        end
+
+        it 'tries to updated other user question' do
+          expect_after_action_redirect_to(root_path) \
+           { patch :update, id: other_question, question: attributes_for(:question, user_id: @user) }
+        end     
+      end   
+
+
+    end
+
   end
   
 end

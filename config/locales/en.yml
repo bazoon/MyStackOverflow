@@ -20,7 +20,7 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  sign_in: "sign_in"
+  sign_in: "signin"
   hello: "Hello world"
   save: "Save"
   created: "Successfuly created !"
