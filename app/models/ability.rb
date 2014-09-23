@@ -41,7 +41,6 @@ class Ability
       end  
 
       can :manage, Question do |question|
-        
         question.user == user #можно короче
       end
 

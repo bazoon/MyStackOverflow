@@ -12,6 +12,7 @@ RSpec.describe QuestionsController, type: :controller do
       before { get :index }
 
       it 'populates an array with all questions' do
+        # вот тут если other_question создать с ! то будет ошибка
         expect(assigns(:questions)).to match_array(questions)
       end
 
@@ -22,6 +23,7 @@ RSpec.describe QuestionsController, type: :controller do
     end
 
     describe 'GET #show' do
+      let!(:answers) { create_list(:answer, 2, question_id: other_question.id) }
       before { get :show, id: other_question }
 
       it 'assigns the requested other_question to @other_question' do
@@ -31,6 +33,19 @@ RSpec.describe QuestionsController, type: :controller do
       it 'renders show view' do
         expect(response).to render_template(:show)
       end
+
+
+      it 'assign a requested to @question' do
+        expect(assigns(:question)).to eq other_question
+      end
+
+      it 'assigns question answers to @answers' do
+        expect(assigns(:answers)).to match_array other_question.answers
+      end
+
+
+
+
     end
   end
 
@@ -104,6 +119,7 @@ RSpec.describe QuestionsController, type: :controller do
   context 'Authorized user' do
     sign_in_user
     let(:question) { create(:question, user_id: @user.id) }
+
     
     include_examples 'index show'
 
@@ -121,13 +137,17 @@ RSpec.describe QuestionsController, type: :controller do
 
     end
 
+
+
+ 
+
     describe 'GET #edit' do
 
-      context 'User tries to edit his own other_question' do
+      context 'User tries to edit his own question' do
         
         before { get :edit, id: question }
 
-        it 'assigns the requested other_question to @other_question' do
+        it 'assigns the requested other_question to @question' do
           expect(assigns(:question)).to eq question
         end
 

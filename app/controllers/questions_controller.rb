@@ -8,11 +8,7 @@ class QuestionsController < ApplicationController
 
   def show
     @answers = @question.answers
-    binding.pry
     @answer = Answer.new
-    # @answer.errors = session[:errors] if session[:errors]
-    # @answer.errors.add(session[:errors].first)
-    @answer.question = @question
   end
 
   def new
@@ -25,7 +21,7 @@ class QuestionsController < ApplicationController
   def create
     @question = current_user.questions.new(question_params)
     if @question.save
-      redirect_to @question, notice: I18n.t(:created) #t
+      redirect_to @question, notice: I18n.t(:created) 
     else
       render :new
     end
@@ -33,7 +29,7 @@ class QuestionsController < ApplicationController
 
   def update
     
-    if @question.user != current_user
+    if cannot? :manage, @question  
       redirect_to root_path
     elsif @question.update(question_params)
       redirect_to @question, notice: I18n.t(:updated)
@@ -43,7 +39,7 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    if @question.user == current_user
+    if cannot? :manage, @question
       @question.destroy
       redirect_to questions_path, notice: I18n.t(:destroyed)
     else
@@ -59,7 +55,7 @@ class QuestionsController < ApplicationController
   end
 
   def question_params
-    params.require(:question).permit(:title, :body, :user_id)
+    params.require(:question).permit(:title, :body)
   end
 
 
