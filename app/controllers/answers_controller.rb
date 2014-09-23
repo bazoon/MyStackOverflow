@@ -18,7 +18,7 @@ class AnswersController < ApplicationController
 
   def update
 
-    if @answer.user != current_user
+    if cannot? :manage, @answer
       redirect_to root_path
     elsif @answer.update(answer_params)
       redirect_to @answer.question, notice: t(:updated)
@@ -31,7 +31,7 @@ class AnswersController < ApplicationController
   def destroy
     
     question = @answer.question
-    if @answer.user == current_user
+    if can? :manage, @answer
       @answer.destroy
       redirect_to question, notice: t(:destroyed)
     else
@@ -40,13 +40,8 @@ class AnswersController < ApplicationController
   end
 
   def select
-    
     @answer.set_as_selected if can? :select, @answer
     redirect_to @answer.question
-    # respond_to do |format|
-    #   format.js
-
-    # end
   end
 
   private

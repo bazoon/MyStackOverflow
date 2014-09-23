@@ -46,7 +46,7 @@ class Ability
 
       can :ask, Question
 
-      can :update, Answer do |answer|
+      can :manage, Answer do |answer|
         answer.user == user
       end
 
