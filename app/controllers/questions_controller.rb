@@ -8,8 +8,10 @@ class QuestionsController < ApplicationController
 
   def show
     @answers = @question.answers
-    
+    binding.pry
     @answer = Answer.new
+    # @answer.errors = session[:errors] if session[:errors]
+    # @answer.errors.add(session[:errors].first)
     @answer.question = @question
   end
 

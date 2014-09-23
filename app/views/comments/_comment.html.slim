@@ -1,4 +1,4 @@
-p.small
+p.small id = ("comment_#{comment.id}")
   = comment.body
   br
   = link_to edit_icon, edit_comment_path(comment), id: "edit_comment#{comment.id}", remote: true
