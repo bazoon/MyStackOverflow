@@ -16,8 +16,7 @@ class CommentsController < ApplicationController
   end
 
   def create
-
-    comment = @commentable.comments.create(comment_params.merge({ user_id: current_user }))
+    comment = @commentable.comments.create(comment_params.merge({ user_id: current_user.id }))
     if comment.save
       redirect_to :back, notice: t('created')
     else
@@ -27,10 +26,8 @@ class CommentsController < ApplicationController
   end
 
   def update
-    
     comment = Comment.find(params[:id])
-    
-    if cannot? :update, comment
+    if cannot? :manage, comment
       redirect_to root_path, flash: { error: t('can_not_update_comment') } 
     elsif comment.update(comment_params)
       redirect_to :back, notice: t('updated')
@@ -41,7 +38,7 @@ class CommentsController < ApplicationController
 
   def destroy
     comment = Comment.find(params[:id])
-    if cannot? :update, comment
+    if cannot? :manage, comment
       redirect_to root_path, flash: { error: t('can_not_destroy_comment') }
     else
       comment.destroy

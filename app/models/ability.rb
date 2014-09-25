@@ -36,7 +36,7 @@ class Ability
       can :write, Comment
       
 
-      can :update, Comment do |comment|
+      can :manage, Comment do |comment|
         comment.user == user
       end  
 
