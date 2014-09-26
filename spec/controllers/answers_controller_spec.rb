@@ -66,12 +66,14 @@ RSpec.describe AnswersController, type: :controller do
   context 'Authorized user' do
 
     sign_in_user  
+
     let(:answer) { create(:answer, user_id: @user.id) }
 
     
 
     describe 'POST #create' do
       
+
       context 'with valids attributes' do
 
         it 'saves the new answer in the database' do

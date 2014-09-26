@@ -4,7 +4,7 @@ class QuestionsController < ApplicationController
 
   def index
     @questions = Question.all.order('created_at desc')
-    binding.pry
+    # binding.pry
   end
 
   def show
@@ -40,7 +40,7 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    if cannot? :manage, @question
+    if can? :manage, @question
       @question.destroy
       redirect_to questions_path, notice: I18n.t(:destroyed)
     else

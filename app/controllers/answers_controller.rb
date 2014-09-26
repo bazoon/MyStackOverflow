@@ -18,7 +18,7 @@ class AnswersController < ApplicationController
 
   def update
 
-    if cannot? :manage, @answer
+    if cannot? :update, @answer
       redirect_to root_path
     elsif @answer.update(answer_params)
       redirect_to @answer.question, notice: t(:updated)
@@ -31,7 +31,7 @@ class AnswersController < ApplicationController
   def destroy
     
     question = @answer.question
-    if can? :manage, @answer
+    if can? :update, @answer
       @answer.destroy
       redirect_to question, notice: t(:destroyed)
     else
