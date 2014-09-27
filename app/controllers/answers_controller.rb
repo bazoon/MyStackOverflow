@@ -8,24 +8,52 @@ class AnswersController < ApplicationController
     # binding.pry
     @answer = @question.answers.new(answer_params)
     @answer.user = current_user
+    @question = @answer.question
 
-    if @answer.save
-      redirect_to @answer.question, notice: t(:created)
-    else
-      redirect_to @answer.question, flash: { error: t(:can_not_save_answer) }
+    respond_to do |format|
+      if @answer.save
+        flash[:notice] = t(:created)
+        format.html { redirect_to @answer.question, notice: t(:created) }
+        format.js { @answer = Answer.new }
+      else
+        flash[:error] = t(:can_not_save_answer)
+        format.html { redirect_to @answer.question }
+        format.js { render 'error_form' }
+      end
     end
+
+
+  end
+
+  def edit
+
+    respond_to do |format|
+      format.html
+      format.js
+    end
+   
   end
 
   def update
 
-    if cannot? :update, @answer
-      redirect_to root_path
-    elsif @answer.update(answer_params)
-      redirect_to @answer.question, notice: t(:updated)
-    else
-      render :edit
+    respond_to do |format|
+      # binding.pry
+      if cannot? :update, @answer
+        flash[:error] = t(:forbidden)
+        format.html { redirect_to root_path }
+        format.js
+      elsif @answer.update(answer_params)
+        flash[:notice] = t(:updated)
+        format.html { redirect_to @answer.question }
+        format.js
+      else
+        flash[:error] = t(:can_not_update)
+        format.html { render :edit }
+        format.js
+      end
+
     end
-    
+
   end
 
   def destroy

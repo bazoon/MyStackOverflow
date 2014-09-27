@@ -1,0 +1,6 @@
+<% if @answer.errors.present? %>
+  $("#answer_form_" + <%= j "#{@answer.id}" %>).html('<%= j render 'form' %>')
+<% else %>
+  $("#answer_" + <%= j "#{@answer.id}" %>).replaceWith('<%= j render @answer %>')
+<% end %>
+$('.flash_box').html('<%= j render 'layouts/messages' %>')

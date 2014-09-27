@@ -5,10 +5,12 @@ div id = ("answer_#{answer.id}") class = (answer.selected ? 'panel panel-success
   .panel-body
     = answer.body
   .panel-footer
-    = link_to edit_icon, edit_answer_path(answer), id: "edit#{answer.id}" if can? :update, answer
+    = link_to edit_icon, edit_answer_path(answer), id: "edit_answer_#{answer.id}", remote: true if can? :update, answer
     = link_to del_icon, answer_path(answer), method: :delete, id: "delete#{answer.id}", data: { confirm: 'Are you sure?' } if can? :update, answer
     = link_to select_icon, select_answer_path(answer), method: :patch if can? :select, answer
     .pull-right = answer.user.email
     ' &nbsp
+  - if can? :update, answer
+    div id = ("answer_form_#{answer.id}")
   - if can? :write, Comment
     = render partial: 'comments/comments', locals: { commentable: answer }

@@ -23,16 +23,19 @@ en:
   sign_in: "signin"
   hello: "Hello world"
   save: "Save"
+  save_answer: "Save answer"
   created: "Successfuly created !"
   updated: "Successfuly updated !"
   destroyed: "Successfuly destroyed !"
   ask_question: "Ask question"
   can_not_save_answer: "There was en error saving your answer !"
-  can_not_save_comment: "There was an error saving your commen !"
+  can_not_save_comment: "There was an error saving your comment !"
   can_not_update_comment: "You can not update this comment"
   can_not_destroy_comment: "You can not remove this comment"
+  can_not_update: "There was an error saving your data !"
   write_comment: 'Comment'
   update_comment: 'Update comment'
+  forbidden: "Forbiden !"
 
   questions:
     title: "Title"

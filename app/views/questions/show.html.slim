@@ -11,14 +11,16 @@
   #question_comments
     - if can? :write, Comment
       = render partial: 'comments/comments', locals: { commentable: @question }
-  
-  
-#answers
-  = render @question.answers
+
 - if can? :ask, Question
   .panel.panel-info
     .panel-heading
       ' Ответить
+      .answer-errors
     .panel-body
       = render( partial: 'answers/form', locals: { question: @question, answer: @answer }) 
 
+  
+  
+.answers
+  = render @question.answers
