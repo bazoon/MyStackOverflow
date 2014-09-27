@@ -1,0 +1,21 @@
+.panel.panel-primary
+  .panel-heading 
+    h3.panel-title
+      = @question.title
+  .panel.body
+    = @question.body
+  .panel-footer 
+    ' &nbsp
+    .pull-right 
+      = @question.user_email
+      = link_to(edit_icon, edit_question_path(@question), remote: true, id: "edit_question_#{@question.id}") if can? :manage, @question
+  #question_comments
+    - if can? :write, Comment
+      = render partial: 'comments/comments', locals: { commentable: @question }
+  - if can? :ask, Question
+    .panel.panel-info
+      .panel-heading
+        ' Ответить
+        .answer-errors
+      .panel-body
+        = render( partial: 'answers/form', locals: { question: @question, answer: @answer }) 

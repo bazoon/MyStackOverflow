@@ -38,10 +38,12 @@ feature 'Update answer', %q{
         within("#answer_#{user_answer.id}") do
           fill_in t('answers.body'), with: 'updated body'
           click_on t('save')
+          expect(page).to_not have_content user_answer.body
+          expect(page).to have_content 'updated body'
         end
+
         
-        expect(page).to have_content t('updated')
-        expect(page).to have_content 'updated body'
+        
       end
       
     end
@@ -56,7 +58,7 @@ feature 'Update answer', %q{
           click_on t('save')
         end
    
-        expect(page).to have_content t(:can_not_update)
+        
         expect(page).to have_content "can't be blank"
       end
 
@@ -66,7 +68,7 @@ feature 'Update answer', %q{
         fill_in t('answers.body'), with: ''
         click_on t('save')
 
-        expect(page).to have_content t(:can_not_update)
+        
         expect(page).to have_content "can't be blank"
       end
 

@@ -1,25 +1,6 @@
-.panel.panel-primary
-  .panel-heading 
-    h3.panel-title
-      = @question.title
-  .panel.body
-    = @question.body
-  .panel-footer 
-    ' &nbsp
-    .pull-right 
-      = @question.user_email
-  #question_comments
-    - if can? :write, Comment
-      = render partial: 'comments/comments', locals: { commentable: @question }
-
-- if can? :ask, Question
-  .panel.panel-info
-    .panel-heading
-      ' Ответить
-      .answer-errors
-    .panel-body
-      = render( partial: 'answers/form', locals: { question: @question, answer: @answer }) 
-
+.question
+  = render 'question_only'
+  
   
   
 .answers

@@ -14,29 +14,52 @@ class QuestionsController < ApplicationController
 
   def new
     @question = Question.new
+    @remote = false
   end
 
   def edit
+    @remote = true
+    respond_to do |format|
+      format.html
+      format.js 
+
+    end
   end
 
   def create
     @question = current_user.questions.new(question_params)
-    if @question.save
-      redirect_to @question, notice: I18n.t(:created) 
-    else
-      render :new
+    
+    respond_to do |format|
+      if @question.save
+        format.html { redirect_to @question, notice: I18n.t(:created) }
+        format.js 
+      else
+        format.html { render :new }
+      end
     end
+
   end
 
   def update
     
-    if cannot? :manage, @question  
-      redirect_to root_path
-    elsif @question.update(question_params)
-      redirect_to @question, notice: I18n.t(:updated)
-    else
-      render :edit
+    respond_to do |format|
+    
+      if cannot? :manage, @question
+        format.html { redirect_to root_path }
+      elsif @question.update(question_params)
+        format.html { redirect_to @question, notice: I18n.t(:updated) }
+        format.js { @answer = Answer.new }
+      else
+        format.html { render :edit }
+        format.js do
+          @remote = true
+          render 'error_form' 
+        end
+      end
+
     end
+    
+
   end
 
   def destroy

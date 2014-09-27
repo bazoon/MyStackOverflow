@@ -1,4 +1,4 @@
-= simple_form_for @question do |f|
+= simple_form_for @question, remote: @remote do |f|
   = f.input :title, label: t('questions.title')
   = f.input :body, as: :text, label: t('questions.body')
 
