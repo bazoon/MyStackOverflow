@@ -41,7 +41,7 @@ class AnswersController < ApplicationController
       if cannot? :update, @answer
         flash[:error] = t(:forbidden)
         format.html { redirect_to root_path }
-        format.js
+        format.js { head 403 }
       elsif @answer.update(answer_params)
         flash[:notice] = t(:updated)
         format.html { redirect_to @answer.question }

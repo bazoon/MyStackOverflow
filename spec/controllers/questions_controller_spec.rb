@@ -12,7 +12,6 @@ RSpec.describe QuestionsController, type: :controller do
       before { get :index }
 
       it 'populates an array with all questions' do
-        # вот тут если other_question создать с ! то будет ошибка
         expect(assigns(:questions)).to match_array(questions)
       end
 
@@ -43,12 +42,8 @@ RSpec.describe QuestionsController, type: :controller do
         expect(assigns(:answers)).to match_array other_question.answers
       end
 
-
-
-
     end
   end
-
 
   context 'Unauthorized user' do
     
@@ -82,16 +77,15 @@ RSpec.describe QuestionsController, type: :controller do
 
     end
 
-
     describe 'PATCH #update' do
 
       it 'redirects to sign_in path' do
-        patch :update, id: other_question, question: attributes_for(:question)
-        expect(response).to redirect_to(new_user_session_path)
+        patch :update, id: other_question, question: attributes_for(:question), format: :js
+        expect(response.status).to eq(401)
       end
 
       it 'does not change other_question attributes' do
-        patch :update, id: other_question, question: { title: 'new title', body: 'new body' }
+        patch :update, id: other_question, question: { title: 'new title', body: 'new body' }, format: :js
         other_question.reload
         expect(other_question.title).to eq attributes[:title]
         expect(other_question.body).to eq attributes[:body]
@@ -136,10 +130,6 @@ RSpec.describe QuestionsController, type: :controller do
       end
 
     end
-
-
-
- 
 
     describe 'GET #edit' do
 
@@ -191,25 +181,25 @@ RSpec.describe QuestionsController, type: :controller do
         context 'valid attributes' do
         
           it 'asssign the requested other_question to @question' do
-            patch :update, id: question, question: attributes_for(:question, user_id: @user) #del
+            patch :update, id: question, question: attributes_for(:question, user_id: @user), format: :js
             expect(assigns(:question)).to eq question
           end
           
           it 'changes question attributes' do
-            patch :update, id: question, question: { title: 'new title', body: 'new body' }
+            patch :update, id: question, question: { title: 'new title', body: 'new body' }, format: :js
             question.reload
             expect(question.title).to eq 'new title'
             expect(question.body).to eq 'new body'
           end
 
           it 'redirects to updated question' do
-            patch :update, id: question, question: attributes_for(:question, user_id: @user)
-            expect(response).to redirect_to question
+            patch :update, id: question, question: attributes_for(:question, user_id: @user), format: :js
+            expect(response).to render_template :update
           end
         end  
 
         context 'invalid attributes' do
-          before { patch :update, id: question, question: {title: 'new title', body: nil, user_id: @user } }
+          before { patch :update, id: question, question: {title: 'new title', body: nil, user_id: @user }, format: :js }
 
           it 'does not change question attributes' do
             question.reload
@@ -217,8 +207,8 @@ RSpec.describe QuestionsController, type: :controller do
             expect(question.body).to eq attributes[:body]
           end
 
-          it 're-renders edit view' do
-            expect(response).to render_template :edit
+          it 'renders error_form' do
+            expect(response).to render_template 'error_form'
           end
 
         end
@@ -251,7 +241,8 @@ RSpec.describe QuestionsController, type: :controller do
         end
         
         it 'tries to delete other user question' do
-          expect_after_action_redirect_to(root_path) { delete :destroy, id: other_question }
+          delete :destroy, id: other_question
+          expect(response).to redirect_to(root_path)
         end
 
       end  
@@ -259,15 +250,15 @@ RSpec.describe QuestionsController, type: :controller do
       describe 'PATCH #update' do
         
         it 'can not update other user question attributes' do
-          patch :update, id: other_question, question: attributes_for(:question, body: "New body")
+          patch :update, id: other_question, question: attributes_for(:question, body: "New body"), format: :js
           other_question.reload
           expect(other_question.body).to eq attributes[:body]
 
         end
 
         it 'tries to updated other user question' do
-          expect_after_action_redirect_to(root_path) \
-           { patch :update, id: other_question, question: attributes_for(:question, user_id: @user) }
+          patch :update, id: other_question, question: attributes_for(:question, user_id: @user), format: :js
+          expect(response.status).to eq(403)
         end     
       end   
 

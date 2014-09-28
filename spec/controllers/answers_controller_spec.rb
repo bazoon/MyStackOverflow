@@ -77,24 +77,24 @@ RSpec.describe AnswersController, type: :controller do
       context 'with valids attributes' do
 
         it 'saves the new answer in the database' do
-          expect_to_create({ answer: attributes_for(:answer), question_id: question }, Answer)
+          expect_to_create({ answer: attributes_for(:answer), question_id: question, format: :js }, Answer)
         end
 
         it 'redirects to question show view' do
-          post :create, answer: attributes_for(:answer), question_id: question
-          expect(response).to redirect_to assigns(:question)
+          post :create, answer: attributes_for(:answer), question_id: question, format: :js
+          expect(response).to render_template :create
         end
 
       end
 
       context 'with invalid attributes' do
         it 'does not save the answer' do
-          expect_to_not_create({ answer: attributes_for(:invalid_answer), question_id: question }, Answer)
+          expect_to_not_create({ answer: attributes_for(:invalid_answer), question_id: question, format: :js }, Answer)
         end
 
-        it 're-renders question view' do
-          post :create, answer: attributes_for(:invalid_question), question_id: question  
-          expect(response).to redirect_to question
+        it 'renders create template' do
+          post :create, answer: attributes_for(:invalid_question), question_id: question, format: :js  
+          expect(response).to render_template 'error_form'
         end
       end
     end
@@ -105,32 +105,32 @@ RSpec.describe AnswersController, type: :controller do
 
         context 'valid attributes' do
 
-          it 'asssign the requested anser to @answer' do
-            patch :update, id: answer, answer: attributes_for(:answer)
-            expect(assigns(:answer)).to eq answer
-          end
+          # it 'asssign the requested anser to @answer' do
+          #   patch :update, id: answer, answer: attributes_for(:answer), format: :js
+          #   expect(assigns(:answer)).to eq answer
+          # end
         
-          it 'changes answer attributes' do
-            patch :update, id: answer, answer: { body: 'new body' }
-            answer.reload
-            expect(answer.body).to eq 'new body'
-          end
+          # it 'changes answer attributes' do
+          #   patch :update, id: answer, answer: { body: 'new body' }, format: :js
+          #   answer.reload
+          #   expect(answer.body).to eq 'new body'
+          # end
 
-          it 'redirects to updated answer' do
-            patch :update, id: answer, answer: attributes_for(:answer)
-            expect(response).to redirect_to answer.question
-          end
+          # it 'redirects to updated answer' do
+          #   patch :update, id: answer, answer: attributes_for(:answer), format: :js
+          #   expect(response).to render_template :update
+          # end
         end
 
         context 'invalid attributes' do
-          before { patch :update, id: answer, answer: { body: nil, user_id: nil } }
+          before { patch :update, id: answer, answer: { body: nil, user_id: nil }, format: :js }
 
           it 'does not change answer attributes' do
             expect(answer.body).to eq 'MyText'
           end
 
           it 're-render edit view' do
-            expect(response).to render_template :edit
+            expect(response).to render_template :update
           end
 
         end
@@ -194,14 +194,14 @@ RSpec.describe AnswersController, type: :controller do
       describe 'PATCH #updated' do
         
         it 'can not update other user answer' do
-          patch :update, id: some_answer, answer: { body: 'new body' }
+          patch :update, id: some_answer, answer: { body: 'new body' }, format: :js
           some_answer.reload
           expect(some_answer.body).to eq attributes[:body]
         end
 
         it 'tries to update some user answer' do
-          patch :update, id: some_answer, answer: attributes_for(:answer)
-          expect(response).to redirect_to(root_path)  
+          patch :update, id: some_answer, answer: attributes_for(:answer), format: :js
+          expect(response.status).to be(403)
         end
 
       end

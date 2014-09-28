@@ -21,8 +21,7 @@ class QuestionsController < ApplicationController
     @remote = true
     respond_to do |format|
       format.html
-      format.js 
-
+      format.js
     end
   end
 
@@ -32,7 +31,6 @@ class QuestionsController < ApplicationController
     respond_to do |format|
       if @question.save
         format.html { redirect_to @question, notice: I18n.t(:created) }
-        format.js 
       else
         format.html { render :new }
       end
@@ -46,6 +44,7 @@ class QuestionsController < ApplicationController
     
       if cannot? :manage, @question
         format.html { redirect_to root_path }
+        format.js { head 403 }
       elsif @question.update(question_params)
         format.html { redirect_to @question, notice: I18n.t(:updated) }
         format.js { @answer = Answer.new }
