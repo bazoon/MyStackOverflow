@@ -105,21 +105,21 @@ RSpec.describe AnswersController, type: :controller do
 
         context 'valid attributes' do
 
-          # it 'asssign the requested anser to @answer' do
-          #   patch :update, id: answer, answer: attributes_for(:answer), format: :js
-          #   expect(assigns(:answer)).to eq answer
-          # end
+          it 'asssign the requested anser to @answer' do
+            patch :update, id: answer, answer: attributes_for(:answer), format: :js
+            expect(assigns(:answer)).to eq answer
+          end
         
-          # it 'changes answer attributes' do
-          #   patch :update, id: answer, answer: { body: 'new body' }, format: :js
-          #   answer.reload
-          #   expect(answer.body).to eq 'new body'
-          # end
+          it 'changes answer attributes' do
+            patch :update, id: answer, answer: { body: 'new body' }, format: :js
+            answer.reload
+            expect(answer.body).to eq 'new body'
+          end
 
-          # it 'redirects to updated answer' do
-          #   patch :update, id: answer, answer: attributes_for(:answer), format: :js
-          #   expect(response).to render_template :update
-          # end
+          it 'redirects to updated answer' do
+            patch :update, id: answer, answer: attributes_for(:answer), format: :js
+            expect(response).to render_template :update
+          end
         end
 
         context 'invalid attributes' do
@@ -164,7 +164,7 @@ RSpec.describe AnswersController, type: :controller do
 
         it 'deletes requested answer' do
           answer
-          expect { delete :destroy, id: answer }.to change(Answer, :count).by(-1)
+          expect { delete :destroy, id: answer, format: :js }.to change(Answer, :count).by(-1)
         end
 
         it 'redirects to question view' do
@@ -172,6 +172,13 @@ RSpec.describe AnswersController, type: :controller do
           delete :destroy, id: answer
           expect(response).to redirect_to question
         end
+
+        it 'it renders destroy template if ajax' do
+          question = answer.question
+          delete :destroy, id: answer, format: :js
+          expect(response).to render_template :destroy
+        end
+
       end
 
       
@@ -187,6 +194,11 @@ RSpec.describe AnswersController, type: :controller do
         it 'tries to delete other user answer' do
           delete :destroy, id: some_answer
           expect(response).to redirect_to(root_path)
+        end
+
+        it 'tries to delete other user answer' do
+          delete :destroy, id: some_answer, format: :js
+          expect(response.status).to eq(403)
         end
 
       end

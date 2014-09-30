@@ -59,12 +59,18 @@ class AnswersController < ApplicationController
   def destroy
     
     question = @answer.question
-    if can? :update, @answer
-      @answer.destroy
-      redirect_to question, notice: t(:destroyed)
-    else
-      redirect_to root_path
+    respond_to do |format|
+      if can? :update, @answer
+        @id = @answer.id
+        @answer.destroy
+        format.html { redirect_to question, notice: t(:destroyed) }
+        format.js 
+      else
+        format.html { redirect_to root_path }
+        format.js { head 403 }
+      end
     end
+
   end
 
   def select
