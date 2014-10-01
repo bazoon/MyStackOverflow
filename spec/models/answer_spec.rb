@@ -4,6 +4,8 @@ RSpec.describe Answer, type: :model do
   
   it { should validate_presence_of :body }
   it { should validate_presence_of :user_id }
+  it { should belong_to(:user) }
+  it { should belong_to(:question) }
 
   let(:question) { create(:question) }
   let!(:answer_1) { create(:answer, question: question) }
