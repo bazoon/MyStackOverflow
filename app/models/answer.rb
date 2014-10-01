@@ -7,11 +7,11 @@ class Answer < ActiveRecord::Base
 
   def set_as_selected
     selected_answers.update_all(selected: false)
-    update(selected:  !selected)
+    update(selected: !selected)
   end
   
   
-
+  #вынести в question
   def selected_answers
     question.answers.where(selected: true)
   end

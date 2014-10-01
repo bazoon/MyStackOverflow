@@ -16,7 +16,9 @@ class CommentsController < ApplicationController
   end
 
   def create
+    #create remove
     @comment = @commentable.comments.create(comment_params.merge({ user_id: current_user.id }))
+    #comment.user = current_user
 
     respond_to do |format|
       
