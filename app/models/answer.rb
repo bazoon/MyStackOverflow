@@ -7,7 +7,7 @@ class Answer < ActiveRecord::Base
 
   def set_as_selected
     selected_answers.update_all(selected: false)
-    update(selected: true)
+    update(selected:  !selected)
   end
   
   

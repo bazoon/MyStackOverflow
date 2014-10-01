@@ -139,22 +139,33 @@ RSpec.describe AnswersController, type: :controller do
     end
 
     describe 'PATCH #select' do
-        
-      context "User selects answer for his question" do
-        let(:user_question) { create(:question, user_id: @user.id) }
-        let(:question_answer) { create(:answer, question_id: user_question.id) }
+      
+      let(:user_question) { create(:question, user_id: @user.id) }
+      let!(:question_answer) { create(:answer, question_id: user_question.id) }
+      let!(:some_answer) { create(:answer, question_id: user_question.id, selected: true) }
 
-        it 'question author can select a question' do
-          patch :select, id: question_answer
-          question_answer.reload
-          expect(question_answer.selected).to eq(true)
-        end
-
-        it 'redirects to question path' do
-          patch :select, id: question_answer.id
-          expect(response).to redirect_to user_question
-        end
+      it 'question author can select a question' do
+        patch :select, id: question_answer, format: :js
+        question_answer.reload
+        expect(question_answer.selected).to eq(true)
       end
+
+      it 'if user select one question others should be deselected' do
+        patch :select, id: question_answer, format: :js
+        some_answer.reload
+        expect(some_answer.selected).to eq(false)
+      end
+
+      it 'redirects to question path' do
+        patch :select, id: question_answer.id
+        expect(response).to redirect_to user_question
+      end
+
+      it 'renders select template' do
+        patch :select, id: question_answer.id, format: :js
+        expect(response).to render_template :select
+      end
+    
 
     end
 

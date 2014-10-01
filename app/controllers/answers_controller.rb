@@ -75,7 +75,10 @@ class AnswersController < ApplicationController
 
   def select
     @answer.set_as_selected if can? :select, @answer
-    redirect_to @answer.question
+    respond_to do |format|
+      format.html { redirect_to @answer.question }
+      format.js
+    end
   end
 
   private
@@ -89,7 +92,6 @@ class AnswersController < ApplicationController
   end
 
   def answer_params
-
     params.require(:answer).permit(:body, :question_id)
   end
 
