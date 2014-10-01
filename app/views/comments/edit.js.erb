@@ -1,1 +1,1 @@
-$("#comment_update_form_" + <%= j "#{@comment.id}" %>).html("<%= escape_javascript render partial: 'update_form', locals: { comment: @comment } %>")
+$("#comment_update_form_" + <%= "#{@comment.id}" %>).html("<%= escape_javascript render partial: 'update_form', locals: { comment: @comment } %>")

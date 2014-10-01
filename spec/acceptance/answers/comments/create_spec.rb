@@ -20,7 +20,15 @@ feature 'Create comment', %q{
     click_on 'submit'
   
     expect(page).to have_content 'new comment'
-    expect(page).to have_content "Successfuly created !"
+  end
+
+  scenario 'Authenticated user creates empty comment', js: true do
+    sign_in(user)
+    visit question_path(question)
+    click_link "comment_answer#{answer.id}"
+    fill_in t('write_comment'), with: ''
+    click_on 'submit'
+    expect(page).to have_content "can't be blank"
   end
 
   scenario 'Non-authenticated user try to create comment' do

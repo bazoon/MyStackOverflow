@@ -1,3 +1,3 @@
 
 
-$("#comment_form_" + "<%=escape_javascript "#{@form_id}" %>").html("<%= escape_javascript render partial: 'form', locals: { commentable: @commentable, comment: @commentable.comments.new } %>")
+$("#comment_form_" + "<%= "#{@form_id}" %>").html("<%= j render partial: 'form', locals: { commentable: @commentable, comment: @commentable.comments.new } %>")

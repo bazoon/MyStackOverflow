@@ -1,11 +1,7 @@
-.panel.panel-info.comments
+.panel.panel-info
   - if commentable.comments && commentable.comments.any?
     .panel-heading
       ' Comments
     .panel-body
       = render commentable.comments
-  .panel-footer
-
-    = link_to 'comment', comments_new_path(commentable: commentable.class.to_s.underscore, commentable_id: commentable.id), remote: true, id: "comment_#{commentable.class.to_s.underscore}#{commentable.id}"
-    div id = ("comment_form_#{commentable.class.to_s.underscore}_#{commentable.id}")
-    
+  

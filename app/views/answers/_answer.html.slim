@@ -12,5 +12,10 @@ div id = ("answer_#{answer.id}")
       ' &nbsp
     - if can? :update, answer
       div id = ("answer_form_#{answer.id}")
-    - if can? :write, Comment
+    .comments
       = render partial: 'comments/comments', locals: { commentable: answer }
+    - if can? :write, Comment
+      = link_to 'comment', comments_new_path(commentable: answer.class.to_s, commentable_id: answer.id), remote: true, id: "comment_#{answer.class.to_s.underscore}#{answer.id}"
+      div id = ("comment_form_#{answer.class.to_s.underscore}_#{answer.id}")
+    
+ 

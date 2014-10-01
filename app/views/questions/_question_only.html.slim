@@ -9,13 +9,18 @@
     .pull-right 
       = @question.user_email
       = link_to(edit_icon, edit_question_path(@question), remote: true, id: "edit_question_#{@question.id}") if can? :manage, @question
-  #question_comments
-    - if can? :write, Comment
-      = render partial: 'comments/comments', locals: { commentable: @question }
+  .comments
+    = render partial: 'comments/comments', locals: { commentable: @question }
+    
+  - if can? :write, Comment
+    = link_to 'comment', comments_new_path(commentable: @question.class.to_s, commentable_id: @question.id), remote: true, id: "comment_#{@question.class.to_s.underscore}#{@question.id}"
+    div id = ("comment_form_#{@question.class.to_s.underscore}_#{@question.id}")
+    
+      
   - if can? :ask, Question
     .panel.panel-info
       .panel-heading
-        ' Ответить
+        ' Answer
         .answer-errors
       .panel-body
         = render( partial: 'answers/form', locals: { question: @question, answer: @answer }) 

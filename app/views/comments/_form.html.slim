@@ -1,7 +1,7 @@
-= simple_form_for [commentable, comment] do |f|
+= simple_form_for [commentable, comment], html: {id: "new_comment_form_#{commentable.class_underscore}_#{commentable.id}"}, remote: true do |f|
   = f.input :body, as: :text, label: t('write_comment')
   = f.input :commentable_type, :as => :hidden, :input_html => { :value => commentable.class.to_s } 
   .form-actions.center
     = f.submit 'submit', class: "btn btn-primary"
-    '
+    
     

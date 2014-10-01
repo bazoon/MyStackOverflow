@@ -16,5 +16,8 @@ class Answer < ActiveRecord::Base
     question.answers.where(selected: true)
   end
 
+  def class_underscore
+    self.class.to_s.underscore
+  end
 
 end

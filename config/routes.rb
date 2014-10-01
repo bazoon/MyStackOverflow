@@ -1,8 +1,7 @@
 Rails.application.routes.draw do
+ # get 'comments/new'
 
   get 'comments/new'
-
-  get 'comments/create'
 
   devise_for :users, :controllers => { registrations: 'registrations' }
 

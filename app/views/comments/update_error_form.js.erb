@@ -1,0 +1,3 @@
+var update_comment_form = "#update_comment_form_<%= @comment.commentable.class_underscore%>_<%=@comment.commentable.id %>"
+
+$(update_comment_form).html('<%= j render partial: 'update_form', locals: { comment: @comment } %>')

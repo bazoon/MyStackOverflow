@@ -1,0 +1,2 @@
+$('#<%=@comment.commentable.class_underscore%>_<%=@comment.commentable.id%> .comments').html('<%= j render partial: 'comments/comments', locals: { commentable: @comment.commentable } %>')
+$('comment_update_form_<%= @comment.commentable.id%>').hide()

@@ -13,13 +13,9 @@ feature 'Destroy comment', %q{
 
   scenario 'Authenticated user updates a comment for answer'  do
     sign_in(user)
-    
     visit question_path(question)
-    # save_and_open_page
     click_link "destroy_comment#{comment.id}"
-  
-    # expect(page).to have_content 'updated comment'
-    expect(page).to have_content t('destroyed')
+    expect(page).to_not have_content comment.body
   end
 
   scenario 'Non-authenticated user try to destroy comment for answer' do

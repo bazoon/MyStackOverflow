@@ -11,5 +11,9 @@ class Question < ActiveRecord::Base
   def user_email
     user.email if user
   end
+
+  def class_underscore
+    self.class.to_s.underscore
+  end
   
 end

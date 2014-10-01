@@ -18,8 +18,18 @@ feature 'Update comment', %q{
     fill_in t('update_comment'), with: 'updated comment'
     click_on 'submit'
     expect(page).to have_content 'updated comment'
-    expect(page).to have_content t('updated')
+    
   end
+
+  scenario 'Authenticated user updates a comment with empty body', js: true do
+    sign_in(user)
+    visit question_path(question)
+    click_link "edit_comment#{comment.id}"
+    fill_in t('update_comment'), with: ''
+    click_on 'submit'
+    expect(page).to have_content "can't be blank"
+  end
+
 
   scenario 'Non-authenticated user try to update comment for question' do
     visit question_path(question)
