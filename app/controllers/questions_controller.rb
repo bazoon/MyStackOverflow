@@ -1,6 +1,8 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
+  load_and_authorize_resource only: [:update, :destroy]
   before_action :set_question, except: [:index, :new, :create]
+
 
   def index
     @questions = Question.all.order('created_at desc')
@@ -41,11 +43,7 @@ class QuestionsController < ApplicationController
   def update
     
     respond_to do |format|
-    
-      if cannot? :manage, @question
-        format.html { redirect_to root_path }
-        format.js { head 403 }
-      elsif @question.update(question_params)
+      if @question.update(question_params)
         format.html { redirect_to @question, notice: I18n.t(:updated) }
         format.js { @answer = Answer.new }
       else
@@ -62,12 +60,8 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    if can? :manage, @question
-      @question.destroy
-      redirect_to questions_path, notice: I18n.t(:destroyed)
-    else
-      redirect_to root_path
-    end
+    @question.destroy
+    redirect_to questions_path, notice: I18n.t(:destroyed)
   end
 
 

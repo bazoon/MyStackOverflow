@@ -236,13 +236,16 @@ RSpec.describe QuestionsController, type: :controller do
     
       describe 'DELETE #destroy' do
       
-        it 'can not delete other user question' do
-          expect_to_not_delete(other_question, id: other_question)
-        end
+        # it 'can not delete other user question' do
+        #   # expect_to_not_delete(other_question, id: other_question)
+        #   expect { delete :destroy,  id: other_question }.to raise_error(CanCan::AccessDenied)
+        # end
         
         it 'tries to delete other user question' do
-          delete :destroy, id: other_question
-          expect(response).to redirect_to(root_path)
+          # delete :destroy, id: other_question
+          expect { delete :destroy,  id: other_question }.to raise_error(CanCan::AccessDenied)
+          # expect(response).to raise_error(CanCan::AccessDenied)
+          # expect(response).to redirect_to(root_path)
         end
 
       end  
@@ -250,16 +253,15 @@ RSpec.describe QuestionsController, type: :controller do
       describe 'PATCH #update' do
         
         it 'can not update other user question attributes' do
-          patch :update, id: other_question, question: attributes_for(:question, body: "New body"), format: :js
+          expect { patch :update, id: other_question, question: attributes_for(:question, body: "New body"), format: :js }.to raise_error(CanCan::AccessDenied)
           other_question.reload
           expect(other_question.body).to eq attributes[:body]
-
         end
 
-        it 'tries to updated other user question' do
-          patch :update, id: other_question, question: attributes_for(:question, user_id: @user), format: :js
-          expect(response.status).to eq(403)
-        end     
+        # it 'tries to updated other user question' do
+        #   patch { :update, id: other_question, question: attributes_for(:question, user_id: @user), format: :js }.to raise_error(CanCan::AccessDenied)
+        #   expect(response.status).to eq(403)
+        # end     
       end   
 
 
