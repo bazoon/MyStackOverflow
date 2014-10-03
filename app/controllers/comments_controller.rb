@@ -16,15 +16,13 @@ class CommentsController < ApplicationController
   end
 
   def create
-    #create remove
-    @comment = @commentable.comments.create(comment_params.merge({ user_id: current_user.id }))
-    #comment.user = current_user
+    @comment = @commentable.comments.new(comment_params)
+    @comment.user = current_user
 
     respond_to do |format|
-      
       if @comment.save
         format.html { redirect_to :back, notice: t('created') }
-        format.js 
+        format.js
       else
         format.html { redirect_to :back, flash: { error: t('can_not_save_comment') } }
         format.js { render 'error_form' }
