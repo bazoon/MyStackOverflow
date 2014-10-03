@@ -1,4 +1,5 @@
-= simple_form_for [commentable, comment], html: {id: "new_comment_form_#{commentable.class_underscore}_#{commentable.id}"}, remote: true do |f|
+= simple_form_for [commentable, comment], 
+html: {class: "new_comment_form", 'data-object' => "#{commentable.class_underscore}", 'data-id' => "#{commentable.id}" }, remote: true do |f|
   = f.input :body, as: :text, label: t('write_comment')
   = f.input :commentable_type, :as => :hidden, :input_html => { :value => commentable.class.to_s } 
   .form-actions.center

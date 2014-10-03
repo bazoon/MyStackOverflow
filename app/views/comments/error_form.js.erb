@@ -1,3 +1,6 @@
-var new_comment_form = "#new_comment_form_<%= @commentable.class_underscore%>_<%=@commentable.id %>"
+var commentable_class = "<%= @commentable.class.to_s.underscore %>"
+var commentable_id = "<%= @commentable.id %>"
+var new_comment_form = ".new_comment_form[data-id='"+commentable_id+ "'][data-object='"+commentable_class+"']"
+
 
 $(new_comment_form).html('<%= j render partial: 'form', locals: {commentable: @commentable, comment: @comment} %>')

@@ -1,3 +1,9 @@
+var commentable_class = "<%= @comment.commentable.class.to_s.underscore %>"
+var commentable_id = "<%= @comment.commentable.id %>"
+var commentable_id_selector = "[data-id='"+commentable_id+"']"
+var commentable_class_selector = '.' + commentable_class
+
+
 var update_comment_form = "#update_comment_form_<%= @comment.commentable.class_underscore%>_<%=@comment.commentable.id %>"
 
 $(update_comment_form).html('<%= j render partial: 'update_form', locals: { comment: @comment } %>')

@@ -1,1 +1,1 @@
-$("#question_<%= @question.id%>").html('<%= j render 'question_only' %>')
+$('[data-id="<%= @question.id %>"]').html('<%= j render 'question_only' %>')
