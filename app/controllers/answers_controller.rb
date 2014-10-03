@@ -1,5 +1,6 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, except: [:show]
+  load_and_authorize_resource only: [:update, :destroy, :select]
   before_action :set_question, only: [:new, :create]
   before_action :set_answer, only: [:edit, :show, :update, :destroy, :select]
 
@@ -37,12 +38,7 @@ class AnswersController < ApplicationController
   def update
 
     respond_to do |format|
-      # binding.pry
-      if cannot? :update, @answer
-        flash[:error] = t(:forbidden)
-        format.html { redirect_to root_path }
-        format.js { head 403 }
-      elsif @answer.update(answer_params)
+      if @answer.update(answer_params)
         flash[:notice] = t(:updated)
         format.html { redirect_to @answer.question }
         format.js
@@ -57,24 +53,17 @@ class AnswersController < ApplicationController
   end
 
   def destroy
-    
     question = @answer.question
     respond_to do |format|
-      if can? :update, @answer
-        @id = @answer.id
-        @answer.destroy
-        format.html { redirect_to question, notice: t(:destroyed) }
-        format.js 
-      else
-        format.html { redirect_to root_path }
-        format.js { head 403 }
-      end
+      @id = @answer.id
+      @answer.destroy
+      format.html { redirect_to question, notice: t(:destroyed) }
+      format.js
     end
-
   end
 
   def select
-    @answer.set_as_selected if can? :select, @answer
+    @answer.set_as_selected
     respond_to do |format|
       format.html { redirect_to @answer.question }
       format.js

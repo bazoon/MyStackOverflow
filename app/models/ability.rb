@@ -46,6 +46,10 @@ class Ability
 
       can :ask, Question
 
+      can :destroy, Answer do |answer|
+        answer.user == user
+      end
+
       can :update, Answer do |answer|
         answer.user == user
       end
