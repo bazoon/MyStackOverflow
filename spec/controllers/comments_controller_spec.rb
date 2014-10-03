@@ -112,28 +112,30 @@ RSpec.describe CommentsController, type: :controller do
 
       describe '#PATCH update' do
       
-        it 'can not update other user"s comment' do
-          patch :update, id: other_comment.id, comment: { body: 'Hello', commentable_type: 'Answer' }, format: :js
-          comment.reload
-          expect(comment.body).to eq('MyComment')
-        end
+        # it 'can not update other user"s comment' do
+        #   patch :update, id: other_comment.id, comment: { body: 'Hello', commentable_type: 'Answer' }, format: :js
+        #   comment.reload
+        #   expect(comment.body).to eq('MyComment')
+        # end
 
         it 'return 403 if via ajax' do
-          patch :update, id: other_comment.id, comment: { body: 'Hello', commentable_type: 'Answer' }, format: :js
-          expect(response.status).to eq(403)
+          # patch :update, id: other_comment.id, comment: { body: 'Hello', commentable_type: 'Answer' }, format: :js
+          # expect(response.status).to eq(403)
+          expect { patch :update, id: other_comment.id, comment: { body: 'Hello', commentable_type: 'Answer' }, format: :js }.to raise_error(CanCan::AccessDenied)
         end
 
       end
 
       describe '#DELETE destroy' do
       
-        it 'can not delete the requested comment' do
-          expect_to_not_delete(other_comment, id: other_comment, format: :js)
-        end
+        # it 'can not delete the requested comment' do
+        #   expect_to_not_delete(other_comment, id: other_comment, format: :js)
+        # end
 
         it 'return 403 if via ajax' do
-          delete :destroy, id: other_comment, format: :js
-          expect(response.status).to eq(403)
+          expect { delete :destroy, id: other_comment, format: :js }.to raise_error(CanCan::AccessDenied)
+          # expect(response.status).to eq(403)
+
         end
 
 

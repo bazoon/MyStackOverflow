@@ -1,5 +1,6 @@
 class CommentsController < ApplicationController
   before_action :authenticate_user!
+  load_and_authorize_resource only: [:update, :destroy]
   before_action :load_commentable, only: [:create]
 
   def new
@@ -36,10 +37,7 @@ class CommentsController < ApplicationController
     @comment = Comment.find(params[:id])
 
     respond_to do |format|
-      if cannot? :manage, @comment
-        format.html { redirect_to root_path, flash: { error: t('can_not_update_comment') } }
-        format.js { head 403 }
-      elsif @comment.update(comment_params)
+      if @comment.update(comment_params)
         format.html { redirect_to :back, notice: t('updated') }
         format.js 
       else
@@ -54,17 +52,11 @@ class CommentsController < ApplicationController
     comment = Comment.find(params[:id])
 
     respond_to do |format|
-      if cannot? :manage, comment
-        format.html { redirect_to root_path, flash: { error: t('can_not_destroy_comment') } }
-        format.js { head 403 }
-      else
         @commentable = comment.commentable
         comment.destroy
         format.html { redirect_to :back, notice: t('destroyed') }
         format.js
-      end
     end
-
   end
 
   private
