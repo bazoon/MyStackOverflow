@@ -1,6 +1,6 @@
 <% if @answer.errors.present? %>
-  $("#answer_form_" + <%= j "#{@answer.id}" %>).html('<%= j render 'form' %>')
+  $(".update_form[data-id='<%= @answer.id %>']").html('<%= j render 'form' %>')
 <% else %>
-  $("#answer_" + <%= j "#{@answer.id}" %>).replaceWith('<%= j render @answer %>')
+  $(".answer[data-id='<%= "#{@answer.id}" %>']").replaceWith('<%= j render @answer %>')
+  $(".answer_form").empty()
 <% end %>
-$('.flash_box').html('<%= j render 'layouts/messages' %>')

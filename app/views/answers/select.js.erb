@@ -1,6 +1,6 @@
 $(".selected-answer").removeClass("panel-success selected-answer").addClass("panel-default")
 <% if @answer.selected %>
-  $("#ans_" + <%= j "#{@answer.id}" %>).addClass("selected-answer panel-success")
+  $(".answer[data-id='<%= @answer.id %>'] .panel").addClass("selected-answer panel-success")
 <% else %>
-  $("#ans_" + <%= j "#{@answer.id}" %>).removeClass("selected-answer panel-success")
+  $(".answer[data-id='<%= @answer.id %>'] .panel").removeClass("selected-answer panel-success")
 <% end %>

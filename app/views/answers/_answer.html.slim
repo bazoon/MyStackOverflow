@@ -1,5 +1,5 @@
-div id = ("answer_#{answer.id}")
-  div  id = ("ans_#{answer.id}") class = (answer.selected ? 'panel panel-success selected-answer' : 'panel panel-default') 
+div class = "answer" data-id = "#{answer.id}"
+  div class = (answer.selected ? 'panel panel-success selected-answer' : 'panel panel-default') 
     .panel-heading 
       h3.panel-title = l(answer.created_at)
     .panel-body
@@ -11,7 +11,7 @@ div id = ("answer_#{answer.id}")
       .pull-right = answer.user.email
       ' &nbsp
     - if can? :update, answer
-      div id = ("answer_form_#{answer.id}")
+        div class = "update_form" data-id = "#{answer.id}"
     .comments
       = render partial: 'comments/comments', locals: { commentable: answer }
     - if can? :write, Comment

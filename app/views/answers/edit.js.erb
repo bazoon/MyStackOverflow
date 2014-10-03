@@ -1,1 +1,2 @@
-$("#answer_form_" + <%= j "#{@answer.id}" %>).html('<%= j render 'form' %>')
+// alert(".update_form[data-id='<%= @answer.id %>']")
+$(".update_form[data-id='<%= @answer.id %>']").html('<%= j render 'form' %>')
