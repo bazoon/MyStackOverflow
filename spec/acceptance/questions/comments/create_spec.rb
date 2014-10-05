@@ -1,4 +1,4 @@
-require 'rails_helper'
+require_relative '../../acceptance_helper'
 
 feature 'Create comment', %q{
   In order to comment sombody's question
@@ -10,6 +10,7 @@ feature 'Create comment', %q{
   given!(:question) { create(:question) }
 
   scenario 'Authenticated user creates a comment', js: true do
+    given(:user2) { create(:user) }
     sign_in(user)
     visit question_path(question)
     click_link "comment_question#{question.id}"

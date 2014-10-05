@@ -3,11 +3,11 @@
   = f.input :body, as: :text, label: t('questions.body')
 
   = f.simple_fields_for :attachments do |a|
-    = a.input :file, as: :file
+    = a.input :file, as: :file, label: 'File'
     = a.link_to_remove "Remove this attachment"    
 
   .form-actions.center
-    = f.link_to_add "Add a attachment", :attachments 
+    = f.link_to_add "Add an attachment", :attachments 
     br
     = f.submit t('save'), class: "btn btn-primary"
     '

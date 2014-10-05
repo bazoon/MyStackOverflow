@@ -30,7 +30,6 @@ class QuestionsController < ApplicationController
   def create
     # binding.pry
     @question = current_user.questions.new(question_params)
-    binding.pry
     respond_to do |format|
       if @question.save
         format.html { redirect_to @question, notice: I18n.t(:created) }
@@ -52,7 +51,7 @@ class QuestionsController < ApplicationController
         format.html { render :edit }
         format.js do
           @remote = true
-          render 'error_form' 
+          render 'error_form'
         end
       end
 
