@@ -1,1 +1,1 @@
-[ ![Codeship Status for bazoon/MyStackOverflow](https://www.codeship.io/projects/72408550-28f0-0132-0d7b-72f84374274a/status)](https://www.codeship.io/projects/38007)
+<a href="https://codeclimate.com/github/bazoon/MyStackOverflow"><img src="https://codeclimate.com/github/bazoon/MyStackOverflow/badges/gpa.svg" /></a>
