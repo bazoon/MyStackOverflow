@@ -62,8 +62,10 @@ class CommentsController < ApplicationController
   private
 
   def load_commentable
+    # binding.pry
     prefix = params[:comment][:commentable_type].underscore
-    @model = prefix.camelize.constantize
+    # @model = prefix.camelize.constantize
+    @model = request.url.split( "/")[3].singularize.camelize.constantize
     @commentable = @model.find(params[prefix+"_id"])
   end
   
