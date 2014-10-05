@@ -14,3 +14,13 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
+
+
+# Ignore uploaded files
+/public/system
+/public/tmp
+/public/uploads
+/public/spec
+
+# Mac OS files
+.DS_Store

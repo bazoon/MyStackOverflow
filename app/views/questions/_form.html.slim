@@ -1,8 +1,14 @@
-= simple_form_for @question, remote: @remote do |f|
+= simple_nested_form_for @question, remote: @remote do |f|
   = f.input :title, label: t('questions.title')
   = f.input :body, as: :text, label: t('questions.body')
 
+  = f.simple_fields_for :attachments do |a|
+    = a.input :file, as: :file
+    = a.link_to_remove "Remove this attachment"    
+
   .form-actions.center
+    = f.link_to_add "Add a attachment", :attachments 
+    br
     = f.submit t('save'), class: "btn btn-primary"
     '
     = link_to "Назад", @question, class: "btn btn-primary"

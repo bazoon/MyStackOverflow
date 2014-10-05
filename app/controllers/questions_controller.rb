@@ -16,7 +16,7 @@ class QuestionsController < ApplicationController
 
   def new
     @question = Question.new
-    @remote = false
+    # @question.attachments.build
   end
 
   def edit
@@ -28,8 +28,9 @@ class QuestionsController < ApplicationController
   end
 
   def create
+    # binding.pry
     @question = current_user.questions.new(question_params)
-    
+    binding.pry
     respond_to do |format|
       if @question.save
         format.html { redirect_to @question, notice: I18n.t(:created) }
@@ -43,6 +44,7 @@ class QuestionsController < ApplicationController
   def update
     
     respond_to do |format|
+      binding.pry
       if @question.update(question_params)
         format.html { redirect_to @question, notice: I18n.t(:updated) }
         format.js { @answer = Answer.new }
@@ -72,7 +74,7 @@ class QuestionsController < ApplicationController
   end
 
   def question_params
-    params.require(:question).permit(:title, :body)
+    params.require(:question).permit(:title, :body, attachments_attributes: [:file, :_destroy, :id])
   end
 
 
