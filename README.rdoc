@@ -1,1 +1,3 @@
 {<img src="https://codeclimate.com/github/bazoon/MyStackOverflow/badges/gpa.svg" />}[https://codeclimate.com/github/bazoon/MyStackOverflow]
+
+{<img src="https://codeclimate.com/github/bazoon/MyStackOverflow/badges/coverage.svg" />}[https://codeclimate.com/github/bazoon/MyStackOverflow]
