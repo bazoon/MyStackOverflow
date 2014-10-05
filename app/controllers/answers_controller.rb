@@ -6,7 +6,6 @@ class AnswersController < ApplicationController
 
 
   def create
-    # binding.pry
     @answer = @question.answers.new(answer_params)
     @answer.user = current_user
     @question = @answer.question
@@ -27,7 +26,6 @@ class AnswersController < ApplicationController
   end
 
   def edit
-
     respond_to do |format|
       format.html
       format.js
@@ -36,7 +34,6 @@ class AnswersController < ApplicationController
   end
 
   def update
-
     respond_to do |format|
       if @answer.update(answer_params)
         flash[:notice] = t(:updated)
@@ -81,7 +78,7 @@ class AnswersController < ApplicationController
   end
 
   def answer_params
-    params.require(:answer).permit(:body, :question_id)
+    params.require(:answer).permit(:body, :question_id, attachments_attributes: [:file, :_destroy, :id])
   end
 
 end

@@ -1,4 +1,4 @@
-require 'rails_helper'
+require_relative "../../acceptance_helper"
 
 feature 'Create comment', %q{
   In order to comment sombody's answer

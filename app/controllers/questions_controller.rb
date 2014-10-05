@@ -43,21 +43,15 @@ class QuestionsController < ApplicationController
   def update
     
     respond_to do |format|
-      binding.pry
       if @question.update(question_params)
         format.html { redirect_to @question, notice: I18n.t(:updated) }
         format.js { @answer = Answer.new }
       else
         format.html { render :edit }
-        format.js do
-          @remote = true
-          render 'error_form'
-        end
+        format.js { render 'error_form' }
       end
 
     end
-    
-
   end
 
   def destroy

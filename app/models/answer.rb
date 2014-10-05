@@ -4,6 +4,9 @@ class Answer < ActiveRecord::Base
   validates :body, :user_id, :question_id, presence: true
   has_many :comments, as: :commentable
 
+  has_many :attachments, as: :attachmentable, dependent: :destroy
+  accepts_nested_attributes_for :attachments, allow_destroy: true
+
 
   def set_as_selected
     selected_answers.update_all(selected: false)

@@ -1,4 +1,4 @@
-require 'rails_helper'
+require_relative "../../acceptance_helper"
 
 feature 'Destroy comment', %q{
   In order to remove my comment

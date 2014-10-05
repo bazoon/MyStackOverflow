@@ -1,9 +1,15 @@
 .answer_form
   
-  = simple_form_for([@question, @answer], remote: true) do |f|
+  = simple_nested_form_for([@question, @answer], remote: true) do |f|
 
     = f.error_notification
     .form-group
       = f.input :body, label: t('answers.body'), :input_html => {class: "form-control"}
-    = f.button :submit, value: t(:save), class: "btn btn-primary"
+      = f.simple_fields_for :attachments do |a|
+        = a.input :file, as: :file, label: 'File'
+        = a.link_to_remove "Remove this attachment"    
+    .form-actions
+      = f.link_to_add "Add an attachment", :attachments 
+      br
+      = f.button :submit, value: t(:save), class: "btn btn-primary"
   br/

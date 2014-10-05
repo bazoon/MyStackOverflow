@@ -1,4 +1,4 @@
-require 'rails_helper'
+require_relative "../../acceptance_helper"
 
 feature 'Update comment', %q{
   In order to change my comment
