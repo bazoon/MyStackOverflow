@@ -6,7 +6,7 @@
     = @question.body
   ul
   - @question.attachments.each do |a|
-    li= link_to a.file.identifier, a.file.url
+      li= link_to a.file.identifier, a.file.url
   .panel-footer 
     ' &nbsp
     .pull-right 
@@ -26,4 +26,5 @@
         ' Answer
         .answer-errors
       .panel-body
-        = render( partial: 'answers/form', locals: { question: @question, answer: @answer }) 
+        .answer_form
+          = render( partial: 'answers/form', locals: { question: @question, answer: @answer }) 
