@@ -62,11 +62,8 @@ class CommentsController < ApplicationController
   private
 
   def load_commentable
-    # binding.pry
-    prefix = params[:comment][:commentable_type].underscore
-    # @model = prefix.camelize.constantize
-    @model = request.url.split( "/")[3].singularize.camelize.constantize
-    @commentable = @model.find(params[prefix+"_id"])
+    resource, id = request.path.split('/')[1,2]
+    @commentable = resource.singularize.classify.constantize.find(id) 
   end
   
   def comment_params
