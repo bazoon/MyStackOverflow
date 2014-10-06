@@ -50,3 +50,6 @@ en:
     body: "Your answer"
     new:
       body: "Answer"
+  question_tags:
+    search:
+      header: "Tag"

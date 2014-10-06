@@ -7,6 +7,7 @@ module Taggable
       includes(:tags).joins(:tags).where(tags: { name: tag_list })
     end
 
+    
   end
   
   module InstanceMethods

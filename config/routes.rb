@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'question_tags/search/:tag', to: 'question_tags#search', as: :question_tags
+
  # get 'comments/new'
 
   get 'comments/new'

@@ -8,7 +8,9 @@
   - @question.attachments.each do |a|
       li= link_to a.file.identifier, a.file.url
   .panel-footer 
-    = @question.tag_list
+    - @question.tags.each do |t|
+      = link_to t.name, question_tags_path(t.name)
+      | &nbsp
     .pull-right 
       = @question.user_email
       = link_to(edit_icon, edit_question_path(@question), remote: true, id: "edit_question_#{@question.id}") if can? :manage, @question

@@ -1,4 +1,5 @@
-h1 = t('.header')
+/ TODO: refactor duplication
+h1 = "#{t('.header')}: #{@tag}"
 ul.list-group
 - @questions.each do |question|
   li.list-group-item
