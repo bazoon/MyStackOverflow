@@ -31,6 +31,7 @@ class QuestionsController < ApplicationController
   def create
     # binding.pry
     @question = current_user.questions.new(question_params)
+    
     respond_to do |format|
       if @question.save
         format.html { redirect_to @question, notice: I18n.t(:created) }
@@ -68,7 +69,7 @@ class QuestionsController < ApplicationController
   end
 
   def question_params
-    params.require(:question).permit(:title, :body, attachments_attributes: [:file, :_destroy, :id])
+    params.require(:question).permit(:title, :body, :tag_list, attachments_attributes: [:file, :_destroy, :id])
   end
 
 

@@ -16,8 +16,10 @@ feature 'Create question', %q{
     fill_in t('questions.title'), with: 'Test question'
     fill_in t('questions.body'), with: 'text text text'
     click_on t('save')
-
     expect(page).to have_content t('created')
+    expect(page).to have_content 'text text text'
+    expect(page).to have_content 'Test question'
+
   end
 
   scenario 'Non-authenticated user try to create question' do

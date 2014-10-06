@@ -4,21 +4,27 @@ module Taggable
   module ClassMethods
     
     def tagged_with(tag_list)
-      self.includes(:tags).joins(:tags).where(tags: { name: tag_list } )
+      includes(:tags).joins(:tags).where(tags: { name: tag_list })
     end
 
   end
   
   module InstanceMethods
   
-    def tag_list=(tag_list)
-      taggings.delete_all
-
-      tag_list.split(',').each do |t|
-        tag = Tag.where(name: t).first_or_create
-        taggings.where(tag: tag, taggable_id: self, taggable_type: self.class.to_s).first_or_create
+    def tag_list=(names)
+      self.tags = names.split(",").map do |n|
+        Tag.where(name: n.strip).first_or_create!
       end
     end
+    
+    # def tag_list=(tag_list)
+  
+
+    #   self.tags = tag_list.split(',').map do |t|
+    #     Tag.where(name: t.strip).first_or_create!
+    #   end
+    #   binding.pry
+    # end
 
     def tag_list
       tags.map(&:name).join(",")

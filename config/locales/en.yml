@@ -40,6 +40,7 @@ en:
   questions:
     title: "Title"
     body: "You question"
+    tags: "Tags"
     new:
       header: "Questions"
       body: "Body of question"
