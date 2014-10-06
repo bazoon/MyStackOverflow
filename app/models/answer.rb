@@ -3,6 +3,8 @@ class Answer < ActiveRecord::Base
   belongs_to :user
   validates :body, :user_id, :question_id, presence: true
   has_many :comments, as: :commentable
+  has_many :taggings, as: :taggable
+  has_many :tags, through: :taggings
 
   has_many :attachments, as: :attachmentable, dependent: :destroy
   accepts_nested_attributes_for :attachments, allow_destroy: true
