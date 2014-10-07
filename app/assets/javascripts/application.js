@@ -17,3 +17,20 @@
 
 //= require jquery_nested_form
 //= require_tree .
+
+$(document).ready(function(){
+
+
+$(".clickme")
+  
+  .bind("ajax:success", function(evt, data, status, xhr){
+      var $form = $(this);
+
+      // alert("Hello")
+      alert(xhr.responseText);
+      // $('#comments').append(xhr.responseText);
+
+    });
+
+
+});
