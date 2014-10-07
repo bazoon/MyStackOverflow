@@ -1,3 +1,5 @@
+
+
 require 'rails_helper'
 
 RSpec.describe RatingModifier do
@@ -10,6 +12,10 @@ RSpec.describe RatingModifier do
   let!(:voter_answer) { create(:answer, user_id: voter.id) }
   let!(:voter_question) { create(:question, user_id: voter.id) }
   let(:rating_modifier) { RatingModifier.new(voter) }
+
+  it 'creates Vote objects if someone votes' do
+    expect { rating_modifier.vote_up(question) }.to change(question.votes, :count).by(1)
+  end
 
 
   it 'increase user reputation by 5 if his Q is voted up' do
