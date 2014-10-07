@@ -9,10 +9,16 @@ class Question < ActiveRecord::Base
   has_many :taggings, as: :taggable
   has_many :tags, through: :taggings
 
+  has_many :votes, as: :voteable
+
   has_many :attachments, as: :attachmentable, dependent: :destroy
   accepts_nested_attributes_for :attachments, allow_destroy: true
 
   include Taggable
+  include Voteable
+
+  VOTE_DOWN_WEIGHT = 2
+  VOTE_WEIGHT = 5
 
   def user_email
     user.email if user
@@ -21,8 +27,6 @@ class Question < ActiveRecord::Base
   def class_underscore
     self.class.to_s.underscore
   end
-
-
 
   
   

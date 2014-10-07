@@ -9,5 +9,8 @@ class User < ActiveRecord::Base
   has_many :comments
   validates :email, :name, presence: true
 
+  VOTE_DOWN_PRICE = 1
+
+  include Voteable  
   
 end

@@ -19,5 +19,14 @@ RSpec.describe Question, type: :model do
     expect(Question.tagged_with('three').first).to eq question
   end
 
+  it 'can be voted for' do
+    expect { question.vote_up }.to change(question, :rating).by(1)
+  end
+
+  it 'can be voted against' do
+    expect { question.vote_down }.to change(question, :rating).by(-1)
+  end
+
+
 end
  

@@ -37,6 +37,15 @@ module ApplicationHelper
   end
 
 
+  def vote_up_icon
+    content_tag(:span,"",class: "glyphicon glyphicon-thumbs-up")
+  end
+
+  def vote_down_icon
+    content_tag(:span,"",class: "glyphicon glyphicon-thumbs-down")
+  end
+
+
   def now
     Time.zone.now
   end

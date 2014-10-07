@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141006031937) do
+ActiveRecord::Schema.define(version: 20141007042547) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 20141006031937) do
     t.datetime "updated_at"
     t.integer  "user_id"
     t.boolean  "selected"
+    t.integer  "rating",      default: 0
   end
 
   create_table "attachments", force: true do |t|
@@ -53,6 +54,15 @@ ActiveRecord::Schema.define(version: 20141006031937) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
+    t.integer  "rating",     default: 0
+  end
+
+  create_table "reputations", force: true do |t|
+    t.integer  "reputationable_id"
+    t.string   "reputationable_type"
+    t.integer  "reputation",          default: 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "taggings", force: true do |t|
@@ -83,9 +93,19 @@ ActiveRecord::Schema.define(version: 20141006031937) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"
+    t.integer  "rating",                 default: 0
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+
+  create_table "votes", force: true do |t|
+    t.integer  "voteable_id"
+    t.string   "voteable_type"
+    t.integer  "vote",          default: 0
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end
