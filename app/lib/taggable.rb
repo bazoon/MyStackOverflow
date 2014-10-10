@@ -18,15 +18,7 @@ module Taggable
       end
     end
     
-    # def tag_list=(tag_list)
-  
-
-    #   self.tags = tag_list.split(',').map do |t|
-    #     Tag.where(name: t.strip).first_or_create!
-    #   end
-    #   binding.pry
-    # end
-
+    
     def tag_list
       tags.map(&:name).join(",")
     end

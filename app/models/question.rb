@@ -14,6 +14,8 @@ class Question < ActiveRecord::Base
   has_many :attachments, as: :attachmentable, dependent: :destroy
   accepts_nested_attributes_for :attachments, allow_destroy: true
 
+  scope :selected_answers, -> { where(selected: true) }
+
   include Taggable
   include Voteable
 

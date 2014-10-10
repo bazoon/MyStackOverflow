@@ -12,11 +12,13 @@ module Voteable
     def vote_up(user)
       vote = find_vote(user)
       vote.update(vote: 1)
+      up_by(1)
     end
 
     def vote_down(user)
       vote = find_vote(user)
       vote.update(vote: -1)
+      down_by(1)
     end
 
     def up_by(n)

@@ -11,8 +11,8 @@ class RatingModifier
   def vote_up(object)
     return if cant_vote?(object)
     object.vote_up(@voter)
-    # object.user.update(rating: object.user.rating + object.class::VOTE_WEIGHT)
     object.user.up_by(object.class::VOTE_WEIGHT)
+
   end
 
   def vote_down(object)

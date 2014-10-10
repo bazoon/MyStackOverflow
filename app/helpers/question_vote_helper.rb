@@ -1,0 +1,2 @@
+module QuestionVoteHelper
+end
