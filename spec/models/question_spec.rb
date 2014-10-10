@@ -20,11 +20,11 @@ RSpec.describe Question, type: :model do
   end
 
   it 'can be voted for' do
-    expect { question.vote_up }.to change(question, :rating).by(1)
+    expect { question.up_by(1) }.to change(question, :rating).by(1)
   end
 
   it 'can be voted against' do
-    expect { question.vote_down }.to change(question, :rating).by(-1)
+    expect { question.down_by(1) }.to change(question, :rating).by(-1)
   end
 
 
