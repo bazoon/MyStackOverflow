@@ -256,11 +256,7 @@ DEPENDENCIES
   factory_girl_rails
   guard
   guard-rspec
-<<<<<<< HEAD
   handlebars_assets
-  jazz_hands
-=======
->>>>>>> reputation modules + specs
   jbuilder (~> 2.0)
   jquery-rails
   launchy
