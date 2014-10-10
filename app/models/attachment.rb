@@ -4,4 +4,9 @@ class Attachment < ActiveRecord::Base
   delegate :identifier, to: :file
 
   belongs_to :attachmentable, polymorphic: true
+
+  def file_name
+    File.basename(file.file.file)
+  end
+
 end

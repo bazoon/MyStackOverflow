@@ -6,6 +6,9 @@ feature 'Add files to an answer', %q{
   I'd like to be able to attach files
 } do
 
+
+#TODO: File.basename
+
   given(:user) { create(:user) }
   given(:question) { create(:question) }
 

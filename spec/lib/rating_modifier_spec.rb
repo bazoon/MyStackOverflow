@@ -5,11 +5,14 @@ RSpec.describe RatingModifier do
   let!(:user) { create(:user) }
   let!(:voter) { create(:user) } 
 
-  let!(:question) { create(:question, user_id: user.id) }
+  let!(:question) { create(:question, user_id: user.id) } #TODO: без id
   let!(:answer) { create(:answer, user_id: user.id) }
   let!(:voter_answer) { create(:answer, user_id: voter.id) }
   let!(:voter_question) { create(:question, user_id: voter.id) }
   let(:rating_modifier) { RatingModifier.new(voter) }
+
+  #TODO: design patterns
+
 
   it 'creates Vote objects if someone votes' do
     expect { rating_modifier.vote_up(question) }.to change(question.votes, :count).by(1)

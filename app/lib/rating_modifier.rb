@@ -8,6 +8,9 @@ class RatingModifier
     object.user == @voter || Vote.voted?(object, @voter)
   end
 
+  # app/servises or models lib delete
+  # SOLID разнести ответственность
+
   def vote_up(object)
     return if cant_vote?(object)
     object.vote_up(@voter)

@@ -4,7 +4,7 @@ class Vote < ActiveRecord::Base
 
 
   def self.voted?(object, user)
-    !where(voteable_type: object.class.to_s, voteable_id: object.id, user_id: user).first.nil?
+    !where(voteable: object, user: user).first.nil?
   end
 
 end

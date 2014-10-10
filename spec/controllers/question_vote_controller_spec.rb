@@ -12,6 +12,8 @@ RSpec.describe QuestionVoteController, type: :controller do
       get :up, question_id: question, format: :json
       expect(assigns(:question)).to eq(question)
     end
+    
+#TODO: проверить был вызван метод с такими то параметрами, контролле не отвествененн за это внизу
 
     it 'question raiting +1' do
       get :up, question_id: question, format: :json 

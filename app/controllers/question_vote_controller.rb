@@ -1,6 +1,6 @@
 class QuestionVoteController < ApplicationController
   before_action :set_question
-
+  #TODO: вложить в вопрос
   def up
     rm = RatingModifier.new(current_user)
     rm.vote_up(@question)

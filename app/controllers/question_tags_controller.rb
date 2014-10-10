@@ -1,4 +1,5 @@
 class QuestionTagsController < ApplicationController
+#TODO: TagController rename
 
   def search
     respond_to do |format|
@@ -8,6 +9,7 @@ class QuestionTagsController < ApplicationController
       format.html
       format.js { render json: @questions }
     end  
+    
   end
 
 end

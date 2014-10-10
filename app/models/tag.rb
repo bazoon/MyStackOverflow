@@ -1,4 +1,5 @@
 class Tag < ActiveRecord::Base
-  validates :name, presence: true
   has_many :taggings
+  validates :name, presence: true
+  
 end

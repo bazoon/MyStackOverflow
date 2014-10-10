@@ -10,9 +10,10 @@ class Answer < ActiveRecord::Base
   has_many :attachments, as: :attachmentable, dependent: :destroy
   accepts_nested_attributes_for :attachments, allow_destroy: true
 
-  VOTE_WEIGHT = 10
+  VOTE_WEIGHT = 10 #константы куда-то
   VOTE_DOWN_WEIGHT = 2
   ACCEPT_WEIGHT = 15
+
   include Voteable
 
   def set_as_selected
