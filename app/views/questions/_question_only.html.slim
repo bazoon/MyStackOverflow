@@ -11,6 +11,7 @@
     - @question.tags.each do |t|
       = link_to t.name, question_tags_path(t.name)
       | &nbsp
+    |&nbsp
     .pull-right 
       = @question.user_email
       = link_to(edit_icon, edit_question_path(@question), remote: true, id: "edit_question_#{@question.id}") if can? :manage, @question
