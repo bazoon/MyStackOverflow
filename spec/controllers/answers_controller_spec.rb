@@ -77,25 +77,26 @@ RSpec.describe AnswersController, type: :controller do
       context 'with valids attributes' do
 
         it 'saves the new answer in the database' do
-          expect_to_create({ answer: attributes_for(:answer), question_id: question, format: :js }, Answer)
+          expect_to_create({ answer: attributes_for(:answer), question_id: question, format: :json }, Answer)
         end
 
-        it 'redirects to question show view' do
-          post :create, answer: attributes_for(:answer), question_id: question, format: :js
-          expect(response).to render_template :create
-        end
+        # it 'redirects to question show view' do
+        #   post :create, answer: attributes_for(:answer), question_id: question, format: :js
+        #   expect(response).to render_template :create
+        # end
 
       end
 
       context 'with invalid attributes' do
         it 'does not save the answer' do
-          expect_to_not_create({ answer: attributes_for(:invalid_answer), question_id: question, format: :js }, Answer)
+          expect_to_not_create({ answer: attributes_for(:invalid_answer), question_id: question, format: :json }, Answer)
         end
 
-        it 'renders create template' do
-          post :create, answer: attributes_for(:invalid_question), question_id: question, format: :js  
-          expect(response).to render_template 'error_form'
+        it 'returns unprocessable_entity' do
+          post :create, answer: attributes_for(:invalid_question), question_id: question, format: :json  
+          expect(response.status).to eq(422)
         end
+
       end
     end
 
@@ -123,14 +124,14 @@ RSpec.describe AnswersController, type: :controller do
         end
 
         context 'invalid attributes' do
-          before { patch :update, id: answer, answer: { body: nil, user_id: nil }, format: :js }
+          before { patch :update, id: answer, answer: { body: nil, user_id: nil }, format: :json }
 
           it 'does not change answer attributes' do
             expect(answer.body).to eq 'MyText'
           end
 
-          it 're-render edit view' do
-            expect(response).to render_template :update
+          it 'returns unprocessable_entity' do
+            expect(response.status).to eq(422)
           end
 
         end

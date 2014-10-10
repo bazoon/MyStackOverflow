@@ -11,7 +11,7 @@ Rails.application.routes.draw do
 
   resources :questions, shallow: true do
     resources :comments
-    resources :answers, except: [:show, :new] do
+    resources :answers, except: [:new] do
       patch 'select', on: :member
       resources :comments
     end

@@ -66,6 +66,7 @@ gem 'carrierwave'
 gem "nested_form"
 # gem "cocoon"
 gem 'remotipart'
+gem 'handlebars_assets'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

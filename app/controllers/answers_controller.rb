@@ -12,17 +12,17 @@ class AnswersController < ApplicationController
 
     respond_to do |format|
       if @answer.save
-        flash[:notice] = t(:created)
-        format.html { redirect_to @answer.question, notice: t(:created) }
-        format.js { @answer = Answer.new }
+        format.json
       else
-        flash[:error] = t(:can_not_save_answer)
-        format.html { redirect_to @answer.question }
-        format.js { render 'error_form' }
+        format.json { render json: @answer.errors, status: :unprocessable_entity}
       end
     end
+  end
 
-
+  def show
+    respond_to do |format|
+      format.json
+    end
   end
 
   def edit
@@ -37,12 +37,12 @@ class AnswersController < ApplicationController
     respond_to do |format|
       if @answer.update(answer_params)
         flash[:notice] = t(:updated)
-        format.html { redirect_to @answer.question }
+        # format.html { redirect_to @answer.question }
+        # binding.pry
         format.js
+        format.json 
       else
-        flash[:error] = t(:can_not_update)
-        format.html { render :edit }
-        format.js
+        format.json { render json: @answer.errors, status: :unprocessable_entity }
       end
 
     end

@@ -14,20 +14,20 @@ feature 'Destroy answer', %q{
   scenario 'Authenticated user destroys his own answer', format: :js do
     sign_in(user)
     visit question_path(question)
-    click_link "delete#{user_answer.id}"
+    click_link "delete_answer_#{user_answer.id}"
     expect(page).to_not have_content 'MyText'
-    expect(page).to_not have_link "delete#{user_answer.id}"
+    expect(page).to_not have_link "delete_answer_#{user_answer.id}"
   end
 
   scenario 'Authenticated user tries to destroy sombody"s answer', format: :js do
     sign_in(user)
     visit question_path(question)
-    expect(page).to_not have_link "delete#{answer.id}"
+    expect(page).to_not have_link "delete_answer_#{answer.id}"
   end
 
   scenario 'Non-authenticated user try to update an answer', format: :js do
     visit question_path(question)
-    expect(page).to_not have_link('delete#{user_answer.id}')
+    expect(page).to_not have_link('delete_answer_#{user_answer.id}')
   end
 
   

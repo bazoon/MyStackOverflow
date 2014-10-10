@@ -11,13 +11,6 @@ feature 'Create answer', %q{
 
   context 'with valid atttribues' do
 
-    scenario 'Authenticated user create the answer' do
-      sign_in(user)
-      visit question_path(question)
-      fill_in t('answers.body'), with: 'text text text'
-      click_on t('save')
-      expect(page).to have_content 'text text text'
-    end
 
     scenario 'Authenticated user create the answer with ajax', js: true do
       sign_in(user)
@@ -33,7 +26,7 @@ feature 'Create answer', %q{
 
   context 'with invalid atttribues' do
     
-    scenario 'Authenticated user tries create the answer', js: true do
+    scenario 'Authenticated user tries to create the answer', js: true do
       sign_in(user)
       visit question_path(question)
       fill_in t('answers.body'), with: ''

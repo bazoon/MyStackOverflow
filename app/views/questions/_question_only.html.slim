@@ -31,3 +31,7 @@
       .panel-body
         .answer_form
           = render( partial: 'answers/form', locals: { question: @question, answer: @answer }) 
+
+- if user_signed_in?
+  script#answer-template[type="text/x-handlebars-template"]
+    = render 'answers/answer.handlebars'

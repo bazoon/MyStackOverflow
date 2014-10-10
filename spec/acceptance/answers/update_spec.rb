@@ -20,17 +20,6 @@ feature 'Update answer', %q{
 
     context 'with valid data' do
 
-      scenario 'updates his own answer' do
-        
-        click_link "edit_answer_#{user_answer.id}"
-      
-        fill_in t('answers.body'), with: 'updated body'
-        click_on t('save')
-        
-        expect(page).to have_content t('updated')
-        expect(page).to have_content 'updated body'
-      end
-
 
       scenario 'updates his own answer via ajax', js: true do
         click_link "edit_answer_#{user_answer.id}"
@@ -58,13 +47,6 @@ feature 'Update answer', %q{
           click_on t('save')
         end
         
-        expect(page).to have_content "can't be blank"
-      end
-
-      scenario 'updates his own answer' do
-        click_link "edit_answer_#{user_answer.id}"
-        fill_in t('answers.body'), with: ''
-        click_on t('save')
         expect(page).to have_content "can't be blank"
       end
 
