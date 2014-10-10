@@ -1,0 +1,21 @@
+div class = "answer" data-id = "{{id}}"
+
+  div class = "panel {{#if selected}} panel-success {{else}} panel-default {{/if}}"
+      .panel-heading 
+        h3.panel-title = "{{created_at}}"
+      .panel-body
+          | {{body}}
+
+      .panel-footer
+        ul class="answer-attachments"
+          |{{#each attachments}}
+          li 
+            a href = "{{url}}" {{file}}
+          |{{/each}}
+
+        .comments
+          |{{#each comments}}
+          p.small 
+            |{{body}}
+ 
+          |{{/each}}

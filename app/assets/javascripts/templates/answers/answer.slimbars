@@ -1,0 +1,22 @@
+div class = "answer" data-id = "{{answer.id}}"
+  div class = 'panel panel-default'
+    .panel-heading 
+      h3.panel-title = "{{created_at}}"
+    .panel-body
+      .answer-body
+        | {{answer.body}}
+      .attachments
+        ul class="answer-attachments"
+        | {{#each attachments}}
+        li
+          a href = "{{file_url}}" {{file_name}}
+        | {{/each}}
+
+    .panel-footer
+      a href="{{edit_path}}" id="edit_answer_{{answer.id}}" data-remote="true"
+        span class = "glyphicon glyphicon-edit"
+      a href="{{destroy_path}}" id="delete_answer_{{answer.id}}" data-method="delete" data-confirm="Are you sure?" data-remote="true" rel="nofollow"
+        span class = "glyphicon glyphicon-trash"
+      a href="{{select_path}}" id="select_answer_{{answer.id}}" data-remote="true" data-method="patch"
+        span class = "glyphicon glyphicon-star"
+    div class = "update_form" data-id = "{{answer.id}}"
