@@ -20,5 +20,5 @@
 16 тестировать связь с пользователем создание вопроса или ответа
 17 save! в тестах
 18 style guides rails
-
+19 file_cache
 models/concerns -> модули
