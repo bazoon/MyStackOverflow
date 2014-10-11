@@ -11,11 +11,7 @@ RSpec.describe Answer, type: :model do
   let!(:answer_1) { create(:answer, question: question) }
   let!(:answer_2) { create(:answer, question: question) }
 
-  it 'has selected answer' do
-    answer_1.set_as_selected
-    expect(answer_1.selected_answers).to match_array([answer_1])
-  end
-
+  
   it 'can select an answer' do
     answer_1.set_as_selected
     answer_1.reload

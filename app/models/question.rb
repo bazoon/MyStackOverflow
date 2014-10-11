@@ -30,6 +30,8 @@ class Question < ActiveRecord::Base
     self.class.to_s.underscore
   end
 
-  
+  def deselect_all_answers
+    answers.deselect
+  end
   
 end

@@ -17,18 +17,15 @@ class Answer < ActiveRecord::Base
   include Voteable
 
   def set_as_selected
-    selected_answers.update_all(selected: false)
+    question.deselect_all_answers
     update(selected: !selected)
   end
   
-  
-  #вынести в question
-  def selected_answers
-    question.answers.where(selected: true)
-  end
-
   def class_underscore
     self.class.to_s.underscore
   end
 
+  def self.deselect
+    update_all(selected: false)
+  end
 end
