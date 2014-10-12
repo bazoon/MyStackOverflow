@@ -11,6 +11,9 @@ class RatingModifier
   # app/servises or models lib delete
   # SOLID разнести ответственность
 
+
+  #TODO: hook on object vote change ? 
+
   def vote_up(object)
     return if cant_vote?(object)
     object.vote_up(@voter)
