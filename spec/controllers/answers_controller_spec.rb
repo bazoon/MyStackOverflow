@@ -80,10 +80,10 @@ RSpec.describe AnswersController, type: :controller do
           expect_to_create({ answer: attributes_for(:answer), question_id: question, format: :json }, Answer)
         end
 
-        # it 'redirects to question show view' do
-        #   post :create, answer: attributes_for(:answer), question_id: question, format: :js
-        #   expect(response).to render_template :create
-        # end
+        it 'renders create template' do
+          post :create, answer: attributes_for(:answer), question_id: question, format: :json
+          expect(response).to render_template(:create)
+        end
 
       end
 
@@ -107,20 +107,21 @@ RSpec.describe AnswersController, type: :controller do
         context 'valid attributes' do
 
           it 'asssign the requested anser to @answer' do
-            patch :update, id: answer, answer: attributes_for(:answer), format: :js
+            patch :update, id: answer, answer: attributes_for(:answer), format: :json
             expect(assigns(:answer)).to eq answer
           end
         
           it 'changes answer attributes' do
-            patch :update, id: answer, answer: { body: 'new body' }, format: :js
+            patch :update, id: answer, answer: { body: 'new body' }, format: :json
             answer.reload
             expect(answer.body).to eq 'new body'
           end
 
           it 'redirects to updated answer' do
-            patch :update, id: answer, answer: attributes_for(:answer), format: :js
+            patch :update, id: answer, answer: attributes_for(:answer), format: :json
             expect(response).to render_template :update
           end
+
         end
 
         context 'invalid attributes' do

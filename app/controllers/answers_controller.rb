@@ -37,9 +37,6 @@ class AnswersController < ApplicationController
     respond_to do |format|
       if @answer.update(answer_params)
         flash[:notice] = t(:updated)
-        # format.html { redirect_to @answer.question }
-        # binding.pry
-        format.js
         format.json 
       else
         format.json { render json: @answer.errors, status: :unprocessable_entity }
