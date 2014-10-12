@@ -12,10 +12,18 @@ class Ability
 
       can :manage, Comment do |comment|
         comment.user == user
-      end  
+      end
 
-      can :manage, Question do |question|
-        question.user == user 
+      can :destroy, Question do |question|
+        question.user == user
+      end
+
+      can :edit, Question do |question|
+        question.user == user
+      end
+
+      can :update, Question do |question|
+        question.user == user
       end
 
       can :destroy, Answer do |answer|
@@ -29,6 +37,7 @@ class Ability
       can :select, Answer do |answer|
         answer.question.user == user
       end
+
 
       
 

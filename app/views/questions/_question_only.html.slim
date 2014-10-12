@@ -20,7 +20,7 @@
       | &nbsp
       = link_to vote_down_icon, question_down_path(@question), remote: true
       | &nbsp
-      = link_to(edit_icon, edit_question_path(@question), remote: true, id: "edit_question_#{@question.id}") if can? :manage, @question
+      = link_to(edit_icon, edit_question_path(@question), remote: true, id: "edit_question_#{@question.id}") if can? :edit, @question
       | &nbsp
       = @question.user_email
       
