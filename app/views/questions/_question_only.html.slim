@@ -12,7 +12,7 @@
       li= link_to a.file_name, a.file.url
   .panel-footer 
     - @question.tags.each do |t|
-      = link_to t.name, question_tags_path(t.name)
+      = link_to t.name, tags_path(t.name)
       | &nbsp
     |&nbsp
     .pull-right 

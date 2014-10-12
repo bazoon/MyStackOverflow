@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe QuestionTagsController, type: :controller do
+RSpec.describe TagsController, type: :controller do
 
   let!(:user) { create(:user) }
   let!(:question) { create(:question, body: 'BODY', user_id: user.id) }

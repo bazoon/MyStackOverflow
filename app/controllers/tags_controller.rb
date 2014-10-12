@@ -1,4 +1,4 @@
-class QuestionTagsController < ApplicationController
+class TagsController < ApplicationController
 #TODO: TagController rename
 
   def search
