@@ -16,9 +16,9 @@
       | &nbsp
     |&nbsp
     .pull-right 
-      = link_to vote_up_icon, question_up_path(@question), remote: true
+      = link_to vote_up_icon, question_up_path(@question), remote: true if can? :rate, @question
       | &nbsp
-      = link_to vote_down_icon, question_down_path(@question), remote: true
+      = link_to vote_down_icon, question_down_path(@question), remote: true if can? :rate, @question
       | &nbsp
       = link_to(edit_icon, edit_question_path(@question), remote: true, id: "edit_question_#{@question.id}") if can? :edit, @question
       | &nbsp

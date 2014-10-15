@@ -12,6 +12,13 @@ RSpec.describe QuestionVoteController, type: :controller do
       get :up, question_id: question, format: :json
       expect(assigns(:question)).to eq(question)
     end
+
+    # it 'calls vote_up for RatingModifier' do
+    #   get :up, question_id: question, format: :json
+    #   allow(assigns(:rm)).to receive(:vote_up) { 1 }
+
+    #   expect(assigns(:rm)).to have_received(:vote_up)
+    # end
     
 #TODO: проверить был вызван метод с такими то параметрами, контролле не отвествененн за это внизу
 

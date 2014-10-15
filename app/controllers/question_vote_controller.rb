@@ -1,9 +1,10 @@
 class QuestionVoteController < ApplicationController
   before_action :set_question
   #TODO: вложить в вопрос
+ 
   def up
-    rm = RatingModifier.new(current_user)
-    rm.vote_up(@question)
+    @rm = RatingModifier.new(current_user)
+    @rm.vote_up(@question)
     
     respond_to do |format|
       format.json { render json: @question.rating }
@@ -11,7 +12,12 @@ class QuestionVoteController < ApplicationController
   end
 
   def down
+    rm = RatingModifier.new(current_user)
+    rm.vote_down(@question)
     
+    respond_to do |format|
+      format.json { render json: @question.rating }
+    end
   end
 
 

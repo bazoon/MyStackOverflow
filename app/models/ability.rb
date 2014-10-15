@@ -26,6 +26,10 @@ class Ability
         question.user == user
       end
 
+      can :rate, Question do |question|
+        question.user != user && !Vote.voted?(question, user)
+      end
+
       can :destroy, Answer do |answer|
         answer.user == user
       end
