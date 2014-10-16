@@ -44,3 +44,5 @@
 - if user_signed_in?
   script#answer-template[type="text/x-handlebars-template"]
     = render 'answers/answer.handlebars'
+
+= subscribe_to "/questions"
