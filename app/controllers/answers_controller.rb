@@ -15,7 +15,7 @@ class AnswersController < ApplicationController
     respond_to do |format|
       if @answer.save
         format.json do
-          PrivatePub.publish_to '/questions', answer: (render template: 'answers/create.json.jbuilder')
+          PrivatePub.publish_to '/questions', create_answer: (render template: 'answers/create.json.jbuilder')
         end
         # format.json { render nothing: true }
       else
@@ -42,8 +42,9 @@ class AnswersController < ApplicationController
   def update
     respond_to do |format|
       if @answer.update(answer_params)
-        flash[:notice] = t(:updated)
-        format.json 
+        format.json do
+          PrivatePub.publish_to '/questions', update_answer: (render template: 'answers/update.json.jbuilder')
+        end
       else
         format.json { render json: @answer.errors, status: :unprocessable_entity }
       end
@@ -53,13 +54,16 @@ class AnswersController < ApplicationController
   end
 
   def destroy
-    question = @answer.question
-    respond_to do |format|
-      @id = @answer.id
-      @answer.destroy
-      format.html { redirect_to question, notice: t(:destroyed) }
-      format.js
-    end
+    PrivatePub.publish_to "/questions", destroy_answer: @answer.id
+    render json: :nothing, status: 204
+    # question = @answer.question
+    # respond_to do |format|
+    #   @id = @answer.id
+    #   @answer.destroy
+    #   format.html { redirect_to question, notice: t(:destroyed) }
+
+    #   format.js
+    # end
   end
 
   def select
