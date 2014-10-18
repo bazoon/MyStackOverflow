@@ -1,38 +1,36 @@
 class VotesController < ApplicationController
-  before_action :set_question
-  #TODO: вложить в вопрос
+  before_action :load_voteable
  
-  def up
+  def vote_up
     @rm = RatingModifier.new(current_user)
-    @rm.vote_up(@question)
+    @rm.vote_up(@voteable)
     
     respond_to do |format|
       format.json do
-        PrivatePub.publish_to '/questions', vote_up_question: (render json: { id: @question.id })
+        PrivatePub.publish_to '/questions', "vote_up_#{@resource}" => (render json: { id: @question.id })
       end
     end
 
   end
 
-  def down
+  def vote_down
     @rm = RatingModifier.new(current_user)
-    @rm.vote_down(@question)
+    @rm.vote_down(@voteable)
     
     respond_to do |format|
       format.json do
-        PrivatePub.publish_to '/questions', vote_down_question: (render json: { id: @question.id })
+        PrivatePub.publish_to '/questions', "vote_down_#{@resource}" => (render json: { id: @question.id })
       end
     end
    
   end
 
-
   private
 
-  def set_question
-    @question = Question.find(params[:question_id])
+  def load_voteable
+    @resource, id = request.path.split('/')[1, 2]
+    @resource = @resource.singularize
+    @voteable = @resource.classify.constantize.find(id)
   end
-
-  
 
 end
