@@ -10,7 +10,15 @@ Rails.application.routes.draw do
 
   get 'home/index'
 
-  resources :questions, shallow: true do
+
+  concern :votable do
+
+      get 'vote_up', to: "votes#vote_up"
+      get 'vote_down', to: "votes#vote_down"
+
+  end
+
+  resources :questions, shallow: true, concerns: :votable do
     resources :comments
     resources :answers, except: [:new] do
       patch 'select', on: :member
@@ -20,6 +28,5 @@ Rails.application.routes.draw do
   
 
   root 'home#index'
-
 
 end
