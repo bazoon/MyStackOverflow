@@ -4,6 +4,7 @@ $ ->
   createAnswer = (answer) ->
     answer = HandlebarsTemplates['answers/answer'](answer)
     $(".answers").append(answer)
+    clearFormErrors($(".answer_form form"))
 
   updateAnswer = (data) ->
     body = HandlebarsTemplates['answers/body'](data)
@@ -15,6 +16,18 @@ $ ->
   destroyAnswer = (id) ->
     $(".answer[data-id='#{id}']").remove()
 
+  voteUpQuestion = (data) ->
+    ratingElem = $("#question_rating_" + data.id)
+    rating = parseInt(ratingElem.text(), 10)
+    ratingElem.text(rating+1)
+    $('.question[data-id="'+ data.id+'"] .vote_controls').hide()
+
+  voteDownQuestion = (data) ->
+    ratingElem = $("#question_rating_" + data.id)
+    rating = parseInt(ratingElem.text(), 10)
+    ratingElem.text(rating-1)
+    $('.question[data-id="'+ data.id+'"] .vote_controls').hide()
+  
 
   PrivatePub.subscribe '/questions' , (data, channel) ->
     
@@ -22,19 +35,21 @@ $ ->
       createAnswer($.parseJSON(data.create_answer))
     if (typeof data.update_answer != 'undefined')
       updateAnswer($.parseJSON(data.update_answer))
-    if (typeof data.destroy_answer != 'undefined')
-      destroyAnswer($.parseJSON(data.destroy_answer))
-    
+    if (typeof data.vote_up_question != 'undefined')
+      voteUpQuestion($.parseJSON(data.vote_up_question))
+    if (typeof data.vote_down_question != 'undefined')
+      voteDownQuestion($.parseJSON(data.vote_down_question))
+  
+      
 
 
  
   clearFormErrors = (form) ->
     form.removeClass("has-error")
     form.find(".alert.alert-danger").remove()
-    formGroup = form.find(".has-error")
-    formGroup.find(".help-block.error").remove()
-    formGroup.removeClass("has-error")
+    form.find(".help-block.error").remove()
     form[0].reset()
+
 
 
   renderFormErrors = (form, response) ->

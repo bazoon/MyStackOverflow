@@ -7,17 +7,23 @@ class QuestionVoteController < ApplicationController
     @rm.vote_up(@question)
     
     respond_to do |format|
-      format.json { render json: @question.rating }
+      format.json do
+        PrivatePub.publish_to '/questions', vote_up_question: (render json: { id: @question.id })
+      end
     end
+
   end
 
   def down
-    rm = RatingModifier.new(current_user)
-    rm.vote_down(@question)
+    @rm = RatingModifier.new(current_user)
+    @rm.vote_down(@question)
     
     respond_to do |format|
-      format.json { render json: @question.rating }
+      format.json do
+        PrivatePub.publish_to '/questions', vote_down_question: (render json: { id: @question.id })
+      end
     end
+   
   end
 
 

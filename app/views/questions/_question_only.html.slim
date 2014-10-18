@@ -4,7 +4,9 @@
       = @question.title
       .pull-right
         .label.label-info
-          = @question.rating
+          span id = "question_rating_#{@question.id}"
+            =@question.rating
+        = @question.user_email
   .panel.body
     = @question.body
   ul
@@ -16,13 +18,14 @@
       | &nbsp
     |&nbsp
     .pull-right 
-      = link_to vote_up_icon, question_up_path(@question), remote: true if can? :rate, @question
-      | &nbsp
-      = link_to vote_down_icon, question_down_path(@question), remote: true if can? :rate, @question
-      | &nbsp
+      .vote_controls
+        = link_to vote_up_icon, question_up_path(@question), remote: true if can? :rate, @question
+        | &nbsp
+        = link_to vote_down_icon, question_down_path(@question), remote: true if can? :rate, @question
+        | &nbsp
       = link_to(edit_icon, edit_question_path(@question), remote: true, id: "edit_question_#{@question.id}") if can? :edit, @question
       | &nbsp
-      = @question.user_email
+      
       
   .comments
     = render partial: 'comments/comments', locals: { commentable: @question }
