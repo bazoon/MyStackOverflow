@@ -82,7 +82,7 @@ RSpec.describe AnswersController, type: :controller do
 
         it 'renders create template' do
           post :create, answer: attributes_for(:answer), question_id: question, format: :json
-          expect(response).to render_template(:create)
+          expect(response).to render_template("answers/create.json.jbuilder")
         end
 
       end
@@ -119,7 +119,7 @@ RSpec.describe AnswersController, type: :controller do
 
           it 'redirects to updated answer' do
             patch :update, id: answer, answer: attributes_for(:answer), format: :json
-            expect(response).to render_template :update
+            expect(response).to render_template "answers/update.json.jbuilder"
           end
 
         end
@@ -177,7 +177,7 @@ RSpec.describe AnswersController, type: :controller do
 
         it 'deletes requested answer' do
           answer
-          expect { delete :destroy, id: answer, format: :js }.to change(Answer, :count).by(-1)
+          expect { delete :destroy, id: answer, format: :json }.to change(Answer, :count).by(-1)
         end
 
         it 'redirects to question view' do
@@ -186,11 +186,11 @@ RSpec.describe AnswersController, type: :controller do
           expect(response).to redirect_to question
         end
 
-        it 'it renders destroy template if ajax' do
-          question = answer.question
-          delete :destroy, id: answer, format: :js
-          expect(response).to render_template :destroy
-        end
+        # it 'it renders destroy template if ajax' do
+        #   question = answer.question
+        #   delete :destroy, id: answer, format: :json
+        #   expect(response).to render_template :destroy
+        # end
 
       end
 

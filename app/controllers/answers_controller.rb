@@ -54,16 +54,15 @@ class AnswersController < ApplicationController
   end
 
   def destroy
-    PrivatePub.publish_to "/questions", destroy_answer: @answer.id
-    render json: :nothing, status: 204
-    # question = @answer.question
-    # respond_to do |format|
-    #   @id = @answer.id
-    #   @answer.destroy
-    #   format.html { redirect_to question, notice: t(:destroyed) }
-
-    #   format.js
-    # end
+    question = @answer.question
+    respond_to do |format|
+      @answer.destroy
+      format.html { redirect_to question, notice: t(:destroyed) }
+      format.json do
+        PrivatePub.publish_to "/questions", destroy_answer: @answer.id 
+        render nothing: true
+      end      
+    end
   end
 
   def select
