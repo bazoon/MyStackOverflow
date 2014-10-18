@@ -1,7 +1,14 @@
 div class = "answer" data-id = "#{answer.id}"
   div class = (answer.selected ? 'panel panel-success selected-answer' : 'panel panel-default') 
     .panel-heading 
-      h3.panel-title = l(answer.created_at)
+      h3.panel-title 
+        = l(answer.created_at)
+        .pull-right
+          .label.label-info
+            span id = "answer_rating_#{answer.id}"
+              =answer.rating
+          small
+            = answer.user.email
     .panel-body
       .answer-body
         = answer.body
@@ -15,10 +22,16 @@ div class = "answer" data-id = "#{answer.id}"
       = link_to edit_icon, edit_answer_path(answer), id: "edit_answer_#{answer.id}", remote: true if can? :update, answer
       = link_to del_icon, answer_path(answer), method: :delete, id: "delete_answer_#{answer.id}", data: { confirm: 'Are you sure?' }, remote: true if can? :update, answer
       = link_to select_icon, select_answer_path(answer), method: :patch, id: "select_answer_#{answer.id}", remote: true if can? :select, answer
-      .pull-right = answer.user.email
+      .pull-right
+        .vote_controls
+            = link_to vote_up_icon, answer_vote_up_path(answer), remote: true if can? :rate, answer
+            | &nbsp
+            = link_to vote_down_icon, answer_vote_down_path(answer), remote: true if can? :rate, answer
+            | &nbsp  
       ' &nbsp
     - if can? :update, answer
         div class = "update_form" data-id = "#{answer.id}"
+
     .comments
       = render partial: 'comments/comments', locals: { commentable: answer }
     - if can? :write, Comment

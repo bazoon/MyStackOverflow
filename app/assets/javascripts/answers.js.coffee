@@ -27,6 +27,12 @@ $ ->
     rating = parseInt(ratingElem.text(), 10)
     ratingElem.text(rating-1)
     $('.question[data-id="'+ data.id+'"] .vote_controls').hide()
+
+  voteUpAnswer = (data) ->
+    ratingElem = $("#answer_rating_" + data.id)
+    rating = parseInt(ratingElem.text(), 10)
+    ratingElem.text(rating+1)
+    $('.answer[data-id="'+ data.id+'"] .vote_controls').hide()
   
 
   PrivatePub.subscribe '/questions' , (data, channel) ->
@@ -39,6 +45,8 @@ $ ->
       voteUpQuestion($.parseJSON(data.vote_up_question))
     if (typeof data.vote_down_question != 'undefined')
       voteDownQuestion($.parseJSON(data.vote_down_question))
+    if (typeof data.vote_up_answer != 'undefined')
+      voteUpAnswer($.parseJSON(data.vote_up_answer))
   
       
 

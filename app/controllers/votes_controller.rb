@@ -7,7 +7,7 @@ class VotesController < ApplicationController
     
     respond_to do |format|
       format.json do
-        PrivatePub.publish_to '/questions', "vote_up_#{@resource}" => (render json: { id: @question.id })
+        PrivatePub.publish_to '/questions', "vote_up_#{@resource}" => (render json: { id: @voteable.id })
       end
     end
 
@@ -19,7 +19,7 @@ class VotesController < ApplicationController
     
     respond_to do |format|
       format.json do
-        PrivatePub.publish_to '/questions', "vote_down_#{@resource}" => (render json: { id: @question.id })
+        PrivatePub.publish_to '/questions', "vote_down_#{@resource}" => (render json: { id: @voteable.id })
       end
     end
    

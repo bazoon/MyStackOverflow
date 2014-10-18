@@ -1,7 +1,15 @@
 div class = "answer" data-id = "{{answer.id}}"
   div class = 'panel panel-default'
     .panel-heading 
-      h3.panel-title = "{{created_at}}"
+      h3.panel-title
+      = "{{created_at}}"
+      .pull-right
+        .label.label-info
+          span id = "answer_rating_{{answer.id}}"
+            = "{{answer.rating}}"
+        small
+          = "{{user_email}}"
+
     .panel-body
       .answer-body
         | {{answer.body}}
@@ -12,6 +20,8 @@ div class = "answer" data-id = "{{answer.id}}"
           a href = "{{file_url}}" {{file_name}}
         | {{/each}}
 
+      
+
     .panel-footer
       a href="{{edit_path}}" id="edit_answer_{{answer.id}}" data-remote="true"
         span class = "glyphicon glyphicon-edit"
@@ -19,4 +29,13 @@ div class = "answer" data-id = "{{answer.id}}"
         span class = "glyphicon glyphicon-trash"
       a href="{{select_path}}" id="select_answer_{{answer.id}}" data-remote="true" data-method="patch"
         span class = "glyphicon glyphicon-star"
+      .pull-right
+        .vote_controls
+            a href="{{vote_up_path}}" data-remote="true"
+              span class = "glyphicon glyphicon-thumbs-up"
+            a href="{{vote_down_path}}" data-remote="true"
+              span class = "glyphicon glyphicon-thumbs-down"
+
+          
+
     div class = "update_form" data-id = "{{answer.id}}"
