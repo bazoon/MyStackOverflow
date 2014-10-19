@@ -26,9 +26,6 @@
         = link_to vote_down_icon, question_vote_down_path(@question), remote: true if can? :rate, @question
         | &nbsp
 
-    = link_to(edit_icon, edit_question_path(@question), remote: true, id: "edit_question_#{@question.id}") if can? :edit, @question
-      | &nbsp
-
       
       
   .comments

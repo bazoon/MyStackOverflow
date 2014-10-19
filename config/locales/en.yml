@@ -39,8 +39,9 @@ en:
 
   questions:
     title: "Title"
-    body: "You question"
+    body: "Your question"
     tags: "Tags"
+    tag_tokens: "Tags"
     new:
       header: "Questions"
       body: "Body of question"

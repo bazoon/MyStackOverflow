@@ -1,7 +1,7 @@
 = simple_nested_form_for @question, remote: @remote do |f|
   = f.input :title, label: t('questions.title')
   = f.input :body, as: :text, label: t('questions.body')
-  = f.input :tag_tokens, :input_html => { data: {load: @question.tags.map {|t| {id: t.name, name: t.name}}   }} 
+  = f.input :tag_tokens, label: t('questions.tag_tokens'), :input_html => { data: {load: @question.tags.map {|t| {id: t.name, name: t.name}}   }} 
 
   = f.simple_fields_for :attachments do |a|
     = a.input :file, as: :file, label: 'File'
