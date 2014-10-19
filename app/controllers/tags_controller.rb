@@ -12,4 +12,20 @@ class TagsController < ApplicationController
     
   end
 
+
+  def tags
+    name = params[:q]
+    tags = Tag.where(name: name)
+    tags = tags.map { |tag| { id: tag.name, name: tag.name } }
+    tags = [id: "#{name}", name: "New: #{name}"] if tags.empty?
+    
+    respond_to do |format|
+
+      format.js { render json: tags }
+
+    end
+  end
+
+
+
 end

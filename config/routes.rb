@@ -1,5 +1,12 @@
 Rails.application.routes.draw do
-  get 'tags/search/:tag', to: 'tags#search', as: :tags
+
+  get 'question_vote/up/:question_id', to: 'question_vote#up', as: :question_up
+  get 'question_vote/down/:question_id', to: 'question_vote#down', as: :question_down
+  
+  get 'tags/search/:tag', to: 'tags#search', as: :tag_search
+  get 'tags', to: 'tags#tags', as: :tags
+
+
   get 'comments/new'
 
   devise_for :users, controllers: { registrations: 'registrations' }

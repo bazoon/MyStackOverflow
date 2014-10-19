@@ -16,6 +16,7 @@
 //= require jquery.remotipart
 //= require handlebars
 //= require private_pub
+//= require jquery.tokeninput
 
 
 //= require jquery_nested_form

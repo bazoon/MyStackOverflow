@@ -12,6 +12,8 @@
  *
  *= require_tree .
  *= require_self
+ *= require token-input-mac
+ *= require token-input-facebook
  */
 
 @import "bootstrap-sprockets";

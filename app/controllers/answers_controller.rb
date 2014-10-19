@@ -10,7 +10,7 @@ class AnswersController < ApplicationController
     @answer.user = current_user
     @question = @answer.question
 
- 
+    
 
     respond_to do |format|
       if @answer.save
