@@ -4,7 +4,7 @@ div class = "answer" data-id = "{{answer.id}}"
       h3.panel-title
       = "{{created_at}}"
       .pull-right
-        .label.label-info
+        .label.label-info.space-right
           span id = "answer_rating_{{answer.id}}"
             = "{{answer.rating}}"
         small
@@ -29,13 +29,7 @@ div class = "answer" data-id = "{{answer.id}}"
         span class = "glyphicon glyphicon-trash"
       a href="{{select_path}}" id="select_answer_{{answer.id}}" data-remote="true" data-method="patch"
         span class = "glyphicon glyphicon-star"
-      .pull-right
-        .vote_controls
-            a href="{{vote_up_path}}" data-remote="true"
-              span class = "glyphicon glyphicon-thumbs-up"
-            a href="{{vote_down_path}}" data-remote="true"
-              span class = "glyphicon glyphicon-thumbs-down"
-
+        
           
 
     div class = "update_form" data-id = "{{answer.id}}"

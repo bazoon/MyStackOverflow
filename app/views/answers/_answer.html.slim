@@ -4,7 +4,7 @@ div class = "answer" data-id = "#{answer.id}"
       h3.panel-title 
         = l(answer.created_at)
         .pull-right
-          .label.label-info
+          .label.label-info.space-right
             span id = "answer_rating_#{answer.id}"
               =answer.rating
           small
