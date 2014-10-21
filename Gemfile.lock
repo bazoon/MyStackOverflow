@@ -350,6 +350,7 @@ DEPENDENCIES
   private_pub
   rails (= 4.1.5)
   remotipart
+  responders
   rspec-rails
   russian
   sass-rails (~> 4.0.3)
