@@ -1,0 +1,5 @@
+ul
+  | {{#each question.attachments}}
+  li 
+    a href = "{{file_url}}" {{file_name}}
+  | {{/each}}

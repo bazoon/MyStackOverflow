@@ -1,4 +1,3 @@
-
 $ ->
 
   createAnswer = (answer) ->
@@ -34,6 +33,17 @@ $ ->
     ratingElem.text(rating+1)
     $('.answer[data-id="'+ data.id+'"] .vote_controls').hide()
   
+  updateQuestion = (data) ->
+    body = HandlebarsTemplates['questions/body'](data)
+    $(".question .body").html(body)
+    title = HandlebarsTemplates['questions/title'](data)
+    $(".question .title").html(title)
+    attachments = HandlebarsTemplates['questions/attachments'](data)
+    $(".question .attachments").html(attachments)
+    tags = HandlebarsTemplates['questions/tags'](data)
+    $(".question .tags").html(tags)
+
+    
 
   PrivatePub.subscribe '/questions' , (data, channel) ->
     
@@ -47,18 +57,17 @@ $ ->
       voteDownQuestion($.parseJSON(data.vote_down_question))
     if (typeof data.vote_up_answer != 'undefined')
       voteUpAnswer($.parseJSON(data.vote_up_answer))
-  
-      
-
-
+    if (typeof data.update_question != 'undefined')
+      # alert 'hhh'
+      console.log(data.update_question)
+      # console.log($.parseJSON(data))
+      updateQuestion(data.update_question)
  
   clearFormErrors = (form) ->
     form.removeClass("has-error")
     form.find(".alert.alert-danger").remove()
     form.find(".help-block.error").remove()
     form[0].reset()
-
-
 
   renderFormErrors = (form, response) ->
 
@@ -89,6 +98,7 @@ $ ->
       renderFormErrors(form, xhr.responseJSON)
 
 
+
   # $(".answer_form form").on "ajax:success", (e, data, status, xhr) ->
   #   answer = HandlebarsTemplates['answers/answer'](xhr.responseJSON)
   #   $(".answers").append(answer)
@@ -99,6 +109,12 @@ $ ->
   $(".answer_form form").on "ajax:error", (event, xhr, status, error) ->
     renderFormErrors($(this), xhr.responseJSON)
   
+
+  # $(".edit_question").on 'ajax:error', (event, xhr, status, error) ->
+  #     # form = $(this)
+  #     # renderFormErrors(form, xhr.responseJSON)
+  #     alert('ER')  
+
   # setUpdateSuccessHook() 
 
   setUpdateErrorHook() 

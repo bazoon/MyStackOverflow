@@ -2,67 +2,52 @@ class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   load_and_authorize_resource only: [:update, :destroy]
   before_action :set_question, except: [:index, :new, :create]
+  after_action :publish_question, only: [:update]
 
-
+  responders :location, :flash
+  respond_to :html
+  
   def index
     @questions = Question.all.order('created_at desc')
-    # binding.pry
   end
 
   def show
     @answers = @question.answers
     @answer = Answer.new
-    # @answer.attachments.build
   end
 
   def new
     @question = Question.new
-    # @question.attachments.build
   end
 
   def edit
-    @remote = true
-    respond_to do |format|
-      format.html
-      format.js
-    end
+    respond_with @question
   end
 
   def create
-    # binding.pry
-    @question = current_user.questions.new(question_params)
-    
-    respond_to do |format|
-      if @question.save
-        format.html { redirect_to @question, notice: I18n.t(:created) }
-      else
-        format.html { render :new }
-      end
-    end
-
+    @question = current_user.questions.create(question_params)
+    respond_with @question   
   end
 
   def update
-    
-    respond_to do |format|
-      if @question.update(question_params)
-        format.html { redirect_to @question, notice: I18n.t(:updated) }
-        format.js { @answer = Answer.new }
-      else
-        format.html { render :edit }
-        format.js { render 'error_form' }
-      end
-
-    end
+    @answer = Answer.new
+    @question.update(question_params)  
+    respond_with @question
   end
 
   def destroy
     @question.destroy
-    redirect_to questions_path, notice: I18n.t(:destroyed)
+    respond_with @question
   end
 
 
   private
+
+  def publish_question
+    if @question.valid?
+      PrivatePub.publish_to '/questions', update_question: QuestionSerializer.new(@question).as_json
+    end
+  end
 
   def set_question
     @question = Question.find(params[:id])

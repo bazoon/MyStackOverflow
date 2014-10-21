@@ -1,0 +1,4 @@
+| {{#each question.tags}}
+a href = "{{url}}" {{name}}
+| &nbsp
+| {{/each}}

@@ -1,6 +1,6 @@
 .panel.panel-primary
   .panel-heading 
-    h3.panel-title
+    h3.panel-title.title
       = @question.title
       .pull-right
         .label.label-info
@@ -9,16 +9,18 @@
         = @question.user_email
   .panel.body
     = @question.body
-  ul
-  - @question.attachments.each do |a|
-      li= link_to a.file_name, a.file.url
-  .panel-footer 
-    - @question.tags.each do |t|
-      = link_to t.name, tag_search_path(t.name)
-      | &nbsp
+  .attachments
+    ul
+    - @question.attachments.each do |a|
+        li= link_to a.file_name, a.file.url 
+  .panel-footer
+    .tags
+      - @question.tags.each do |t|
+        = link_to t.name, tag_search_path(t.name)
+        | &nbsp
     |&nbsp
     .pull-right 
-      = link_to(edit_icon, edit_question_path(@question), remote: true, id: "edit_question_#{@question.id}") if can? :edit, @question
+      = link_to(edit_icon, edit_question_path(@question), id: "edit_question_#{@question.id}") if can? :edit, @question
         | &nbsp
       .vote_controls
         = link_to vote_up_icon, question_vote_up_path(@question), remote: true if can? :rate, @question
