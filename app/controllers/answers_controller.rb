@@ -8,7 +8,7 @@ class AnswersController < ApplicationController
   after_action :publish_updated_answer, only: :update
   after_action :publish_deleted_answer, only: :destroy
   
-  responders :location, :flash
+  responders :location, :flash 
   respond_to :json, :js
 
   def create
