@@ -46,11 +46,13 @@ $ ->
     
 
   PrivatePub.subscribe '/questions' , (data, channel) ->
-    
+
     if (typeof data.create_answer != 'undefined')
-      createAnswer($.parseJSON(data.create_answer))
+      createAnswer(data.create_answer)
     if (typeof data.update_answer != 'undefined')
-      updateAnswer($.parseJSON(data.update_answer))
+      updateAnswer(data.update_answer)
+    if (typeof data.destroy_answer != 'undefined')
+      destroyAnswer(data.destroy_answer)
     if (typeof data.vote_up_question != 'undefined')
       voteUpQuestion($.parseJSON(data.vote_up_question))
     if (typeof data.vote_down_question != 'undefined')
@@ -58,11 +60,8 @@ $ ->
     if (typeof data.vote_up_answer != 'undefined')
       voteUpAnswer($.parseJSON(data.vote_up_answer))
     if (typeof data.update_question != 'undefined')
-      # alert 'hhh'
-      console.log(data.update_question)
-      # console.log($.parseJSON(data))
       updateQuestion(data.update_question)
- 
+    
   clearFormErrors = (form) ->
     form.removeClass("has-error")
     form.find(".alert.alert-danger").remove()
@@ -70,12 +69,11 @@ $ ->
     form[0].reset()
 
   renderFormErrors = (form, response) ->
-
     unless form.hasClass("has-error")
       form.addClass("has-error")
       form.prepend("<div class='alert alert-danger has-error'>Please review the problems below:</div>")
       
-      for field, error of response
+      for field, error of response.errors
         field = form.find(".form-control[id$=#{field}]")
         formGroup = field.parents(".form-group")
         # formGroup.addClass("has-error") 

@@ -4,25 +4,19 @@ class AnswersController < ApplicationController
   before_action :set_question, only: [:new, :create]
   before_action :set_answer, only: [:edit, :show, :update, :destroy, :select]
 
+  after_action :publish_new_answer, only: :create
+  after_action :publish_updated_answer, only: :update
+  after_action :publish_deleted_answer, only: :destroy
+  
+  responders :location, :flash
+  respond_to :json, :js
 
   def create
     @answer = @question.answers.new(answer_params)
     @answer.user = current_user
     @question = @answer.question
-
-    
-
-    respond_to do |format|
-      if @answer.save
-        format.json do
-          PrivatePub.publish_to '/questions', create_answer: (render template: 'answers/create.json.jbuilder')
-        end
-        # format.json { render nothing: true }
-      else
-        format.json { render json: @answer.errors, status: :unprocessable_entity }
-      end
-    end
-
+    @answer.save
+    respond_with @answer
   end
 
   def show
@@ -32,48 +26,36 @@ class AnswersController < ApplicationController
   end
 
   def edit
-    respond_to do |format|
-      format.html
-      format.js
-    end
-   
+    respond_with @answer
   end
 
   def update
-    respond_to do |format|
-      if @answer.update(answer_params)
-        format.json do
-          PrivatePub.publish_to '/questions', update_answer: (render template: 'answers/update.json.jbuilder')
-        end
-      else
-        format.json { render json: @answer.errors, status: :unprocessable_entity }
-      end
-
-    end
-
+    @answer.update(answer_params)
+    respond_with @answer
   end
 
   def destroy
-    question = @answer.question
-    respond_to do |format|
-      @answer.destroy
-      format.html { redirect_to question, notice: t(:destroyed) }
-      format.json do
-        PrivatePub.publish_to "/questions", destroy_answer: @answer.id 
-        render nothing: true
-      end      
-    end
+    respond_with @answer.destroy
   end
 
   def select
     @answer.set_as_selected
-    respond_to do |format|
-      format.html { redirect_to @answer.question }
-      format.js
-    end
+    respond_with @answer
   end
 
   private
+  
+  def publish_new_answer
+    PrivatePub.publish_to '/questions', create_answer: AnswerSerializer.new(@answer).as_json if @answer.valid?
+  end
+
+  def publish_updated_answer
+    PrivatePub.publish_to '/questions', update_answer: AnswerSerializer.new(@answer).as_json if @answer.valid?
+  end
+
+  def publish_deleted_answer
+    PrivatePub.publish_to '/questions', destroy_answer: @answer.id
+  end
   
   def set_question
     @question = Question.find(params[:question_id])

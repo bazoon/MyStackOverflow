@@ -1,6 +1,0 @@
-<% if @answer.errors.present? %>
-  $(".update_form[data-id='<%= @answer.id %>']").html('<%= j render 'form' %>')
-<% else %>
-  $(".answer[data-id='<%= "#{@answer.id}" %>']").replaceWith('<%= j render @answer %>')
-  $(".answer_form").empty()
-<% end %>

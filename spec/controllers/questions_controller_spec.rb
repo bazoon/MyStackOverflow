@@ -181,25 +181,25 @@ RSpec.describe QuestionsController, type: :controller do
         context 'valid attributes' do
         
           it 'asssign the requested other_question to @question' do
-            patch :update, id: question, question: attributes_for(:question, user_id: @user), format: :js
+            patch :update, id: question, question: attributes_for(:question, user_id: @user)
             expect(assigns(:question)).to eq question
           end
           
           it 'changes question attributes' do
-            patch :update, id: question, question: { title: 'new title', body: 'new body' }, format: :js
+            patch :update, id: question, question: { title: 'new title', body: 'new body' }
             question.reload
             expect(question.title).to eq 'new title'
             expect(question.body).to eq 'new body'
           end
 
           it 'redirects to updated question' do
-            patch :update, id: question, question: attributes_for(:question, user_id: @user), format: :js
-            expect(response).to render_template :update
+            patch :update, id: question, question: attributes_for(:question, user_id: @user)
+            expect(response).to redirect_to question
           end
         end  
 
         context 'invalid attributes' do
-          before { patch :update, id: question, question: {title: 'new title', body: nil, user_id: @user }, format: :js }
+          before { patch :update, id: question, question: {title: 'new title', body: nil, user_id: @user }}
 
           it 'does not change question attributes' do
             question.reload
@@ -207,9 +207,7 @@ RSpec.describe QuestionsController, type: :controller do
             expect(question.body).to eq attributes[:body]
           end
 
-          it 'renders error_form' do
-            expect(response).to render_template 'error_form'
-          end
+          
 
         end
       end

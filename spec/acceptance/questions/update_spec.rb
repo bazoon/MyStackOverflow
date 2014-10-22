@@ -21,7 +21,7 @@ feature 'Update question', %q{
         fill_in t('questions.title'), with: 'updated title'
         fill_in t('questions.body'), with: 'updated body'
         click_on t('save')
-        expect(page).to have_content t('updated')
+        expect(page).to have_content 'Question was successfully updated'
         expect(page).to have_content 'updated title'
         expect(page).to have_content 'updated body'
       end

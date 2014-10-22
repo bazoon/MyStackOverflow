@@ -14,7 +14,7 @@ feature 'Create question', %q{
     sign_in(user)
     visit '/questions'
     click_link "delete#{user_question.id}"
-    expect(page).to have_content t('destroyed')
+    expect(page).to have_content 'Question was successfully destroyed'
   end
 
   scenario 'Authenticated user tries to destroy sombody"s question' do

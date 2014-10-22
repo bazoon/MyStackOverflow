@@ -80,9 +80,9 @@ RSpec.describe AnswersController, type: :controller do
           expect_to_create({ answer: attributes_for(:answer), question_id: question, format: :json }, Answer)
         end
 
-        it 'renders create template' do
-          post :create, answer: attributes_for(:answer), question_id: question, format: :json
-          expect(response).to render_template("answers/create.json.jbuilder")
+        it "returns 201 status code" do
+          post :create, { answer: attributes_for(:answer), question_id: question, format: :json }
+          expect(response.status).to eq 201
         end
 
       end
@@ -117,10 +117,10 @@ RSpec.describe AnswersController, type: :controller do
             expect(answer.body).to eq 'new body'
           end
 
-          it 'redirects to updated answer' do
-            patch :update, id: answer, answer: attributes_for(:answer), format: :json
-            expect(response).to render_template "answers/update.json.jbuilder"
+          it 'returns unprocessable_entity' do
+            expect(response.status).to eq(200)
           end
+          
 
         end
 
@@ -158,11 +158,7 @@ RSpec.describe AnswersController, type: :controller do
         expect(some_answer.selected).to eq(false)
       end
 
-      it 'redirects to question path' do
-        patch :select, id: question_answer.id
-        expect(response).to redirect_to user_question
-      end
-
+      
       it 'renders select template' do
         patch :select, id: question_answer.id, format: :js
         expect(response).to render_template :select
@@ -180,17 +176,17 @@ RSpec.describe AnswersController, type: :controller do
           expect { delete :destroy, id: answer, format: :json }.to change(Answer, :count).by(-1)
         end
 
-        it 'redirects to question view' do
-          question = answer.question
-          delete :destroy, id: answer
-          expect(response).to redirect_to question
-        end
-
-        # it 'it renders destroy template if ajax' do
+        # it 'redirects to question view' do
         #   question = answer.question
-        #   delete :destroy, id: answer, format: :json
-        #   expect(response).to render_template :destroy
+        #   delete :destroy, id: answer
+        #   expect(response).to redirect_to question
         # end
+
+        it 'it renders destroy template if ajax' do
+          question = answer.question
+          delete :destroy, id: answer, format: :js
+          expect(response).to render_template :destroy
+        end
 
       end
 
