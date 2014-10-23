@@ -2,6 +2,7 @@ $ ->
 
   createAnswer = (answer) ->
     answer = HandlebarsTemplates['answers/answer'](answer)
+    console.log answer
     $(".answers").append(answer)
     clearFormErrors($(".answer_form form"))
 
@@ -43,8 +44,19 @@ $ ->
     tags = HandlebarsTemplates['questions/tags'](data)
     $(".question .tags").html(tags)
 
+
+  createQuestionComment = (data) ->
+    comment = HandlebarsTemplates['comments/body'](data)
+    console.log comment
+    $(".question .comments .panel-body").append(comment)  
     
 
+  createComment = (data) ->
+    if data.comment.commentable_type == "Question"
+      createQuestionComment(data.comment)
+    else
+      createAnswerComment(data)
+    
   PrivatePub.subscribe '/questions' , (data, channel) ->
 
     if (typeof data.create_answer != 'undefined')
@@ -61,6 +73,8 @@ $ ->
       voteUpAnswer($.parseJSON(data.vote_up_answer))
     if (typeof data.update_question != 'undefined')
       updateQuestion(data.update_question)
+    if (typeof data.create_comment != 'undefined')
+      createComment(data.create_comment)
     
   clearFormErrors = (form) ->
     form.removeClass("has-error")

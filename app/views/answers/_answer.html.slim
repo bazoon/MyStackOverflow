@@ -20,7 +20,7 @@ div class = "answer" data-id = "#{answer.id}"
     .panel-footer
       
       = link_to edit_icon, edit_answer_path(answer), id: "edit_answer_#{answer.id}", remote: true if can? :update, answer
-      = link_to del_icon, answer_path(answer), method: :delete, id: "delete_answer_#{answer.id}", data: { confirm: 'Are you sure?' }, remote: true if can? :update, answer
+      = link_to del_icon, answer_path(answer), method: :delete, id: "delete_answer_#{answer.id}", data: { confirm: 'Are you sure?' }, remote: true, data: {type: :json} if can? :update, answer
       = link_to select_icon, select_answer_path(answer), method: :patch, id: "select_answer_#{answer.id}", remote: true if can? :select, answer
       .pull-right
         .vote_controls
