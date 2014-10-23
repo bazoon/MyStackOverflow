@@ -16,6 +16,15 @@ class Answer < ActiveRecord::Base
 
   include Voteable
 
+
+  def vote_weight
+    VOTE_WEIGHT
+  end
+
+  def vote_down_weight
+    VOTE_DOWN_WEIGHT
+  end
+
   def set_as_selected
     question.deselect_all_answers
     update(selected: !selected)

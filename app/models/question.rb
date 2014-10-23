@@ -22,6 +22,14 @@ class Question < ActiveRecord::Base
   VOTE_DOWN_WEIGHT = 2
   VOTE_WEIGHT = 5
 
+  def vote_weight
+    VOTE_WEIGHT
+  end
+
+  def vote_down_weight
+    VOTE_DOWN_WEIGHT
+  end
+
   def user_email
     user.email if user
   end

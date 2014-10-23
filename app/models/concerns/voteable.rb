@@ -1,17 +1,19 @@
 # Module for voting
 module Voteable
+ # Синхронно изменяет рейтинги моделей
+
+
   
-  # methods included as intance
   module InstanceMethods
     
     
     def vote_up(user)
-      Vote.up(self, user)
+      self.user.up_by(vote_weight)
       up_by(1)
     end
 
     def vote_down(user)
-      Vote.up(self, user)
+      self.user.down_by(vote_down_weight)
       down_by(1)
     end
 

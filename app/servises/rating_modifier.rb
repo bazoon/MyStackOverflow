@@ -1,5 +1,5 @@
 class RatingModifier
-
+  
   def initialize(voter)
     @voter = voter
   end
@@ -8,23 +8,18 @@ class RatingModifier
     object.user == @voter || Vote.voted?(object, @voter)
   end
 
-  # app/servises or models lib delete
-  # SOLID разнести ответственность
-
-
-  #TODO: hook on object vote change ? 
+  # SOLID
 
   def vote_up(object)
     return if cant_vote?(object)
+    Vote.up(object, @voter)
     object.vote_up(@voter)
-    object.user.up_by(object.class::VOTE_WEIGHT)
-
   end
 
   def vote_down(object)
     return if cant_vote?(object)
+    Vote.down(object, @voter)
     object.vote_down(@voter)
-    object.user.down_by(object.class::VOTE_DOWN_WEIGHT)
     @voter.down_by(1)
   end
 
