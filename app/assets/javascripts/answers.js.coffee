@@ -133,7 +133,7 @@ $ ->
   #     # renderFormErrors(form, xhr.responseJSON)
   #     alert('ER')  
 
-  setUpdateSuccessHook() 
+  # setUpdateSuccessHook() 
 
   # setUpdateErrorHook() 
   setUpdateErrorHook()

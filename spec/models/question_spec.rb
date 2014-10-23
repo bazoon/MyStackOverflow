@@ -29,14 +29,14 @@ RSpec.describe Question, type: :model do
   # end
 
   it 'can search with tags string' do
-    question.tag_list = 'one, two'
-    question2.tag_list = 'three, four'
+    question.tag_tokens = 'one, two'
+    question2.tag_tokens = 'three, four'
     expect(Question.tagged_with("one, four")).to match_array([question, question2])
   end
 
    it 'can search with tags array' do
-    question.tag_list = 'one, two'
-    question2.tag_list = 'three, four'
+    question.tag_tokens = 'one, two'
+    question2.tag_tokens = 'three, four'
     expect(Question.tagged_with(["one", "four"])).to match_array([question, question2])
   end
 
