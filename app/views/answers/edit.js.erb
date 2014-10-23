@@ -1,3 +1,6 @@
 $(".update_form[data-id='<%= @answer.id %>']").html('<%= j render 'form' %>')
 $(".update_form[data-id='<%= @answer.id %>']").show()
+$(".edit_answer").on("ajax:error", function(event, xhr, status, error) {
+  return window.renderFormErrors($(this), xhr.responseJSON);
+});
 

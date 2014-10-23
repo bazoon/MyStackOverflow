@@ -11,14 +11,14 @@ feature 'Destroy comment', %q{
   given!(:answer) { create(:answer, body: 'SOOOOM', question_id: question.id) }
   given!(:comment) { create(:comment, commentable_id: answer.id, user_id: user.id) }
 
-  scenario 'Authenticated user updates a comment for answer'  do
+  scenario 'Authenticated user updates a comment for answer', js: true  do
     sign_in(user)
     visit question_path(question)
     click_link "destroy_comment#{comment.id}"
     expect(page).to_not have_content comment.body
   end
 
-  scenario 'Non-authenticated user try to destroy comment for answer' do
+  scenario 'Non-authenticated user try to destroy comment for answer', js: true do
     visit question_path(question)
     expect(page).to_not have_link "destroy_comment#{comment.id}"
   end

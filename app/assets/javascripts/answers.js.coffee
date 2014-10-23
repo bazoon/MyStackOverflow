@@ -4,7 +4,7 @@ $ ->
     answer = HandlebarsTemplates['answers/answer'](answer)
     console.log answer
     $(".answers").append(answer)
-    clearFormErrors($(".answer_form form"))
+    window.clearFormErrors($(".answer_form form"))
 
   updateAnswer = (data) ->
     body = HandlebarsTemplates['answers/body'](data)
@@ -44,19 +44,38 @@ $ ->
     tags = HandlebarsTemplates['questions/tags'](data)
     $(".question .tags").html(tags)
 
+  hideCommentForm = ->
+    $(".edit_comment").hide()    
+
+  hideNewCommentForm = ->
+    $(".new_comment_form").hide()    
 
   createQuestionComment = (data) ->
-    comment = HandlebarsTemplates['comments/body'](data)
-    console.log comment
+    comment = HandlebarsTemplates['comments/comment'](data)
     $(".question .comments .panel-body").append(comment)  
-    
+    hideNewCommentForm()
 
+  createAnswerComment = (data) ->
+    comment = HandlebarsTemplates['comments/comment'](data)
+    $(".answer[data-id='"+data.commentable.id+"'] .comments .panel-body").append(comment)
+    hideNewCommentForm()
+ 
   createComment = (data) ->
     if data.comment.commentable_type == "Question"
       createQuestionComment(data.comment)
     else
-      createAnswerComment(data)
-    
+      createAnswerComment(data.comment)
+
+  updateComment = (data) ->
+    body = HandlebarsTemplates['comments/body'](data)
+    console.log body
+    $("#comment_" + data.id+" .body").html(body)
+    hideCommentForm()
+
+  destroyComment = (id) ->
+    $("#comment_#{id}").remove()
+
+
   PrivatePub.subscribe '/questions' , (data, channel) ->
 
     if (typeof data.create_answer != 'undefined')
@@ -75,24 +94,11 @@ $ ->
       updateQuestion(data.update_question)
     if (typeof data.create_comment != 'undefined')
       createComment(data.create_comment)
+    if (typeof data.update_comment != 'undefined')
+      updateComment(data.update_comment.comment)
+    if (typeof data.destroy_comment != 'undefined')
+      destroyComment(data.destroy_comment)
     
-  clearFormErrors = (form) ->
-    form.removeClass("has-error")
-    form.find(".alert.alert-danger").remove()
-    form.find(".help-block.error").remove()
-    form[0].reset()
-
-  renderFormErrors = (form, response) ->
-    unless form.hasClass("has-error")
-      form.addClass("has-error")
-      form.prepend("<div class='alert alert-danger has-error'>Please review the problems below:</div>")
-      
-      for field, error of response.errors
-        field = form.find(".form-control[id$=#{field}]")
-        formGroup = field.parents(".form-group")
-        # formGroup.addClass("has-error") 
-        
-        formGroup.append("<span class='help-block error'>#{error[0]}</a>")
 
   # setUpdateSuccessHook = ->
   #   $(".update_form").on "ajax:success",  (e, data, status, xhr) ->
@@ -105,10 +111,10 @@ $ ->
   #     clearFormErrors($(this))
 
   setUpdateErrorHook = ->
-    $(".update_form").on 'ajax:error', (event, xhr, status, error) ->
-      form = $(this)
-      renderFormErrors(form, xhr.responseJSON)
-
+      $(".update_form").on 'ajax:error', (event, xhr, status, error) ->
+        form = $(this)
+        renderFormErrors(form, xhr.responseJSON)
+  
 
 
   # $(".answer_form form").on "ajax:success", (e, data, status, xhr) ->
@@ -119,7 +125,7 @@ $ ->
   #   clearFormErrors($(this))
 
   $(".answer_form form").on "ajax:error", (event, xhr, status, error) ->
-    renderFormErrors($(this), xhr.responseJSON)
+    window.renderFormErrors($(this), xhr.responseJSON)
   
 
   # $(".edit_question").on 'ajax:error', (event, xhr, status, error) ->
@@ -127,7 +133,8 @@ $ ->
   #     # renderFormErrors(form, xhr.responseJSON)
   #     alert('ER')  
 
-  # setUpdateSuccessHook() 
+  setUpdateSuccessHook() 
 
-  setUpdateErrorHook() 
+  # setUpdateErrorHook() 
+  setUpdateErrorHook()
   

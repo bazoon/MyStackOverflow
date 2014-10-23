@@ -1,3 +1,6 @@
 
 
 $("#comment_form_" + "<%= "#{@form_id}" %>").html("<%= j render partial: 'form', locals: { commentable: @commentable, comment: @commentable.comments.new } %>")
+$(".new_comment_form").on("ajax:error", function(event, xhr, status, error) {
+  return window.renderFormErrors($(this), xhr.responseJSON);
+});

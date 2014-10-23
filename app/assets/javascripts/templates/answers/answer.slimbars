@@ -25,7 +25,7 @@ div class = "answer" data-id = "{{answer.id}}"
     .panel-footer
       a href="{{answer.edit_path}}" id="edit_answer_{{answer.id}}" data-remote="true"
         span class = "glyphicon glyphicon-edit"
-      a href="{{answer.destroy_path}}" id="delete_answer_{{answer.id}}" data-method="delete" data-confirm="Are you sure?" data-remote="true" rel="nofollow"
+      a href="{{answer.destroy_path}}" id="delete_answer_{{answer.id}}" data-method="delete" data-confirm="Are you sure?" data-remote="true" rel="nofollow" data-type="json"
         span class = "glyphicon glyphicon-trash"
       a href="{{answer.select_path}}" id="select_answer_{{answer.id}}" data-remote="true" data-method="patch"
         span class = "glyphicon glyphicon-star"

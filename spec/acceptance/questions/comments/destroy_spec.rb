@@ -11,7 +11,7 @@ feature 'Destroy comment', %q{
   given!(:answer) { create(:answer, body: 'SOOOOM', question_id: question.id) }
   given!(:comment) { create(:question_comment, commentable_id: question.id, user_id: user.id) }
 
-  scenario 'Authenticated user destroys comment for question', remote: true do
+  scenario 'Authenticated user destroys comment for question', js: true do
     sign_in(user)
     # binding.pry
     comment
@@ -20,7 +20,7 @@ feature 'Destroy comment', %q{
     expect(page).to_not have_content(comment.body)
   end
 
-  scenario 'Non-authenticated user try to destroy comment for question' do
+  scenario 'Non-authenticated user try to destroy comment for question', js: true do
     visit question_path(question)
     expect(page).to_not have_link "destroy_comment#{comment.id}"
   end

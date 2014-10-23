@@ -1,4 +1,4 @@
-= simple_form_for comment, html: {id: "update_comment_form_#{comment.commentable.class.to_s.underscore}_#{comment.commentable.id}"}, remote: true do |f|
+= simple_form_for comment, html: {id: "update_comment_form_#{comment.commentable.class.to_s.underscore}_#{comment.commentable.id}"}, remote: true, data: { type: :json }  do |f|
   = f.input :body, as: :text, label: t('update_comment')
   .form-actions.center
     = f.submit 'submit', class: "btn btn-primary"

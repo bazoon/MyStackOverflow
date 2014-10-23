@@ -1,1 +1,6 @@
-$(".comment+[data-id='"+<%= "#{@comment.id}" %>+"']").html("<%= j render partial: 'update_form', locals: { comment: @comment } %>")
+$(".comment div[data-id='"+<%= "#{@comment.id}" %>+"']").html("<%= j render partial: 'update_form', locals: { comment: @comment } %>")
+
+$(".edit_comment").on("ajax:error", function(event, xhr, status, error) {
+  return window.renderFormErrors($(this), xhr.responseJSON);
+});
+

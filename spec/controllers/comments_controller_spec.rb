@@ -18,17 +18,12 @@ RSpec.describe CommentsController, type: :controller do
       context 'with valids attributes' do
 
         it 'saves the new comment in the database' do
-          expect_to_create({ answer_id: answer.id, comment: attributes_for(:comment), format: :js}, Comment)
+          expect_to_create({ answer_id: answer.id, comment: attributes_for(:comment), format: :json }, Comment)
         end
 
-        it 'renders create template' do
-          post :create, answer_id: answer.id, comment: attributes_for(:comment), format: :js
-          expect(response).to render_template :create
-        end
-
-        it 'redirects to question show view' do
-          post :create, answer_id: answer.id, comment: attributes_for(:comment)
-          expect(response).to redirect_to(question)
+        it 'returns 201 status' do
+          post :create, answer_id: answer.id, comment: attributes_for(:comment), format: :json
+          expect(response.status).to eq(201)
         end
 
       end
@@ -36,12 +31,12 @@ RSpec.describe CommentsController, type: :controller do
       context 'with invalid attributes' do
         
         it 'does not save the new comment in the database' do
-          expect_to_not_create({ answer_id: answer, comment: { body: nil, commentable_type: 'Answer' }, format: :js}, Comment)
+          expect_to_not_create({ answer_id: answer, comment: { body: nil, commentable_type: 'Answer' }, format: :json}, Comment)
         end
 
-        it 'renders error_form' do
-          post :create,  answer_id: answer, comment: { body: nil, commentable_type: 'Answer' }, format: :js
-          expect(response).to render_template :error_form
+        it 'returns 422 status' do
+          post :create,  answer_id: answer, comment: { body: nil, commentable_type: 'Answer' }, format: :json
+          expect(response.status).to eq(422)
         end
 
 
@@ -54,35 +49,35 @@ RSpec.describe CommentsController, type: :controller do
       context 'with valid attributes' do
         
         it 'updates user own comment' do
-          patch :update, id: comment.id, comment: { body: 'Hello', commentable_type: 'Answer' }, format: :js
+          patch :update, id: comment.id, comment: { body: 'Hello', commentable_type: 'Answer' }, format: :json
           comment.reload
           expect(comment.body).to eq('Hello')
         end
 
-        it 'renders update template' do
-          patch :update, id: comment.id, comment: { body: 'Hello'}, format: :js
-          expect(response).to render_template :update
+        it 'returns 204 status' do
+          patch :update, id: comment.id, comment: { body: 'Hello'}, format: :json
+          expect(response.status).to eq(204)
 
         end
 
-        it 'redirects to question show view' do
-          patch :update, id: comment.id, comment: { body: 'Hello', commentable_type: 'Answer' }
-          expect(response).to redirect_to(question)
-        end
+        # it 'redirects to question show view' do
+        #   patch :update, id: comment.id, comment: { body: 'Hello', commentable_type: 'Answer' }
+        #   expect(response).to redirect_to(question)
+        # end
         
       end
 
       context 'with invalid attributes' do
         
         it 'can not update comment' do
-          patch :update, id: comment.id, comment: { body: nil, commentable_type: 'Answer' }, format: :js
+          patch :update, id: comment.id, comment: { body: nil, commentable_type: 'Answer' }, format: :json
           comment.reload
           expect(comment.body).to eq('MyComment')
         end       
 
-        it 'renders update_error_form' do
-          patch :update, id: comment.id, comment: { body: nil, commentable_type: 'Answer' }, format: :js
-          expect(response).to render_template :update_error_form
+        it 'returns 422 status' do
+          patch :update, id: comment.id, comment: { body: nil, commentable_type: 'Answer' }, format: :json
+          expect(response.status).to eq(422)
         end
 
 
@@ -93,17 +88,12 @@ RSpec.describe CommentsController, type: :controller do
     describe '#DELETE destroy' do
       
       it 'deletes the requested comment' do
-        expect_to_delete(comment, id: comment, format: :js)
+        expect_to_delete(comment, id: comment, format: :json)
       end
 
-      it 'renders destroy template' do
-        delete :destroy, id: comment, format: :js
-        expect(response).to render_template :destroy
-      end
-
-      it 'redirect to question path' do
-        delete :destroy, id: comment
-        expect(response).to redirect_to(question)
+      it 'returns 204 status' do
+        delete :destroy, id: comment, format: :json
+        expect(response.status).to eq(204)
       end
 
     end
@@ -121,7 +111,7 @@ RSpec.describe CommentsController, type: :controller do
         it 'return 403 if via ajax' do
           # patch :update, id: other_comment.id, comment: { body: 'Hello', commentable_type: 'Answer' }, format: :js
           # expect(response.status).to eq(403)
-          expect { patch :update, id: other_comment.id, comment: { body: 'Hello', commentable_type: 'Answer' }, format: :js }.to raise_error(CanCan::AccessDenied)
+          expect { patch :update, id: other_comment.id, comment: { body: 'Hello', commentable_type: 'Answer' }, format: :json }.to raise_error(CanCan::AccessDenied)
         end
 
       end
@@ -133,7 +123,7 @@ RSpec.describe CommentsController, type: :controller do
         # end
 
         it 'return 403 if via ajax' do
-          expect { delete :destroy, id: other_comment, format: :js }.to raise_error(CanCan::AccessDenied)
+          expect { delete :destroy, id: other_comment, format: :json }.to raise_error(CanCan::AccessDenied)
           # expect(response.status).to eq(403)
 
         end

@@ -4,9 +4,11 @@ class CommentsController < ApplicationController
   before_action :load_commentable, only: :create
   before_action :new_commentable, only: :new
   after_action :publish_new_comment, only: :create
+  after_action :publish_updated_comment, only: :update
+  after_action :publish_destroyed_comment, only: :destroy
 
   responders :location, :flash
-  respond_to :json, :js
+  respond_to :json
 
   def new
   end
@@ -21,51 +23,31 @@ class CommentsController < ApplicationController
     @comment.user = current_user
     @comment.save
     respond_with @comment
-
-    # respond_to do |format|
-      
-    #   if @comment.save
-    #     format.html { redirect_to :back, notice: t('created') }
-    #     format.js
-    #   else
-    #     format.html { redirect_to :back, flash: { error: t('can_not_save_comment') } }
-    #     format.js { render 'error_form' }
-    #   end 
-
-    # end
-  
   end
 
   def update
     @comment = Comment.find(params[:id])
-
-    respond_to do |format|
-      if @comment.update(comment_params)
-        format.html { redirect_to :back, notice: t('updated') }
-        format.js 
-      else
-        format.html { redirect_to :back, flash: { error: t('can_not_save_comment') } }
-        format.js { render 'update_error_form' }
-      end
-    end
+    @comment.update(comment_params)
+    respond_with @comment
   end
 
   def destroy
-    # binding.pry
-    comment = Comment.find(params[:id])
-
-    respond_to do |format|
-        @commentable = comment.commentable
-        comment.destroy
-        format.html { redirect_to :back, notice: t('destroyed') }
-        format.js
-    end
+    @comment = Comment.find(params[:id])
+    respond_with @comment.destroy
   end
 
   private
 
   def publish_new_comment
     PrivatePub.publish_to '/questions', create_comment: CommentSerializer.new(@comment).as_json if @comment.valid?
+  end
+
+  def publish_updated_comment
+    PrivatePub.publish_to '/questions', update_comment: CommentSerializer.new(@comment).as_json if @comment.valid?
+  end
+
+  def publish_destroyed_comment
+    PrivatePub.publish_to '/questions', destroy_comment: @comment.id
   end
 
   def new_commentable

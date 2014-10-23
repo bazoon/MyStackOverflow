@@ -1,9 +1,10 @@
-p.small.comment id = ("comment_#{comment.id}")
-  = comment.body
+div.small.comment id = ("comment_#{comment.id}")
+  .body
+    = comment.body
   br
   = link_to edit_icon, edit_comment_path(comment), id: "edit_comment#{comment.id}", remote: true if can? :manage, comment
-  = link_to del_icon, comment_path(comment), id: "destroy_comment#{comment.id}", method: :delete, data: { confirm: 'Are you sure?' }, remote: true if can? :manage, comment
+  = link_to del_icon, comment_path(comment), id: "destroy_comment#{comment.id}", method: :delete, data: { confirm: 'Are you sure?' }, "data-type" => "json", remote: true if can? :manage, comment
   
   
   div data-id = "#{comment.id}"
-  hr
+hr
