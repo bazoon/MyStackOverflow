@@ -14,8 +14,8 @@ Rails.application.routes.draw do
   get 'home/index'
 
   concern :votable do
-    get 'vote_up', to: 'votes#vote_up'
-    get 'vote_down', to: 'votes#vote_down'
+    patch 'vote_up', to: 'votes#vote_up'
+    patch 'vote_down', to: 'votes#vote_down'
   end
 
   resources :questions, shallow: true, concerns: :votable do

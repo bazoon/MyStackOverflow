@@ -24,9 +24,9 @@ div class = "answer" data-id = "#{answer.id}"
       = link_to select_icon, select_answer_path(answer), method: :patch, id: "select_answer_#{answer.id}", remote: true if can? :select, answer
       .pull-right
         .vote_controls
-            = link_to vote_up_icon, answer_vote_up_path(answer), remote: true if can? :rate, answer
+            = link_to vote_up_icon, answer_vote_up_path(answer), method: :patch, remote: true, "data-type" => "json" if can? :rate, answer
             | &nbsp
-            = link_to vote_down_icon, answer_vote_down_path(answer), remote: true if can? :rate, answer
+            = link_to vote_down_icon, answer_vote_down_path(answer), method: :patch, remote: true, "data-type" => "json" if can? :rate, answer
             | &nbsp  
       ' &nbsp
     - if can? :update, answer
