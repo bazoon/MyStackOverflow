@@ -18,11 +18,13 @@ Rails.application.routes.draw do
     patch 'vote_down', to: 'votes#vote_down'
   end
 
-  resources :questions, shallow: true, concerns: :votable do
+  concern :commentable do
     resources :comments
-    resources :answers, except: [:new], concerns: :votable do
+  end
+
+  resources :questions, shallow: true, concerns: [:votable, :commentable] do
+    resources :answers, except: [:new], concerns: [:votable, :commentable] do
       patch 'select', on: :member
-      resources :comments
     end
   end
   
