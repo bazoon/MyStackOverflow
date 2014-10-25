@@ -1,6 +1,8 @@
 class CommentsController < ApplicationController
   before_action :authenticate_user!
+  
   load_and_authorize_resource only: [:update, :destroy]
+
   before_action :load_commentable, only: :create
   before_action :new_commentable, only: :new
   after_action :publish_new_comment, only: :create
@@ -18,6 +20,7 @@ class CommentsController < ApplicationController
     @commentable = @comment.commentable_type.constantize
   end
 
+  #TODO: reduce
   def create
     @comment = @commentable.comments.new(comment_params)
     @comment.user = current_user
@@ -26,7 +29,7 @@ class CommentsController < ApplicationController
   end
 
   def update
-    @comment = Comment.find(params[:id])
+    @comment = Comment.find(params[:id]) #TODO: move to before filter
     @comment.update(comment_params)
     respond_with @comment
   end

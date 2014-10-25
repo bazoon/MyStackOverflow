@@ -1,4 +1,5 @@
 $ ->
+  #TODO: class, namespace
 
   createAnswer = (answer) ->
     answer = HandlebarsTemplates['answers/answer'](answer)

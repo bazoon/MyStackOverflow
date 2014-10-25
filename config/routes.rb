@@ -9,7 +9,8 @@ Rails.application.routes.draw do
 
   get 'comments/new'
 
-  devise_for :users, controllers: { registrations: 'registrations' }
+  # devise_for :users, controllers: { registrations: 'registrations' }
+  devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks' }
 
   get 'home/index'
 

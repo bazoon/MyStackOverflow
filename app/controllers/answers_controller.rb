@@ -11,10 +11,12 @@ class AnswersController < ApplicationController
   responders :location, :flash 
   respond_to :json, :js
 
+
+  #TODO: refactor
   def create
     @answer = @question.answers.new(answer_params)
     @answer.user = current_user
-    @question = @answer.question
+    # @question = @answer.question
     @answer.save
     respond_with @answer
   end
@@ -25,6 +27,7 @@ class AnswersController < ApplicationController
     end
   end
 
+  #TODO: не стоит аякс делать
   def edit
     respond_with @answer
   end

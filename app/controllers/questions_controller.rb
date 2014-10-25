@@ -30,7 +30,7 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    @answer = Answer.new
+    @answer = Answer.new #TODO: move to form
     @question.update(question_params)  
     respond_with @question
   end

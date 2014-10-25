@@ -74,6 +74,9 @@ gem 'jquery-tokeninput-rails'
 gem 'responders'
 gem 'active_model_serializers'
 
+gem 'omniauth'
+gem 'omniauth-facebook'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

@@ -10,6 +10,7 @@
 #= require jquery_nested_form
 #= require_tree .
 
+#TODO: ready, вынести common.js
 
 clearFormErrors = (form) ->
   form.removeClass("has-error")
