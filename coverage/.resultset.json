@@ -88,6 +88,15 @@
         null,
         null,
         1,
+        1,
+        null,
+        null,
+        null,
+        1,
+        null,
+        1,
+        68,
+        null,
         null
       ],
       "/Users/vitaliynesterenko/projects/so/lib/application_responder.rb": [
@@ -608,6 +617,6 @@
         null
       ]
     },
-    "timestamp": 1414257285
+    "timestamp": 1414392649
   }
 }
