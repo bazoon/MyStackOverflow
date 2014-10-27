@@ -2,7 +2,6 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   before_action :load_omniauth_info, only: [:facebook, :twitter]
   before_action :find_user, only: [:facebook, :twitter]
-  after_action :set_flash, only: [:facebook, :twitter]
 
   def facebook
   end
@@ -13,7 +12,9 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def find_user
     @user = User.find_for_oauth(@auth)
+
     if @user.persisted?
+      set_flash_message(:notice, :success, kind: @auth.provider)
       sign_in_and_redirect @user, event: :authentication
     else
       cookies[:provider], cookies[:uid] = @auth.provider, @auth.provider.to_s
@@ -36,9 +37,6 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   private
 
-  def set_flash
-    set_flash_message(:notice, :success, kind: @auth.provider) if @user.persisted? && is_navigational_format?
-  end
 
   def load_omniauth_info
     @auth = request.env['omniauth.auth']

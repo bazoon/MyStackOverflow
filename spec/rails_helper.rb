@@ -44,7 +44,7 @@ RSpec.configure do |config|
   # instead of true.
   config.use_transactional_fixtures = true
 
-
+  OmniAuth.config.test_mode = true
 
 
   # config.before :each do

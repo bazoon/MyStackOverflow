@@ -21,7 +21,7 @@ class User < ActiveRecord::Base
     authorization = Authorization.where(provider: auth.provider, uid: auth.uid.to_s).first
     return authorization.user if authorization
 
-    email = auth.info[:email]
+    email = auth.info[:email] if auth.info
     user = User.where(email: email).first
     password = Devise.friendly_token[0, 20]
     
