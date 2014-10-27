@@ -37,13 +37,15 @@ feature 'User sign in with Twitter or Facebook', %q{
   end
  
 
-  scenario "Non-authenticated if error with twitter oauth" do
+  scenario 'Non-authenticated if error with twitter oauth' do
     OmniAuth.config.mock_auth[:twitter] = :invalid_credentials
     visit new_user_session_path
     expect(page).to have_content 'Sign in with Twitter'
-    click_link "Sign in with Twitter"
+    click_link 'Sign in with Twitter'
     expect(page).to have_link 'Sign in'
-    expect(page).to have_content "Could not authenticate you from Twitter"
+    expect(page).to have_content 'Could not authenticate you from Twitter'
+    # visit '/rails/mailers/'
+    # expect(page).to have_content 'Welcome'
   end
 
 
