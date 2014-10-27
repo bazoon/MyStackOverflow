@@ -402,8 +402,8 @@
         null,
         null,
         1,
-        5,
-        5,
+        0,
+        0,
         null,
         null,
         null
@@ -1040,7 +1040,7 @@
         1,
         1,
         null,
-        6,
+        1,
         null,
         1,
         null,
@@ -1109,8 +1109,23 @@
       "/Users/vitaliynesterenko/projects/so/app/helpers/registrations_helper.rb": [
         1,
         null
+      ],
+      "/Users/vitaliynesterenko/projects/so/app/models/tag.rb": [
+        1,
+        1,
+        1,
+        null,
+        null,
+        1,
+        2,
+        4,
+        2,
+        2,
+        null,
+        null,
+        null
       ]
     },
-    "timestamp": 1414405563
+    "timestamp": 1414426751
   }
 }
