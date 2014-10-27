@@ -1,0 +1,11 @@
+h2 Enter your email please
+.center
+  = simple_form_for(@user, url: save_email_path) do |f|
+    = f.error_notification
+    .form-inputs
+      = f.input :email, required: true, autofocus: true
+      = f.input :name, required: true, autofocus: true
+      = f.input :password, as: :hidden, required: true
+      = f.input :password_confirmation, as: :hidden, required: true
+    .form-actions
+      = f.button :submit, "Confirm"

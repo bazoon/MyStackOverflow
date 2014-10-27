@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  default_url_options :host => "example.com" #TODO: why is that ?
 
   get 'question_vote/up/:question_id', to: 'question_vote#up', as: :question_up
   get 'question_vote/down/:question_id', to: 'question_vote#down', as: :question_down
@@ -10,7 +11,13 @@ Rails.application.routes.draw do
   get 'comments/new'
 
   # devise_for :users, controllers: { registrations: 'registrations' }
-  devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks' }
+  devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks',
+                                    confirmations: 'confirmations' }
+
+  devise_scope :user do
+    post 'save_email', to: 'omniauth_callbacks#save_email'
+  end
+
 
   get 'home/index'
 
