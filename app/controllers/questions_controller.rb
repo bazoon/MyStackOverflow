@@ -26,12 +26,11 @@ class QuestionsController < ApplicationController
 
   def create
     @question = current_user.questions.create(question_params)
-    respond_with @question   
+    respond_with @question
   end
 
   def update
-    @answer = Answer.new #TODO: move to form
-    @question.update(question_params)  
+    @question.update(question_params)
     respond_with @question
   end
 

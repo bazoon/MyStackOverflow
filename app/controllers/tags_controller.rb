@@ -1,5 +1,5 @@
 class TagsController < ApplicationController
-#TODO: TagController rename
+
 
   def search
     respond_to do |format|
@@ -15,16 +15,9 @@ class TagsController < ApplicationController
 
   def tags
     name = params[:q]
-    tags = Tag.where(name: name)
-    tags = tags.map { |tag| { id: tag.name, name: tag.name } }
-
-    # binding.pry
-    tags = [id: "#{name}", name: "New: #{name}"] if tags.empty?
-    
+    tags = Tag.find_or_new(name)
     respond_to do |format|
-
       format.js { render json: tags.to_json }
-
     end
   end
 

@@ -11,5 +11,6 @@ class RegistrationsController < Devise::RegistrationsController
     params.require(:user).permit(:name, :email, :password, :password_confirmation)
   end
   
+
   #можно через ApplicationController
 end

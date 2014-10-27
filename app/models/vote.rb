@@ -9,7 +9,7 @@ class Vote < ActiveRecord::Base
   end
 
   def self.voted?(object, user)
-    !where(voteable: object, user: user).first.nil? #TODO: exist?
+    !where(voteable: object, user: user).first.nil? # TODO: exist?
   end
 
   def self.up(object, user)

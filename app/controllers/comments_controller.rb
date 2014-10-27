@@ -8,7 +8,7 @@ class CommentsController < ApplicationController
   after_action :publish_new_comment, only: :create
   after_action :publish_updated_comment, only: :update
   after_action :publish_destroyed_comment, only: :destroy
-
+  before_action :load_comment, except: [:new, :create]
   responders :location, :flash
   respond_to :json
 
@@ -16,26 +16,20 @@ class CommentsController < ApplicationController
   end
 
   def edit
-    @comment = Comment.find(params['id'])
     @commentable = @comment.commentable_type.constantize
   end
 
-  #TODO: reduce
   def create
-    @comment = @commentable.comments.new(comment_params)
-    @comment.user = current_user
-    @comment.save
+    @comment = @commentable.comments.create(comment_params.merge(user: current_user))
     respond_with @comment
   end
 
   def update
-    @comment = Comment.find(params[:id]) #TODO: move to before filter
     @comment.update(comment_params)
     respond_with @comment
   end
 
   def destroy
-    @comment = Comment.find(params[:id])
     respond_with @comment.destroy
   end
 
@@ -51,6 +45,10 @@ class CommentsController < ApplicationController
 
   def publish_destroyed_comment
     PrivatePub.publish_to '/questions', destroy_comment: @comment.id
+  end
+
+  def load_comment
+    @comment = Comment.find(params[:id])   
   end
 
   def new_commentable
