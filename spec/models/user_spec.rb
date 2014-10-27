@@ -72,7 +72,51 @@ RSpec.describe User, :type => :model do
           expect(authorization.provider).to eq auth.provider
           expect(authorization.uid).to eq auth.uid
         end
+
+        context 'user provider does not deliver email' do
+
+          let(:auth) { OmniAuth::AuthHash.new(provider: 'twitter', uid: '123456', info: { email: nil, nickname: "tw01" }) }
+
+          it 'return user without email' do
+            user = User.find_for_oauth(auth)
+            expect(user.email).to be_empty
+          end
+
+
+
+        end
+
+
       end
+
+    
+
+
+
     end
   end
+
+
+  describe '#send_confirmation_instructions' do
+    let(:user) { create(:user) }
+    let(:provider) { 'twitter' }
+
+    it 'check for confirmation_token to be set' do
+      user.send_confirmation_instructions(provider)
+      expect(user.confirmation_token).to_not be_nil
+    end
+
+    it 'Call devise_mailer to deliver confirmation_instructions' do
+      mailer = double('mailer')
+      allow(mailer).to receive(:deliver)
+      allow(user.send(:devise_mailer)).to receive(:confirmation_instructions) { mailer }
+
+      expect(user.send(:devise_mailer)).to receive(:confirmation_instructions)
+      user.send_confirmation_instructions(provider)
+    end
+
+
+  end
+
+
 end
