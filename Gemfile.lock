@@ -239,6 +239,8 @@ GEM
     pry-stack_explorer (0.4.9.1)
       binding_of_caller (>= 0.7)
       pry (>= 0.9.11)
+    pundit (0.3.0)
+      activesupport (>= 3.0.0)
     rack (1.5.2)
     rack-test (0.6.2)
       rack (>= 1.0)
@@ -383,6 +385,7 @@ DEPENDENCIES
   omniauth-twitter
   pg
   private_pub
+  pundit
   rails (= 4.1.5)
   remotipart
   responders
