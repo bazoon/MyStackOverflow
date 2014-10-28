@@ -16,6 +16,7 @@ feature 'Search questions by tag', %q{
 
   scenario 'User search by tag' do
 
+    
 
     visit question_path(question)
 

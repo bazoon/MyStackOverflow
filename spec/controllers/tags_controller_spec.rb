@@ -11,6 +11,8 @@ RSpec.describe TagsController, type: :controller do
 
   describe 'GET search' do
     
+    sign_in_user  
+
     it 'Fill @question with array of questions tagged with tag' do
       get :search, tag: 'TAG'
       expect(assigns(@questions)[:questions]).to match_array([question, question2])

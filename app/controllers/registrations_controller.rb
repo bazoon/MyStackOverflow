@@ -1,6 +1,8 @@
 
 class RegistrationsController < Devise::RegistrationsController
- 
+  
+  skip_after_action :verify_authorized, except: :index
+  
   private
  
   # def sign_up_params

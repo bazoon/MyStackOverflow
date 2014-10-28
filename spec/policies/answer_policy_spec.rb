@@ -89,6 +89,26 @@ describe AnswerPolicy do
 
   end
 
+  permissions :select? do
+    
+    it 'denies access if user is a guest' do
+      expect(subject).not_to permit(nil, create(:answer))
+    end
+
+    it 'denies access for all expect question author' do
+      expect(subject).not_to permit(user, create(:answer))
+    end
+
+    it 'grants access if user is owner answers question' do
+      expect(subject).to permit(user, create(:answer, question: create(:question, user: user)))
+    end
+
+    it 'grants access if user is an admin' do
+      expect(subject).to permit(admin, create(:answer))
+    end
+
+  end
+
 
 
 

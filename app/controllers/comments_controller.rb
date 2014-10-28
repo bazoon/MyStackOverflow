@@ -1,7 +1,7 @@
 class CommentsController < ApplicationController
   before_action :authenticate_user!
   
-  load_and_authorize_resource only: [:update, :destroy]
+  # load_and_authorize_resource only: [:update, :destroy]
 
   before_action :load_commentable, only: :create
   before_action :new_commentable, only: :new
@@ -16,20 +16,24 @@ class CommentsController < ApplicationController
   end
 
   def edit
+    authorize @comment
     @commentable = @comment.commentable_type.constantize
   end
 
   def create
     @comment = @commentable.comments.create(comment_params.merge(user: current_user))
+    authorize @comment
     respond_with @comment
   end
 
   def update
+    authorize @comment
     @comment.update(comment_params)
     respond_with @comment
   end
 
   def destroy
+    authorize @comment
     respond_with @comment.destroy
   end
 

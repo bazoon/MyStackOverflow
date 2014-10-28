@@ -102,16 +102,17 @@ RSpec.describe CommentsController, type: :controller do
 
       describe '#PATCH update' do
       
-        # it 'can not update other user"s comment' do
-        #   patch :update, id: other_comment.id, comment: { body: 'Hello', commentable_type: 'Answer' }, format: :js
-        #   comment.reload
-        #   expect(comment.body).to eq('MyComment')
-        # end
+        it 'can not update other user"s comment' do
+          patch :update, id: other_comment.id, comment: { body: 'Hello', commentable_type: 'Answer' }, format: :json
+          comment.reload
+          expect(comment.body).to eq('MyComment')
+        end
 
         it 'return 403 if via ajax' do
           # patch :update, id: other_comment.id, comment: { body: 'Hello', commentable_type: 'Answer' }, format: :js
           # expect(response.status).to eq(403)
-          expect { patch :update, id: other_comment.id, comment: { body: 'Hello', commentable_type: 'Answer' }, format: :json }.to raise_error(CanCan::AccessDenied)
+          patch :update, id: other_comment.id, comment: { body: 'Hello', commentable_type: 'Answer' }, format: :json
+          expect(response.status).to eq(403)
         end
 
       end
@@ -123,9 +124,8 @@ RSpec.describe CommentsController, type: :controller do
         # end
 
         it 'return 403 if via ajax' do
-          expect { delete :destroy, id: other_comment, format: :json }.to raise_error(CanCan::AccessDenied)
-          # expect(response.status).to eq(403)
-
+          delete :destroy, id: other_comment, format: :json
+          expect(response.status).to eq(403)
         end
 
 

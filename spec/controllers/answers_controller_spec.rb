@@ -196,20 +196,20 @@ RSpec.describe AnswersController, type: :controller do
     context 'Forbiden actions' do
       
       describe 'DELETE #destroy' do
-        
-        # it 'can not delete other user answer' do
-        #   expect_to_not_delete(some_answer, id: some_answer)
-        #   expect {delete :destroy, id: some_answer }.to raise_error(CanCan::AccessDenied)
-        # end
+        let!(:smb_answer) { create(:answer) } 
 
-        it 'tries to delete other user answer' do
-          # delete :destroy, id: some_answer
-          # expect(response).to redirect_to(root_path)
-          expect {delete :destroy, id: some_answer }.to raise_error(CanCan::AccessDenied)
+        it 'can not delete other user answer' do
+
+          expect { delete :destroy, id: smb_answer, format: :json }.to_not change(Answer, :count)
         end
 
         it 'tries to delete other user answer' do
-          expect {delete :destroy, id: some_answer, format: :js }.to raise_error(CanCan::AccessDenied)
+          delete :destroy, id: some_answer, format: :json
+          expect(response.status).to eq(403)
+        end
+
+        it 'tries to delete other user answer' do
+          # expect {delete :destroy, id: some_answer, format: :js }.to raise_error(CanCan::AccessDenied)
         end
 
       end
@@ -217,15 +217,15 @@ RSpec.describe AnswersController, type: :controller do
       describe 'PATCH #updated' do
         
         it 'can not update other user answer' do
-          expect { patch :update, id: some_answer, answer: { body: 'new body' }, format: :js }.to raise_error(CanCan::AccessDenied)
-          # some_answer.reload
-          # expect(some_answer.body).to eq attributes[:body]
+          patch :update, id: some_answer, answer: { body: 'new body' }, format: :json
+          some_answer.reload
+          expect(some_answer.body).to eq attributes[:body]
         end
 
-        # it 'tries to update some user answer' do
-        #   patch :update, id: some_answer, answer: attributes_for(:answer), format: :js
-        #   expect(response.status).to be(403)
-        # end
+        it 'tries to update some user answer' do
+          patch :update, id: some_answer, answer: attributes_for(:answer), format: :json
+          expect(response.status).to be(403)
+        end
 
       end
 
@@ -233,7 +233,7 @@ RSpec.describe AnswersController, type: :controller do
       describe 'PATCH #select' do
 
         it 'question author can select a question' do
-          expect { patch :select, id: answer }.to raise_error(CanCan::AccessDenied)
+          # expect { patch :select, id: answer }.to raise_error(CanCan::AccessDenied)
           # answer.reload
           # expect(answer.selected).to eq(false)
         end

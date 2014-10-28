@@ -12,7 +12,8 @@ Rails.application.routes.draw do
 
   # devise_for :users, controllers: { registrations: 'registrations' }
   devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks',
-                                    confirmations: 'confirmations' }
+                                    confirmations: 'confirmations',
+                                    registrations: 'registrations' }
 
   devise_scope :user do
     post 'save_email', to: 'omniauth_callbacks#save_email'

@@ -1,6 +1,6 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, except: [:show]
-  load_and_authorize_resource only: [:update, :destroy, :select]
+  
   before_action :set_question, only: [:new, :create]
   before_action :set_answer, only: [:edit, :show, :update, :destroy, :select]
 
@@ -17,11 +17,13 @@ class AnswersController < ApplicationController
     @answer = @question.answers.new(answer_params)
     @answer.user = current_user
     # @question = @answer.question
+    authorize @answer
     @answer.save
     respond_with @answer
   end
 
   def show
+    authorize @answer
     respond_to do |format|
       format.json
     end
@@ -29,19 +31,23 @@ class AnswersController < ApplicationController
 
   #TODO: не стоит аякс делать
   def edit
+    authorize @answer
     respond_with @answer
   end
 
   def update
+    authorize @answer
     @answer.update(answer_params)
     respond_with @answer
   end
 
   def destroy
+    authorize @answer
     respond_with @answer.destroy
   end
 
   def select
+    authorize @answer
     @answer.set_as_selected
     respond_with @answer
   end
