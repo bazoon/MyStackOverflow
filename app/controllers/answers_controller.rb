@@ -14,10 +14,10 @@ class AnswersController < ApplicationController
 
   #TODO: refactor
   def create
+    authorize Answer
     @answer = @question.answers.new(answer_params)
     @answer.user = current_user
     # @question = @answer.question
-    authorize @answer
     @answer.save
     respond_with @answer
   end

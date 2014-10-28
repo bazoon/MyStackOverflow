@@ -29,7 +29,7 @@ class QuestionsController < ApplicationController
 
   def create
     @question = current_user.questions.create(question_params)
-    authorize @question
+    authorize Question
     respond_with @question
   end
 
