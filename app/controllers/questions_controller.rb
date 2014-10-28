@@ -21,6 +21,8 @@ class QuestionsController < ApplicationController
   end
 
   def edit
+    binding.pry
+    authorize @question
     respond_with @question
   end
 
