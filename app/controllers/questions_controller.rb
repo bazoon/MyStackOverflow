@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-  load_and_authorize_resource only: [:update, :destroy]
+  
   before_action :set_question, except: [:index, :new, :create]
   after_action :publish_question, only: [:update]
 
@@ -14,29 +14,33 @@ class QuestionsController < ApplicationController
   def show
     @answers = @question.answers
     @answer = Answer.new
+    authorize @question
   end
 
   def new
     @question = Question.new
+    authorize @question
   end
 
   def edit
-    binding.pry
     authorize @question
     respond_with @question
   end
 
   def create
     @question = current_user.questions.create(question_params)
+    authorize @question
     respond_with @question
   end
 
   def update
+    authorize @question
     @question.update(question_params)
     respond_with @question
   end
 
   def destroy
+    authorize @question
     @question.destroy
     respond_with @question
   end

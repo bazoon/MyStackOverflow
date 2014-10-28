@@ -45,7 +45,7 @@ RSpec.describe QuestionsController, type: :controller do
     end
   end
 
-  context 'Unauthorized user' do
+  context 'Unauthenticated user' do
     
     include_examples 'index show'
 
@@ -110,7 +110,7 @@ RSpec.describe QuestionsController, type: :controller do
 
   end
 
-  context 'Authorized user' do
+  context 'Authenticated user' do
     sign_in_user
     let(:question) { create(:question, user_id: @user.id) }
 
@@ -206,9 +206,6 @@ RSpec.describe QuestionsController, type: :controller do
             expect(question.title).to eq attributes[:title]
             expect(question.body).to eq attributes[:body]
           end
-
-          
-
         end
       end
 
@@ -231,19 +228,21 @@ RSpec.describe QuestionsController, type: :controller do
     end
 
     context 'Forbiden actions' do
+
+      describe 'GET #edit' do
+      
+        it 'tries to edit other user question', format: :js do
+          get :edit,  id: other_question 
+          expect(response).to redirect_to(root_path)
+        end
+
+      end  
     
       describe 'DELETE #destroy' do
       
-        # it 'can not delete other user question' do
-        #   # expect_to_not_delete(other_question, id: other_question)
-        #   expect { delete :destroy,  id: other_question }.to raise_error(CanCan::AccessDenied)
-        # end
-        
         it 'tries to delete other user question' do
-          # delete :destroy, id: other_question
-          expect { delete :destroy,  id: other_question }.to raise_error(CanCan::AccessDenied)
-          # expect(response).to raise_error(CanCan::AccessDenied)
-          # expect(response).to redirect_to(root_path)
+          delete :destroy,  id: other_question
+          expect(response).to redirect_to(root_path)
         end
 
       end  
@@ -251,9 +250,14 @@ RSpec.describe QuestionsController, type: :controller do
       describe 'PATCH #update' do
         
         it 'can not update other user question attributes' do
-          expect { patch :update, id: other_question, question: attributes_for(:question, body: "New body"), format: :js }.to raise_error(CanCan::AccessDenied)
+          patch :update, id: other_question, question: attributes_for(:question, body: "New body"), format: :js
           other_question.reload
           expect(other_question.body).to eq attributes[:body]
+        end
+
+        it 'redirects or renders forbidden' do
+          patch :update, id: other_question, question: attributes_for(:question, body: "New body")
+          expect(response).to redirect_to(root_path)
         end
 
         # it 'tries to updated other user question' do
