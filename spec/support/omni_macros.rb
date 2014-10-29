@@ -20,3 +20,12 @@ def set_mock_hash_for_twitter
       info: { nickname: 'foo' }
     )
 end
+
+#TODO: for code review
+def set_after_sign_in_path
+  ApplicationController.class_eval do
+    def after_sign_in_path_for(resource)
+      questions_path
+    end
+  end
+end

@@ -25,7 +25,7 @@ feature 'User sign in with Twitter or Facebook', %q{
     expect(page).to have_content "Could not authenticate you from Facebook"
   end
 
-  scenario 'Non-registered user try to sign in with Twitter' do
+  scenario 'Non-registered user try to sign in with Twitter', js: true do
     visit new_user_session_path
     expect(page).to have_content 'Sign in with Twitter'
     set_mock_hash_for_twitter

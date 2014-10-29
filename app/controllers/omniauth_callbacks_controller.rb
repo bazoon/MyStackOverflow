@@ -3,6 +3,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   before_action :load_omniauth_info, only: [:facebook, :twitter]
   before_action :find_user, only: [:facebook, :twitter]
 
+  #TODO: how to test?
   def facebook
   end
 
@@ -10,32 +11,33 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     # render json: request.env['omniauth.auth']
   end
 
-  def find_user
-    @user = User.find_for_oauth(@auth)
-
-    if @user.persisted?
-      set_flash_message(:notice, :success, kind: @auth.provider)
-      sign_in_and_redirect @user, event: :authentication
-    else
-      cookies[:provider], cookies[:uid] = @auth.provider, @auth.provider.to_s
-      @user.name = @auth.info.nickname || @auth.info.name || "new user"
-      render 'ask_for_email'
-    end
-  end
-
-
   def save_email
     @user = User.find_or_initialize_by(email: params[:user][:email])
+    @user.password = Devise.friendly_token[0, 20]
     if @user.persisted? || @user.update(email_params)
-      @user.send_confirmation_instructions(cookies[:provider])
+      @user.send_confirmation_instructions(session[:provider])
       redirect_to root_path, notice: 'Confirmation hase been sent'
     else
       render 'ask_for_email'
     end
   end
 
-
   private
+
+  def find_user
+    @user = User.find_for_oauth(@auth)
+    if @user.persisted?
+      set_flash_message(:notice, :success, kind: @auth.provider)
+      sign_in_and_redirect @user, event: :authentication
+    else
+      session[:provider], session[:uid] = @auth.provider, @auth.provider.to_s
+      render 'ask_for_email'
+    end
+  end
+
+
+
+
 
 
   def load_omniauth_info
