@@ -20,25 +20,27 @@
         | &nbsp
     |&nbsp
     .pull-right 
-      = link_to(edit_icon, edit_question_path(@question), id: "edit_question_#{@question.id}") if can? :edit, @question
+      - if policy(@question).update?
+        = link_to(edit_icon, edit_question_path(@question), id: "edit_question_#{@question.id}")
         | &nbsp
       .vote_controls
-        = link_to vote_up_icon, question_vote_up_path(@question), method: :patch, remote: true, "data-type" => "json" if can? :rate, @question
-        | &nbsp
-        = link_to vote_down_icon, question_vote_down_path(@question), method: :patch, remote: true, "data-type" => "json" if can? :rate, @question
-        | &nbsp
+        - if policy(@question).vote?
+          = link_to vote_up_icon, question_vote_up_path(@question), method: :patch, remote: true, "data-type" => "json"
+          | &nbsp
+          = link_to vote_down_icon, question_vote_down_path(@question), method: :patch, remote: true, "data-type" => "json"
+          | &nbsp
 
       
       
   .comments
     = render partial: 'comments/comments', locals: { commentable: @question }
     
-  - if can? :write, Comment
+  - if policy(Comment).create?
     = link_to 'comment', comments_new_path(commentable: @question.class.to_s, commentable_id: @question.id), remote: true, id: "comment_#{@question.class.to_s.underscore}#{@question.id}"
     div id = ("comment_form_#{@question.class.to_s.underscore}_#{@question.id}")
     
       
-  - if can? :ask, Question
+  - if policy(Answer).create?
     .panel.panel-info.new-answer
       .panel-heading
         ' Answer

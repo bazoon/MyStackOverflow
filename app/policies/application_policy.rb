@@ -23,7 +23,7 @@ class ApplicationPolicy
   end
 
   def update?
-     @user && @record.user == @user || @user && @user.admin
+    @user && @record.user == @user || @user && @user.admin
   end
 
   def edit?
@@ -32,6 +32,10 @@ class ApplicationPolicy
 
   def destroy?
     update?
+  end
+
+  def vote?
+    record.user != @user && !Vote.voted?(@record, @user)
   end
 
   # def scope

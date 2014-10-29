@@ -66,10 +66,10 @@ feature 'Update answer', %q{
  
   
 
-  # scenario 'Non-authenticated user try to update an answer' do
-  #   visit question_path(question)
-  #   expect(page).to_not have_link('edit_answer_#{user_answer.id}')
-  # end
+  scenario 'Non-authenticated user try to update an answer' do
+    visit question_path(question)
+    expect(page).to_not have_link('edit_answer_#{user_answer.id}')
+  end
 
   
 end

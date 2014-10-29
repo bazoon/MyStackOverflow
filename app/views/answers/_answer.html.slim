@@ -19,22 +19,26 @@ div class = "answer" data-id = "#{answer.id}"
      
     .panel-footer
       
-      = link_to edit_icon, edit_answer_path(answer), id: "edit_answer_#{answer.id}", remote: true if can? :update, answer
-      = link_to del_icon, answer_path(answer), data: { confirm: 'Are you sure?' }, method: :delete, id: "delete_answer_#{answer.id}", remote: true, "data-type" => "json" if can? :update, answer
-      = link_to select_icon, select_answer_path(answer), method: :patch, id: "select_answer_#{answer.id}", remote: true if can? :select, answer
+      - if policy(answer).update?
+        = link_to edit_icon, edit_answer_path(answer), id: "edit_answer_#{answer.id}", remote: true 
+        = link_to del_icon, answer_path(answer), data: { confirm: 'Are you sure?' }, method: :delete, id: "delete_answer_#{answer.id}", remote: true, "data-type" => "json"
+      - if policy(answer).select?
+        = link_to select_icon, select_answer_path(answer), method: :patch, id: "select_answer_#{answer.id}", remote: true 
+
       .pull-right
         .vote_controls
-            = link_to vote_up_icon, answer_vote_up_path(answer), method: :patch, remote: true, "data-type" => "json" if can? :rate, answer
-            | &nbsp
-            = link_to vote_down_icon, answer_vote_down_path(answer), method: :patch, remote: true, "data-type" => "json" if can? :rate, answer
-            | &nbsp  
+            - if policy(answer).vote?
+              = link_to vote_up_icon, answer_vote_up_path(answer), method: :patch, remote: true, "data-type" => "json" 
+              | &nbsp
+              = link_to vote_down_icon, answer_vote_down_path(answer), method: :patch, remote: true, "data-type" => "json" 
+              | &nbsp  
       ' &nbsp
-    - if can? :update, answer
+    - if policy(answer).update?
         div class = "update_form" data-id = "#{answer.id}"
 
     .comments
       = render partial: 'comments/comments', locals: { commentable: answer }
-    - if can? :write, Comment
+    - if policy(Comment).create?
       = link_to 'comment', comments_new_path(commentable: answer.class.to_s, commentable_id: answer.id), remote: true, id: "comment_#{answer.class.to_s.underscore}#{answer.id}"
       div id = ("comment_form_#{answer.class.to_s.underscore}_#{answer.id}")
     
