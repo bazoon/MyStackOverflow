@@ -20,12 +20,10 @@ class User < ActiveRecord::Base
   def self.find_for_oauth(auth)
     authorization = Authorization.where(provider: auth.provider, uid: auth.uid.to_s).first
     return authorization.user if authorization
-
-    email = auth.info[:email] if auth.info
-    name = auth.info.nickname || auth.info.name || dummy_name if auth.info
+ 
+    email, name = auth.info[:email], auth.info.nickname || auth.info.name if auth.info
     user = User.where(email: email).first
     
-
     if user
       user.create_authorization(auth)
     else
@@ -55,13 +53,5 @@ class User < ActiveRecord::Base
     user
   end
 
-
-  def dummy_email
-    Devise.friendly_token[0, 7] + "@" + Devise.friendly_token[0, 5] + ".com"
-  end
-
-  def dummy_name
-    Devise.friendly_token[0,5]
-  end
   
 end
