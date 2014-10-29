@@ -1,8 +1,7 @@
 class CommentsController < ApplicationController
   before_action :authenticate_user!
   
-  # load_and_authorize_resource only: [:update, :destroy]
-
+  skip_after_action :verify_authorized, only: :new
   before_action :load_commentable, only: :create
   before_action :new_commentable, only: :new
   after_action :publish_new_comment, only: :create
@@ -13,6 +12,7 @@ class CommentsController < ApplicationController
   respond_to :json
 
   def new
+
   end
 
   def edit

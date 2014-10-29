@@ -15,11 +15,7 @@ class AnswersController < ApplicationController
   #TODO: refactor
   def create
     authorize Answer
-    # @answer = @question.answers.new(answer_params)
     @answer = @question.answers.create(answer_params.merge(user: current_user))
-    # @answer.user = current_user
-    # @question = @answer.question
-    # @answer.save
     respond_with @answer
   end
 

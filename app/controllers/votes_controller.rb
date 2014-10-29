@@ -1,8 +1,9 @@
 class VotesController < ApplicationController
   before_action :load_voteable
-  respond_to :json
+  before_action :authorize_voteable
   after_action :publish_up, only: :vote_up
   after_action :publish_down, only: :vote_down
+  respond_to :json  
 
   def vote_up
     @rm = RatingModifier.new(current_user)
@@ -24,6 +25,10 @@ class VotesController < ApplicationController
 
   def publish_down
     PrivatePub.publish_to '/questions', "vote_down_#{@resource}" => { id: @voteable.id } 
+  end
+
+  def authorize_voteable
+    authorize @voteable, :update?
   end
 
   def load_voteable

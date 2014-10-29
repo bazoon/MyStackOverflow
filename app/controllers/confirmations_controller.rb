@@ -1,5 +1,5 @@
 class ConfirmationsController < Devise::ConfirmationsController
-
+  
   def show
 
     @user = User.where(confirmation_token: (params[:confirmation_token])).first

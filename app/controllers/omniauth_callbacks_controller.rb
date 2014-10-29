@@ -1,4 +1,5 @@
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
+  skip_before_filter :authenticate_user!
   skip_after_action :verify_authorized
   before_action :load_omniauth_info, only: [:facebook, :twitter]
   before_action :find_user, only: [:facebook, :twitter]

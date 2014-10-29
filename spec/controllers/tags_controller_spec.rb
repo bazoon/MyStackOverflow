@@ -33,7 +33,7 @@ RSpec.describe TagsController, type: :controller do
 
     it 'returns searched tags as json' do
       tags = Tag.find_or_new('TA')
-      xhr :get, :tags, q: 'TA', format: :js
+      xhr :get, :tags, q: 'TA', format: :json
       expect(response.body).to eq(tags.to_json)
     end
     

@@ -1,24 +1,28 @@
 class TagsController < ApplicationController
   before_action :authenticate_user!, only: :tags
+  skip_after_action :verify_authorized
+
+  before_action :load_tag, only: :search
+  respond_to :json, :html
 
   def search
-    respond_to do |format|
-      @tag = params.permit(:tag)[:tag]
-      @questions = Question.tagged_with(@tag)
-      format.html
-      format.js { render json: @questions }
-    end  
+    @questions = Question.tagged_with(@tag)
+    respond_with @questions
   end
 
   def tags
-
-    name = params[:q]
-    tags = Tag.find_or_new(name)
-    respond_to do |format|
-      format.js { render json: tags.to_json }
+    tags = Tag.find_or_new(params[:q])
+    respond_with tags do |format|
+      format.json { render json: tags.to_json }
     end
   end
 
+  private
+  
+
+  def load_tag
+    @tag = params.permit(:tag)[:tag]
+  end
 
 
 end
