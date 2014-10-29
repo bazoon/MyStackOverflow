@@ -1,14 +1,15 @@
 
-def set_mock_hash_for_facebook
-  
-  OmniAuth.config.mock_auth[:facebook] = OmniAuth::AuthHash.new(
-      provider: 'facebook',
-      uid: '123545',
-      info: {
-        email: 'email@email.com'
-      }
 
-    )
+def valid_oauth
+  OmniAuth::AuthHash.new(
+    { provider: 'facebook',
+      uid: '123545',
+      info: { email: 'email@email.com' }
+    })
+end
+
+def set_mock_hash_for_facebook
+  OmniAuth.config.mock_auth[:facebook] = valid_oauth
 end
 
 

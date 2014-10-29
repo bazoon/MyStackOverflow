@@ -5,6 +5,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   #TODO: how to test?
   def facebook
+
   end
 
   def twitter
@@ -12,7 +13,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def save_email
-    @user = User.find_or_initialize_by(email: params[:user][:email])
+    @user = User.find_or_initialize_by(email: params[:user][:email], name: params[:user][:name])
     @user.password = Devise.friendly_token[0, 20]
     if @user.persisted? || @user.update(email_params)
       @user.send_confirmation_instructions(session[:provider])
@@ -25,7 +26,9 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   private
 
   def find_user
+    @auth = load_omniauth_info
     @user = User.find_for_oauth(@auth)
+
     if @user.persisted?
       set_flash_message(:notice, :success, kind: @auth.provider)
       sign_in_and_redirect @user, event: :authentication
