@@ -18,7 +18,7 @@ class User < ActiveRecord::Base
 
 
   def self.find_for_oauth(auth)
-    authorization = Authorization.where(provider: auth.provider, uid: auth.uid.to_s).first
+    authorization = Authorization.find_by_auth(auth)
     return authorization.user if authorization
  
     email, name = auth.info[:email], auth.info.nickname || auth.info.name if auth.info
@@ -43,6 +43,11 @@ class User < ActiveRecord::Base
     devise_mailer.send(:confirmation_instructions, self, confirmation_token, provider: provider).deliver
   end
 
+
+  def confirm_and_authorize(provider, uid)
+    confirm!
+    authorizations.create(provider: provider, uid: uid)
+  end
 
   private
 
