@@ -3,7 +3,6 @@ $ ->
 
   createAnswer = (answer) ->
     answer = HandlebarsTemplates['answers/answer'](answer)
-    console.log answer
     $(".answers").append(answer)
     window.clearFormErrors($(".answer_form form"))
 
@@ -46,10 +45,12 @@ $ ->
     $(".question .tags").html(tags)
 
   hideCommentForm = ->
-    $(".edit_comment").hide()    
+    $(".edit_comment").hide() 
 
   hideNewCommentForm = ->
-    $(".new_comment_form").hide()    
+    $(".new_comment_form").hide() 
+    window.clearFormErrors($(".new_comment_form"))
+
 
   createQuestionComment = (data) ->
     comment = HandlebarsTemplates['comments/comment'](data)
@@ -77,28 +78,28 @@ $ ->
     $("#comment_#{id}").remove()
 
 
-  PrivatePub.subscribe '/questions' , (data, channel) ->
+  # PrivatePub.subscribe '/questions' , (data, channel) ->
 
-    if (typeof data.create_answer != 'undefined')
-      createAnswer(data.create_answer)
-    if (typeof data.update_answer != 'undefined')
-      updateAnswer(data.update_answer)
-    if (typeof data.destroy_answer != 'undefined')
-      destroyAnswer(data.destroy_answer)
-    if (typeof data.vote_up_question != 'undefined')
-      voteUpQuestion(data.vote_up_question)
-    if (typeof data.vote_down_question != 'undefined')
-      voteDownQuestion(data.vote_down_question)
-    if (typeof data.vote_up_answer != 'undefined')
-      voteUpAnswer(data.vote_up_answer)
-    if (typeof data.update_question != 'undefined')
-      updateQuestion(data.update_question)
-    if (typeof data.create_comment != 'undefined')
-      createComment(data.create_comment)
-    if (typeof data.update_comment != 'undefined')
-      updateComment(data.update_comment.comment)
-    if (typeof data.destroy_comment != 'undefined')
-      destroyComment(data.destroy_comment)
+  #   if (typeof data.create_answer != 'undefined')
+  #     createAnswer(data.create_answer)
+  #   if (typeof data.update_answer != 'undefined')
+  #     updateAnswer(data.update_answer)
+  #   if (typeof data.destroy_answer != 'undefined')
+  #     destroyAnswer(data.destroy_answer)
+  #   if (typeof data.vote_up_question != 'undefined')
+  #     voteUpQuestion(data.vote_up_question)
+  #   if (typeof data.vote_down_question != 'undefined')
+  #     voteDownQuestion(data.vote_down_question)
+  #   if (typeof data.vote_up_answer != 'undefined')
+  #     voteUpAnswer(data.vote_up_answer)
+  #   if (typeof data.update_question != 'undefined')
+  #     updateQuestion(data.update_question)
+  #   if (typeof data.create_comment != 'undefined')
+  #     createComment(data.create_comment)
+  #   if (typeof data.update_comment != 'undefined')
+  #     updateComment(data.update_comment.comment)
+  #   if (typeof data.destroy_comment != 'undefined')
+  #     destroyComment(data.destroy_comment)
     
 
   # setUpdateSuccessHook = ->
@@ -113,6 +114,10 @@ $ ->
 
   setUpdateErrorHook = ->
       $(".update_form").on 'ajax:error', (event, xhr, status, error) ->
+        form = $(this)
+        renderFormErrors(form, xhr.responseJSON)
+
+      $(".new_comment_form").on 'ajax:error', (event, xhr, status, error) ->
         form = $(this)
         renderFormErrors(form, xhr.responseJSON)
   

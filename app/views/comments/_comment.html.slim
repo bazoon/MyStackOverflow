@@ -1,11 +1,10 @@
-div.small.comment id = ("comment_#{comment.id}")
+div.small.comment id = ("#{comment.id}")
   .body
     = comment.body
   br
   - if policy(comment).update?
-    = link_to edit_icon, edit_comment_path(comment), id: "edit_comment#{comment.id}", remote: true
+    = link_to edit_icon, "#", id: "edit_comment#{comment.id}", remote: true
     = link_to del_icon, comment_path(comment), id: "destroy_comment#{comment.id}", method: :delete, data: { confirm: 'Are you sure?' }, "data-type" => "json", remote: true
   
-  
-  div data-id = "#{comment.id}"
-hr
+  - if policy(Comment).create?
+    = render partial: 'comments/update_form', locals: { comment: comment }

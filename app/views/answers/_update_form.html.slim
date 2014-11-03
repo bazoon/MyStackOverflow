@@ -1,6 +1,4 @@
-
-= simple_nested_form_for([question, answer], remote: true, data: { type: :json } ) do |f|
-
+= simple_nested_form_for([nil, answer], remote: true, data: { type: :json }, html: {class: "hidden edit_answer"} ) do |f|
   = f.error_notification
   = f.input :body, label: t('answers.body'), :input_html => { class: "form-control" }
   = f.simple_fields_for :attachments do |a|

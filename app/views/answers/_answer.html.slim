@@ -1,11 +1,11 @@
-div class = "answer" data-id = "#{answer.id}"
+.answer id = answer.id
   div class = (answer.selected ? 'panel panel-success selected-answer' : 'panel panel-default') 
     .panel-heading 
       h3.panel-title 
         = l(answer.created_at)
         .pull-right
           .label.label-info.space-right
-            span id = "answer_rating_#{answer.id}"
+            span class = "rating"
               =answer.rating
           small
             = answer.user.email
@@ -20,7 +20,7 @@ div class = "answer" data-id = "#{answer.id}"
     .panel-footer
       
       - if policy(answer).update?
-        = link_to edit_icon, edit_answer_path(answer), id: "edit_answer_#{answer.id}", remote: true 
+        = link_to edit_icon, '#', class: "edit_link", remote: true 
         = link_to del_icon, answer_path(answer), data: { confirm: 'Are you sure?' }, method: :delete, id: "delete_answer_#{answer.id}", remote: true, "data-type" => "json"
       - if policy(answer).select?
         = link_to select_icon, select_answer_path(answer), method: :patch, id: "select_answer_#{answer.id}", remote: true 
@@ -33,13 +33,15 @@ div class = "answer" data-id = "#{answer.id}"
               = link_to vote_down_icon, answer_vote_down_path(answer), method: :patch, remote: true, "data-type" => "json" 
               | &nbsp  
       ' &nbsp
-    - if policy(answer).update?
-        div class = "update_form" data-id = "#{answer.id}"
+      - if policy(answer).update?
+        = render partial: 'answers/update_form', locals: { answer: answer } 
 
     .comments
       = render partial: 'comments/comments', locals: { commentable: answer }
     - if policy(Comment).create?
-      = link_to 'comment', comments_new_path(commentable: answer.class.to_s, commentable_id: answer.id), remote: true, id: "comment_#{answer.class.to_s.underscore}#{answer.id}"
-      div id = ("comment_form_#{answer.class.to_s.underscore}_#{answer.id}")
+      = link_to 'comment', '#', class: 'comment-edit-link'
+      = render partial: 'comments/form', locals: { commentable: answer, comment: answer.comments.new }
+
+      
     
  

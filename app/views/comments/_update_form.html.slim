@@ -1,6 +1,7 @@
-= simple_form_for comment, html: {id: "update_comment_form_#{comment.commentable.class.to_s.underscore}_#{comment.commentable.id}"}, remote: true, data: { type: :json }  do |f|
+= simple_form_for comment, html: {class: "update_form"}, remote: true, data: { type: :json }  do |f|
   = f.input :body, as: :text, label: t('update_comment')
   .form-actions.center
-    = f.submit 'submit', class: "btn btn-primary"
-    '
+    = f.submit 'Update comment', class: "btn btn-primary"
+    | &nbsp;nbsp;
+    a.cancel-comment href="#" Cancel
     

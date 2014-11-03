@@ -1,5 +1,5 @@
 ul class="answer-attachments"
-  | {{#each attachments}}
+  | {{#each answer.attachments}}
   li 
     a href = "{{file_url}}" {{file_name}}
   | {{/each}}

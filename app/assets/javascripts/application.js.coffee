@@ -12,6 +12,9 @@
 
 #TODO: ready, вынести common.js
 
+  
+
+
 clearFormErrors = (form) ->
   form.removeClass("has-error")
   form.find(".alert.alert-danger").remove()
