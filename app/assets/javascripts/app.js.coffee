@@ -1,4 +1,5 @@
 this.App = {}
+# Demo: Circular reference
 
 
 $ ->

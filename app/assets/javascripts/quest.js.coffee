@@ -39,7 +39,7 @@ class @Question
   subscribeToPub: ->
   
     PrivatePub.subscribe '/questions' , (data, channel) =>
-      console.log 'PrivatePub'
+      
       
       if (typeof data.create_answer != 'undefined')
         @createAnswer(data.create_answer)
@@ -60,6 +60,7 @@ class @Question
       if (typeof data.create_comment != 'undefined')
         @createComment(data.create_comment)
       if (typeof data.update_comment != 'undefined')
+        console.log 'PrivatePub'
         @updateComment(data.update_comment.comment)
       if (typeof data.destroy_comment != 'undefined')
         @destroyComment(data.destroy_comment.comment)
@@ -87,7 +88,8 @@ class @Question
 
   updateQuestionComment: (data) ->
     # alert('COMMENT')
-    comment = @comments[data.id]
+    comment = @comments["comment_"+data.id]
+    
     comment.update(data)
 
   updateAnswerComment: (data) ->

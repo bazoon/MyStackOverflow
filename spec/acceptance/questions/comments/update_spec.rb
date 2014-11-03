@@ -10,18 +10,20 @@ feature 'Update comment', %q{
   given!(:question) { create(:question) }
   # given!(:answer) { create(:answer, body: 'SOOOOM', question_id: question.id) }
   given!(:comment) { create(:question_comment, commentable_id: question.id, user_id: user.id) }
-
   scenario 'Authenticated user updates a comment for question', js: true do
     sign_in(user)
     visit question_path(question)
-    click_link "edit_comment#{comment.id}"
     
-    
-    
-    fill_in :comment_body, with: 'COOL COMMENT'
-    click_on 'Update comment'
+    # fill_in 'Update comment', with: 'COOL COMMENT2'
+    within(".question .comments") do
+      click_link "edit_comment_#{comment.id}"
+      click_on 'Update comment'
+      puts page.driver.console_messages
+    end
     save_and_open_page
-    expect(page).to have_content 'COOL COMMENT'
+    page.save_screenshot('/Users/vitaliynesterenko/projects/so/tmp/screenshot.png')
+    
+    # expect(page).to have_content 'COOL COMMENT2'
     
   end
 
