@@ -22,9 +22,10 @@ feature 'Update answer', %q{
 
 
       scenario 'updates his own answer via ajax', js: true do
+        # binding.pry
+        
         click_link "edit_answer_#{user_answer.id}"
-
-        within(".answer[data-id='#{user_answer.id}']") do
+        within("#answer_#{user_answer.id}") do
           fill_in t('answers.body'), with: 'updated body'
           click_on t('save')
           expect(page).to_not have_content user_answer.body
@@ -42,7 +43,7 @@ feature 'Update answer', %q{
       scenario 'updates his own answer via ajax', js: true do
         click_link "edit_answer_#{user_answer.id}"
         
-        within(".answer[data-id='#{user_answer.id}']") do
+        within("#answer_#{user_answer.id}") do
           fill_in t('answers.body'), with: ''
           click_on t('save')
         end

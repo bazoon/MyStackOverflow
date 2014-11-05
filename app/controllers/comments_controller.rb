@@ -9,7 +9,8 @@ class CommentsController < ApplicationController
   after_action :publish_destroyed_comment, only: :destroy
   before_action :load_comment, except: [:new, :create]
   responders :location, :flash
-  respond_to :json
+
+  respond_to :json,:js
 
   def new
 
@@ -28,6 +29,7 @@ class CommentsController < ApplicationController
 
   def update
     authorize @comment
+
 
     @comment.update(comment_params)
     # puts @comment.inspect

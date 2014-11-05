@@ -19,15 +19,15 @@ feature 'Select answer', %q{
     
   scenario 'Question author can select best question', js: true do
     click_on "select_answer_#{answer.id}"
-    expect(find(".answer[data-id='#{answer.id}']")).to have_css('div.selected-answer')
+    expect(find(".answer#answer_#{answer.id}")).to have_css('div.selected-answer')
   end
 
   scenario 'If Question selects one question the previous should be deselected', js: true do
-    expect(find(".answer[data-id='#{selected_answer.id}']")).to have_css('div.selected-answer')
-    expect(find(".answer[data-id='#{answer.id}']")).to_not have_css('div.selected-answer')
+    expect(find(".answer#answer_#{selected_answer.id}")).to have_css('div.selected-answer')
+    expect(find(".answer#answer_#{answer.id}")).to_not have_css('div.selected-answer')
     click_on "select_answer_#{answer.id}"
-    expect(find(".answer[data-id='#{answer.id}']")).to have_css('div.selected-answer')
-    expect(find(".answer[data-id='#{selected_answer.id}']")).to_not have_css('div.selected-answer')
+    expect(find(".answer#answer_#{answer.id}")).to have_css('div.selected-answer')
+    expect(find(".answer#answer_#{selected_answer.id}")).to_not have_css('div.selected-answer')
   end
 
 

@@ -14,8 +14,10 @@ feature 'Update comment', %q{
   scenario 'Authenticated user updates a comment', js: true do
     sign_in(user)
     visit question_path(question)
-    click_link "edit_comment#{comment.id}"
+    
+    click_link "edit_comment_#{comment.id}"
     fill_in t('update_comment'), with: 'updated comment'
+    
     click_on 'submit'
     expect(page).to have_content 'updated comment'
   end
@@ -23,7 +25,8 @@ feature 'Update comment', %q{
   scenario 'Authenticated user updates a comment with empty body', js: true do
     sign_in(user)
     visit question_path(question)
-    click_link "edit_comment#{comment.id}"
+    click_link "edit_comment_#{comment.id}"
+    
     fill_in t('update_comment'), with: ''
     click_on 'submit'
     expect(page).to have_content "can't be blank"
@@ -32,7 +35,7 @@ feature 'Update comment', %q{
 
   scenario 'Non-authenticated user try to update comment' do
     visit question_path(question)
-    expect(page).to_not have_link "edit_comment#{comment.id}"
+    expect(page).to_not have_link "edit_comment_#{comment.id}"
   end
 
 

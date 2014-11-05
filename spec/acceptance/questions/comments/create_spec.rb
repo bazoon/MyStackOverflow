@@ -12,7 +12,7 @@ feature 'Create comment', %q{
   scenario 'Authenticated user creates a comment', js: true do
     sign_in(user)
     visit question_path(question)
-    click_link "comment_question#{question.id}"
+    click_on "comment"
     fill_in t('write_comment'), with: 'new comment'
     click_on 'submit'
     expect(page).to have_content 'new comment'
@@ -21,7 +21,7 @@ feature 'Create comment', %q{
   scenario 'Authenticated user creates empty comment', js: true do
     sign_in(user)
     visit question_path(question)
-    click_link "comment_question#{question.id}"
+    click_link "comment"
     fill_in t('write_comment'), with: ''
     click_on 'submit'
     expect(page).to have_content "can't be blank"
@@ -30,7 +30,7 @@ feature 'Create comment', %q{
 
   scenario 'Non-authenticated user try to create comment' do
     visit question_path(question)
-    expect(page).to_not have_link "comment_question#{question.id}"
+    expect(page).to_not have_link "comment"
   end
 
 

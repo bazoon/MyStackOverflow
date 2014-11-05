@@ -14,8 +14,10 @@ feature 'Destroy answer', %q{
   scenario 'Authenticated user destroys his own answer', js: true do
     sign_in(user)
     visit question_path(question)
+    # binding.pry
     click_link "delete_answer_#{user_answer.id}"
-    # save_and_open_page
+    page.driver.browser.switch_to.alert.accept
+
     expect(page).to_not have_content 'MyText'
     expect(page).to_not have_link "delete_answer_#{user_answer.id}"
   end

@@ -25,6 +25,15 @@ class @Question
     @loadComments() 
     @bindElements() 
     @subscribeToPub()
+    @setAjaxHooks()
+
+  setAjaxHooks: ->
+    that = this
+
+
+    this.$commentForm.on "ajax:error", (e, xhr, status) ->
+      that.renderFormErrors($(this), xhr.responseJSON)  
+  
 
   bindElements: ->
     
@@ -38,9 +47,8 @@ class @Question
 
   subscribeToPub: ->
   
+
     PrivatePub.subscribe '/questions' , (data, channel) =>
-      
-      
       if (typeof data.create_answer != 'undefined')
         @createAnswer(data.create_answer)
       if (typeof data.update_answer != 'undefined')
@@ -60,19 +68,20 @@ class @Question
       if (typeof data.create_comment != 'undefined')
         @createComment(data.create_comment)
       if (typeof data.update_comment != 'undefined')
-        console.log 'PrivatePub'
         @updateComment(data.update_comment.comment)
       if (typeof data.destroy_comment != 'undefined')
         @destroyComment(data.destroy_comment.comment)
   
 
   destroyComment: (data) ->
+
     if data.commentable_type == "Question"
       @destroyQuestionComment(data)
     else
       @destroyAnswerComment(data)
 
   destroyQuestionComment: (data) ->
+    console.log 'DLE'
     comment = @comments[data.id]
     comment.destroy()
 
@@ -88,7 +97,7 @@ class @Question
 
   updateQuestionComment: (data) ->
     # alert('COMMENT')
-    comment = @comments["comment_"+data.id]
+    comment = @comments[data.id]
     
     comment.update(data)
 
@@ -141,11 +150,13 @@ class @Question
 
   loadAnswers: ->
     this.$answer.each (i, e) =>
-      @answers[e.id] = new Answer(e.id)    
+      id = e.id.split("_")[1]
+      @answers[id] = new Answer(id)    
 
   loadComments: ->
     this.$comment.each (i, e) =>
-      @comments[e.id] = new Comment(e.id, "question", @question_id)
+      id = e.id.split("_")[1]
+      @comments[id] = new Comment(id, "question", @question_id)
 
   voteUp: ->
     rating = parseInt(this.$rating.text(), 10)

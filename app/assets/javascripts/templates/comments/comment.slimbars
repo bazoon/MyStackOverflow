@@ -1,8 +1,8 @@
-div.small.comment id = "{{id}}"
+div.small.comment id = "comment_{{id}}"
   .body
     | {{body}}
   br
-  a href="#" id="edit_comment{{id}}" data-remote="true" 
+  a href="#" class="edit_comment" id="edit_comment_{{id}}" data-remote="true" 
     span class = "glyphicon glyphicon-edit"
   a href="{{destroy_path}}" id="delete_comment_{{id}}" data-method="delete" data-confirm="Are you sure?" data-remote="true" rel="nofollow" data-type="json"
     span class = "glyphicon glyphicon-trash"

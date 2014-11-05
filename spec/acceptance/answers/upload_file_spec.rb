@@ -28,11 +28,11 @@ feature 'Add files to an answer', %q{
       inputs[0].set "#{Rails.root}/spec/spec_helper.rb"
       inputs[1].set "#{Rails.root}/spec/rails_helper.rb"
  
-      
+      # binding.pry
       click_on t('save')
     end
 
-    click_on t('save')
+    
     within('.answers') do
       expect(page).to have_link 'spec_helper.rb', href: '/uploads/attachment/file/1/spec_helper.rb'
       expect(page).to have_link 'rails_helper.rb', href: '/uploads/attachment/file/2/rails_helper.rb'

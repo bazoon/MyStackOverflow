@@ -2,7 +2,7 @@
 class @Answer
   constructor: (@answer_id) ->
 
-    this.$el = $(".answer##{@answer_id}")
+    this.$el = $(".answer#answer_#{@answer_id}")
     this.$body = this.$el.find(".answer-body")
     this.$attachments = this.$el.find(".attachments")
     this.$rating = this.$el.find(".rating")
@@ -24,7 +24,8 @@ class @Answer
 
   loadComments: ->
     this.$comment.each (i, e) =>
-      this.comments[e.id] = new Comment(e.id, "answer", @answer_id)
+      id = e.id.split("_")[1]
+      this.comments[id] = new Comment(id, "answer", @answer_id)
 
   bindElements: ->
     this.$editLink.click (e) =>
@@ -102,6 +103,7 @@ class @Answer
     this.$attachments.html(attachments)
 
   destroyAnswer: ->
+    console.log this
     this.$el.remove()
   
   voteUp: ->

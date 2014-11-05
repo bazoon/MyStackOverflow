@@ -1,4 +1,4 @@
-div class = "answer" id = "{{answer.id}}"
+div class = "answer" id = "answer_{{answer.id}}"
   div class = 'panel panel-default'
     .panel-heading 
       h3.panel-title
@@ -23,7 +23,7 @@ div class = "answer" id = "{{answer.id}}"
       
 
     .panel-footer
-      a href="#" id="edit_answer_{{answer.id}}" data-remote="true" class="edit_link"
+      a href="#" id="edit_answer_{{answer.id}}" data-remote="true" class="edit_link" 
         span class = "glyphicon glyphicon-edit"
       a href="{{answer.destroy_path}}" id="delete_answer_{{answer.id}}" data-method="delete" data-confirm="Are you sure?" data-remote="true" rel="nofollow" data-type="json"
         span class = "glyphicon glyphicon-trash"
