@@ -16,7 +16,7 @@ feature 'Destroy answer', %q{
     visit question_path(question)
     # binding.pry
     click_link "delete_answer_#{user_answer.id}"
-    page.driver.browser.switch_to.alert.accept
+    # page.driver.browser.switch_to.alert.accept
 
     expect(page).to_not have_content 'MyText'
     expect(page).to_not have_link "delete_answer_#{user_answer.id}"
