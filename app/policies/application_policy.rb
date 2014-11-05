@@ -35,6 +35,7 @@ class ApplicationPolicy
   end
 
   def vote?
+    # binding.pry
     record.user != @user && !Vote.voted?(@record, @user)
   end
 

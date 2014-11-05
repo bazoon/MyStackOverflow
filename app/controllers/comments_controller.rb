@@ -9,7 +9,8 @@ class CommentsController < ApplicationController
   after_action :publish_destroyed_comment, only: :destroy
   before_action :load_comment, except: [:new, :create]
   responders :location, :flash
-  respond_to :json
+
+  respond_to :json,:js
 
   def new
 
@@ -28,7 +29,10 @@ class CommentsController < ApplicationController
 
   def update
     authorize @comment
+
+
     @comment.update(comment_params)
+    # puts @comment.inspect
     respond_with @comment
   end
 
@@ -48,7 +52,7 @@ class CommentsController < ApplicationController
   end
 
   def publish_destroyed_comment
-    PrivatePub.publish_to '/questions', destroy_comment: @comment.id
+    PrivatePub.publish_to '/questions', destroy_comment: CommentSerializer.new(@comment).as_json
   end
 
   def load_comment

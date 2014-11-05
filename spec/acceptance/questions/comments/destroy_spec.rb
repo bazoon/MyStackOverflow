@@ -17,6 +17,8 @@ feature 'Destroy comment', %q{
     comment
     visit question_path(question)
     click_link "destroy_comment#{comment.id}"
+    
+    # page.driver.browser.switch_to.alert.accept
     expect(page).to_not have_content(comment.body)
   end
 

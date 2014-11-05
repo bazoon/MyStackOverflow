@@ -22,5 +22,8 @@
 /public/uploads
 /public/spec
 
+
+/coverage
+
 # Mac OS files
 .DS_Store
