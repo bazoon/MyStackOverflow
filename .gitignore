@@ -23,7 +23,7 @@
 /public/spec
 
 
-/coverage
+/coverage/*.*
 
 # Mac OS files
 .DS_Store
