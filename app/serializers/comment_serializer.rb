@@ -9,7 +9,7 @@ class CommentSerializer < ActiveModel::Serializer
 
 
   def commentable
-    object.commentable_type
+    object.commentable
   end
 
   def commentable_type
