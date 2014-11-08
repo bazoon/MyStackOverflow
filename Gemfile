@@ -41,7 +41,7 @@ end
 
 group :test do
     gem 'shoulda-matchers'
-
+    gem 'json_spec'
 end
 
 group :development do
@@ -79,6 +79,9 @@ gem 'omniauth-facebook'
 gem 'omniauth-twitter'
 
 gem "pundit"
+gem 'doorkeeper'
+# gem 'oj'
+# gem 'oj_mimic_json'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

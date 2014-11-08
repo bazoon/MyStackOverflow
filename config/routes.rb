@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  use_doorkeeper
+
   default_url_options :host => "example.com" #TODO: why is that ?
 
   get 'question_vote/up/:question_id', to: 'question_vote#up', as: :question_up
@@ -37,6 +39,23 @@ Rails.application.routes.draw do
     end
   end
   
+
+  namespace :api do
+    namespace :v1 do
+      
+      resources :profiles do
+        get :me, on: :collection
+      end
+      
+      resources :answers, only: [:show]
+
+      resources :questions, only: [:index, :show] do
+        resources :answers, only: :index
+      end
+
+    end
+  end
+
 
   root 'home#index'
 

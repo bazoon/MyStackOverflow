@@ -6,7 +6,7 @@ class Attachment < ActiveRecord::Base
   belongs_to :attachmentable, polymorphic: true
 
   def file_name
-    File.basename(file.file.file)
+    File.basename(file.file.file) if file && file.file
   end
 
 end

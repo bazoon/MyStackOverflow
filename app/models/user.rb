@@ -12,6 +12,8 @@ class User < ActiveRecord::Base
 
   before_create { skip_confirmation!  }
 
+  scope :excluding, -> (idd) { where.not(id: idd) }
+
   VOTE_DOWN_PRICE = 1 #TODO 
 
   include Voteable  

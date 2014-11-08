@@ -7,13 +7,13 @@ class VotesController < ApplicationController
 
   def vote_up
     @rm = RatingModifier.new(current_user)
-    # @rm.vote_up(@voteable)
+    @rm.vote_up(@voteable)
     respond_with @voteable
   end
 
   def vote_down
     @rm = RatingModifier.new(current_user)
-    # @rm.vote_down(@voteable)
+    @rm.vote_down(@voteable)
     respond_with @voteable
   end
 
