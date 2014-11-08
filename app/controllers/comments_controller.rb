@@ -16,11 +16,7 @@ class CommentsController < ApplicationController
 
   end
 
-  def edit
-    authorize @comment
-    @commentable = @comment.commentable_type.constantize
-  end
-
+  
   def create
     authorize Comment
     @comment = @commentable.comments.create(comment_params.merge(user: current_user))
