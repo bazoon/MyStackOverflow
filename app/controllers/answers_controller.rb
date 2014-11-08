@@ -28,9 +28,9 @@ class AnswersController < ApplicationController
 
   #TODO: не стоит аякс делать
   def edit
-    authorize @answer
-    respond_with @answer
-  end
+  #   authorize @answer
+  #   respond_with @answer
+  # end
 
   def update
     authorize @answer
