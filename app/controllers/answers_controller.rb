@@ -8,11 +8,9 @@ class AnswersController < ApplicationController
   after_action :publish_updated_answer, only: :update
   after_action :publish_deleted_answer, only: :destroy
   
-  responders :location, :flash 
+  responders :location, :flash
   respond_to :json, :js
 
-
-  #TODO: refactor
   def create
     authorize Answer
     @answer = @question.answers.create(answer_params.merge(user: current_user))
@@ -26,11 +24,6 @@ class AnswersController < ApplicationController
     end
   end
 
-  #TODO: не стоит аякс делать
-  def edit
-  #   authorize @answer
-  #   respond_with @answer
-  # end
 
   def update
     authorize @answer

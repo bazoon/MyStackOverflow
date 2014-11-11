@@ -1,146 +1,133 @@
-$ ->
-  #TODO: class, namespace
 
-  createAnswer = (answer) ->
-    answer = HandlebarsTemplates['answers/answer'](answer)
-    $(".answers").append(answer)
-    window.clearFormErrors($(".answer_form form"))
+class @Answer
+  constructor: (@answer_id) ->
 
-  updateAnswer = (data) ->
+    this.$el = $(".answer#answer_#{@answer_id}")
+    this.$body = this.$el.find(".answer-body")
+    this.$attachments = this.$el.find(".attachments")
+    this.$rating = this.$el.find(".rating")
+    this.$voteControls = this.$el.find(".vote_controls")
+    this.$comments = this.$el.find(".comments")
+    this.$commentsPanel = this.$el.find(".comments .panel-body") 
+    this.$comment = this.$el.find(".comment")
+    this.$commentLink = this.$el.find(".comment-edit-link")
+    this.$cancelCommentLink = this.$el.find(".cancel-comment")
+    this.$commentForm = this.$el.find(".new_comment_form")
+    this.$editForm = this.$el.find(".edit_answer")
+    this.$editLink = this.$el.find(".edit_link")
+    this.comments = []
+    @bindElements()
+    @loadComments()
+    @setAjaxHooks()
+
+
+
+  loadComments: ->
+    this.$comment.each (i, e) =>
+      id = e.id.split("_")[1]
+      this.comments[id] = new Comment(id, "answer", @answer_id)
+
+  bindElements: ->
+    this.$editLink.click (e) =>
+      e.preventDefault()
+      @showEditForm()
+      false
+
+    this.$commentLink.click (e) =>
+      e.preventDefault()
+      @showCommentForm()
+
+    this.$cancelCommentLink.click (e) =>
+      e.preventDefault()
+      @hideCommentForm()  
+
+  setAjaxHooks: ->
+    that = this
+
+    this.$editForm.on "ajax:error", (e, xhr, status) ->
+      # console.log that.renderFormErrors
+      that.renderFormErrors($(this), xhr.responseJSON)
+
+    this.$commentForm.on "ajax:error", (e, xhr, status) ->
+      that.renderFormErrors($(this), xhr.responseJSON)  
+
+  destroyComment: (data) ->
+    comment = @comments[data.id]
+    comment.destroy()          
+
+  updateComment: (data) ->
+    comment = @comments[data.id]
+    comment.update(data)    
+
+  createComment: (data) ->
+    comment = HandlebarsTemplates['comments/comment'](data)
+    this.$commentsPanel.append(comment)  
+    @comments[data.id] = new Comment(data.id, "answer", @answer_id)  
+    @hideCommentForm()
+
+  updateBody: (data) ->
     body = HandlebarsTemplates['answers/body'](data)
-    $(".update_form").hide()
-    $(".answer[data-id='#{data.answer.id}'] .answer-body").html(body) 
+    this.$body.html(body)  
+
+  updateAttachments: (data) ->
     attachments = HandlebarsTemplates['answers/attachments'](data)
-    $(".answer[data-id='#{data.answer.id}'] .attachments").html(attachments)
+    this.$attachments.html(attachments)  
 
-  destroyAnswer = (id) ->
-    $(".answer[data-id='#{id}']").remove()
 
-  voteUpQuestion = (data) ->
-    ratingElem = $("#question_rating_" + data.id)
-    rating = parseInt(ratingElem.text(), 10)
-    ratingElem.text(rating+1)
-    $('.question[data-id="'+ data.id+'"] .vote_controls').hide()
 
-  voteDownQuestion = (data) ->
-    ratingElem = $("#question_rating_" + data.id)
-    rating = parseInt(ratingElem.text(), 10)
-    ratingElem.text(rating-1)
-    $('.question[data-id="'+ data.id+'"] .vote_controls').hide()
+  showEditForm: ->
+    this.$editForm.removeClass("hidden")
 
-  voteUpAnswer = (data) ->
-    ratingElem = $("#answer_rating_" + data.id)
-    rating = parseInt(ratingElem.text(), 10)
-    ratingElem.text(rating+1)
-    $('.answer[data-id="'+ data.id+'"] .vote_controls').hide()
   
-  updateQuestion = (data) ->
-    body = HandlebarsTemplates['questions/body'](data)
-    $(".question .body").html(body)
-    title = HandlebarsTemplates['questions/title'](data)
-    $(".question .title").html(title)
-    attachments = HandlebarsTemplates['questions/attachments'](data)
-    $(".question .attachments").html(attachments)
-    tags = HandlebarsTemplates['questions/tags'](data)
-    $(".question .tags").html(tags)
+  hideEditForm: ->
+    this.$editForm.addClass("hidden")
+    @clearFormErrors(this.$editForm)
 
-  hideCommentForm = ->
-    $(".edit_comment").hide() 
+  showCommentForm: ->
+    this.$commentForm.removeClass("hidden")
 
-  hideNewCommentForm = ->
-    $(".new_comment_form").hide() 
-    window.clearFormErrors($(".new_comment_form"))
+  hideCommentForm: ->
+    this.$commentForm.addClass("hidden")
+    this.$commentForm[0].reset()
 
+  update: (data) ->
+    body = HandlebarsTemplates['answers/body'](data)
+    @hideEditForm()  
+    this.$body.html(body) 
+    attachments = HandlebarsTemplates['answers/attachments'](data)
+    this.$attachments.html(attachments)
 
-  createQuestionComment = (data) ->
-    comment = HandlebarsTemplates['comments/comment'](data)
-    $(".question .comments .panel-body").append(comment)  
-    hideNewCommentForm()
-
-  createAnswerComment = (data) ->
-    comment = HandlebarsTemplates['comments/comment'](data)
-    $(".answer[data-id='"+data.commentable.id+"'] .comments .panel-body").append(comment)
-    hideNewCommentForm()
- 
-  createComment = (data) ->
-    if data.comment.commentable_type == "Question"
-      createQuestionComment(data.comment)
-    else
-      createAnswerComment(data.comment)
-
-  updateComment = (data) ->
-    body = HandlebarsTemplates['comments/body'](data)
-    console.log body
-    $("#comment_" + data.id+" .body").html(body)
-    hideCommentForm()
-
-  destroyComment = (id) ->
-    $("#comment_#{id}").remove()
-
-
-  # PrivatePub.subscribe '/questions' , (data, channel) ->
-
-  #   if (typeof data.create_answer != 'undefined')
-  #     createAnswer(data.create_answer)
-  #   if (typeof data.update_answer != 'undefined')
-  #     updateAnswer(data.update_answer)
-  #   if (typeof data.destroy_answer != 'undefined')
-  #     destroyAnswer(data.destroy_answer)
-  #   if (typeof data.vote_up_question != 'undefined')
-  #     voteUpQuestion(data.vote_up_question)
-  #   if (typeof data.vote_down_question != 'undefined')
-  #     voteDownQuestion(data.vote_down_question)
-  #   if (typeof data.vote_up_answer != 'undefined')
-  #     voteUpAnswer(data.vote_up_answer)
-  #   if (typeof data.update_question != 'undefined')
-  #     updateQuestion(data.update_question)
-  #   if (typeof data.create_comment != 'undefined')
-  #     createComment(data.create_comment)
-  #   if (typeof data.update_comment != 'undefined')
-  #     updateComment(data.update_comment.comment)
-  #   if (typeof data.destroy_comment != 'undefined')
-  #     destroyComment(data.destroy_comment)
-    
-
-  # setUpdateSuccessHook = ->
-  #   $(".update_form").on "ajax:success",  (e, data, status, xhr) ->
-  #     data = $.parseJSON(xhr.responseText)
-  #     body = HandlebarsTemplates['answers/body'](data)
-  #     $(".update_form").hide()
-  #     $(".answer[data-id='#{data.answer.id}'] .answer-body").html(body) 
-  #     attachments = HandlebarsTemplates['answers/attachments'](data)
-  #     $(".answer[data-id='#{data.answer.id}'] .attachments").html(attachments)
-  #     clearFormErrors($(this))
-
-  setUpdateErrorHook = ->
-      $(".update_form").on 'ajax:error', (event, xhr, status, error) ->
-        form = $(this)
-        renderFormErrors(form, xhr.responseJSON)
-
-      $(".new_comment_form").on 'ajax:error', (event, xhr, status, error) ->
-        form = $(this)
-        renderFormErrors(form, xhr.responseJSON)
+  destroyAnswer: ->
+    console.log this
+    this.$el.remove()
   
+  voteUp: ->
+    rating = parseInt(this.$rating.text(), 10)
+    this.$rating.text(rating + 1)
+    this.$voteControls.hide() 
 
-
-  # $(".answer_form form").on "ajax:success", (e, data, status, xhr) ->
-  #   answer = HandlebarsTemplates['answers/answer'](xhr.responseJSON)
-  #   $(".answers").append(answer)
-  #   setUpdateSuccessHook()
-  #   setUpdateErrorHook()
-  #   clearFormErrors($(this))
-
-  $(".answer_form form").on "ajax:error", (event, xhr, status, error) ->
-    window.renderFormErrors($(this), xhr.responseJSON)
+  voteDown: ->
+    rating = parseInt(this.$rating.text(), 10)
+    this.$rating.text(rating - 1)
+    this.$voteControls.hide() 
   
+  clearFormErrors: (form) ->
+    form.removeClass("has-error")
+    form.find(".alert.alert-danger").remove()
+    form.find(".help-block.error").remove()
+    form[0].reset()
 
-  # $(".edit_question").on 'ajax:error', (event, xhr, status, error) ->
-  #     # form = $(this)
-  #     # renderFormErrors(form, xhr.responseJSON)
-  #     alert('ER')  
+  renderFormErrors: (form, response) ->
 
-  # setUpdateSuccessHook() 
+    unless form.hasClass("has-error")
+      form.addClass("has-error")
+      form.prepend("<div class='alert alert-danger has-error'>Please review the problems below:</div>")
+      
+      for field, error of response.errors
+        field = form.find(".form-control[id$=#{field}]")
+        formGroup = field.parents(".form-group")
+        # formGroup.addClass("has-error") 
+        
+        formGroup.append("<span class='help-block error'>#{error[0]}</a>")
 
-  # setUpdateErrorHook() 
-  # setUpdateErrorHook()
-  
+
