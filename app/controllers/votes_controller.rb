@@ -3,7 +3,7 @@ class VotesController < ApplicationController
   before_action :authorize_voteable
   after_action :publish_up, only: :vote_up
   after_action :publish_down, only: :vote_down
-  respond_to :json  
+  respond_to :json
 
   def vote_up
     @rm = RatingModifier.new(current_user)
@@ -28,7 +28,6 @@ class VotesController < ApplicationController
   end
 
   def authorize_voteable
-
     authorize @voteable, :vote?
   end
 

@@ -24,21 +24,29 @@ RSpec.describe VotesController, type: :controller do
       expect(assigns(:voteable)).to eq(answer)
     end
 
-    # it 'calls vote_up for RatingModifier' do
-    #   expect(RatingModifier).to receive(:new)
-    #   get :vote_up, question_id: question, format: :json
-      
+    it 'calls vote_up for RatingModifier' do
+      rm = RatingModifier.new(user)
+      allow(RatingModifier).to receive(:new) { rm }
+      expect(rm).to receive(:vote_up).with(question)
+      get :vote_up, question_id: question, format: :json
+    end
 
-    # end
+    it 'calls vote_down for RatingModifier' do
+      rm = RatingModifier.new(user)
+      allow(RatingModifier).to receive(:new) { rm }
+      expect(rm).to receive(:vote_down).with(question)
+      get :vote_down, question_id: question, format: :json
+    end
     
-#TODO: проверить был вызван метод с такими то параметрами, контролле не отвествененн за это внизу
+    it 'Publish question after vote_up call' do
+      expect(PrivatePub).to receive(:publish_to)
+      get :vote_up, question_id: question, format: :json
+    end
 
-    # it 'question raiting +1' do
-    #   get :up, question_id: question, format: :json 
-    #   question.reload
-    #   expect(question.rating).to eq(1)
-    # end
-
+    it 'Publish question after vote_down call' do
+      expect(PrivatePub).to receive(:publish_to)
+      get :vote_down, question_id: question, format: :json
+    end
 
   end
 

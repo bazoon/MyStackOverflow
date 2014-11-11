@@ -8,8 +8,6 @@ class RatingModifier
     object.user == @voter || Vote.voted?(object, @voter)
   end
 
-  # SOLID
-
   def vote_up(object)
     return if cant_vote?(object)
     Vote.up(object, @voter)
