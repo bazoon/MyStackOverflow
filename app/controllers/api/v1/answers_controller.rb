@@ -4,11 +4,11 @@ class Api::V1::AnswersController < Api::V1::BaseController
   before_action :load_question, only: :index
 
   def index
-    respond_with @question.answers
+    respond_with @question.answers, serializers: Api::AnswerSerializer
   end
 
   def show
-    respond_with Answer.find(params[:id])
+    respond_with Answer.find(params[:id]), serializer: Api::AnswerSerializer
   end
 
 

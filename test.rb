@@ -7,7 +7,7 @@ callback_url = 'urn:ietf:wg:oauth:2.0:oob'
 
 client = OAuth2::Client.new(app_id, secret, :site => 'http://localhost:3000')
 client.auth_code.authorize_url(:redirect_uri => callback_url)
-token = client.auth_code.get_token('53cd42b9748aa2809ed7ecd8ba7b2401e4b0f7055e72da95a6688f15888da537', :redirect_uri => callback_url)
+token = client.auth_code.get_token('7dc3c09c85d98cf751c802a015ccef128c0bb44efbf3bc33f6f23f2e1f68e14c', :redirect_uri => callback_url)
 
 p token
 
