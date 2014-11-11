@@ -36,8 +36,8 @@ group :test, :development do
     
     gem 'launchy'
     gem 'database_cleaner'
-    # gem "capybara-webkit"
-    gem 'selenium-webdriver'
+    gem "capybara-webkit"
+    # gem 'selenium-webdriver'
 end
 
 group :test do

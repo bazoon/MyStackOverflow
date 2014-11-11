@@ -47,6 +47,13 @@ class User < ActiveRecord::Base
     authorizations.create(provider: provider, uid: uid)
   end
 
+  
+  def create_authorization(auth)
+    self.authorizations.create(provider: auth.provider, uid: auth.uid)
+    self
+  end
+
+
   private
 
   def self.create_user_from_oauth(auth, name)
@@ -57,10 +64,5 @@ class User < ActiveRecord::Base
   end
 
   
-  def create_authorization(auth)
-    self.authorizations.create(provider: auth.provider, uid: auth.uid)
-    self
-  end
-
   
 end

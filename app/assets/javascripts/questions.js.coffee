@@ -15,7 +15,7 @@ class @Question
     this.$cancelCommentLink = this.$el.find(".cancel-comment")
     this.$answers = $(".answers")
     this.$answer = $(".answers .answer")
-    this.$answer_form = this.$el.find(".answer_form form")
+    this.$answerForm = this.$el.find(".answer_form form")
 
     @question_id = this.$el.id
     @comments = {}
@@ -31,6 +31,9 @@ class @Question
 
 
     this.$commentForm.on "ajax:error", (e, xhr, status) ->
+      that.renderFormErrors($(this), xhr.responseJSON)  
+
+    this.$answerForm.on "ajax:error", (e, xhr, status) ->
       that.renderFormErrors($(this), xhr.responseJSON)  
   
 
@@ -137,7 +140,7 @@ class @Question
   createAnswer: (data) ->
     answer = HandlebarsTemplates['answers/answer'](data)
     this.$answers.append(answer)
-    @clearFormErrors(this.$answer_form)
+    @clearFormErrors(this.$answerForm)
     @answers[data.answer.id] = new Answer(data.answer.id)
 
 
