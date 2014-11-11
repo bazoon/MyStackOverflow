@@ -8,8 +8,8 @@ feature 'Destroy comment', %q{
 
   given(:user) { create(:user) }
   given!(:question) { create(:question) }
-  given!(:answer) { create(:answer, body: 'SOOOOM', question_id: question.id) }
-  given!(:comment) { create(:comment, commentable_id: answer.id, user_id: user.id) }
+  given!(:answer) { create(:answer, body: 'SOOOOM', question: question) }
+  given!(:comment) { create(:comment, commentable_id: answer.id, user: user) }
 
   scenario 'Authenticated user updates a comment for answer', js: true  do
     sign_in(user)

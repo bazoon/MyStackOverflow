@@ -21,6 +21,8 @@ class @Comment
     @bindElements()
     @setAjaxHooks()
 
+    
+
 
   setAjaxHooks: ->
     that = this

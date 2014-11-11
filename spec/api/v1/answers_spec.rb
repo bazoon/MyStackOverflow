@@ -8,7 +8,7 @@ describe 'Answers API' do
   let!(:comments) { create_list(:comment, 2, commentable_type: "Answer", commentable_id: answer.id)  } 
   let!(:comment) { comments.last } #possible bug if comment.first and TODO: why last?
   let!(:attachments) { create_list(:attachment, 2, attachmentable_id: answer.id, attachmentable_type: "Answer")  } 
-  let(:attachment) { attachments.last } 
+  let(:attachment) { attachments.last } #TODO: 1 elem
 
 
   describe 'GET index' do

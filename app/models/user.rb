@@ -34,10 +34,6 @@ class User < ActiveRecord::Base
     
   end
 
-  def create_authorization(auth)
-    self.authorizations.create(provider: auth.provider, uid: auth.uid)
-    self
-  end
 
 
   def send_confirmation_instructions(provider)
@@ -46,7 +42,7 @@ class User < ActiveRecord::Base
   end
 
 
-  def confirm_and_authorize(provider, uid)
+  def confirm_and_authorize(provider, uid) #TODO: похожий внизу?
     confirm!
     authorizations.create(provider: provider, uid: uid)
   end
@@ -58,6 +54,12 @@ class User < ActiveRecord::Base
     user = User.create!(email: auth.info[:email], name: name, password: password, password_confirmation: password)
     user.create_authorization(auth)
     user
+  end
+
+  
+  def create_authorization(auth)
+    self.authorizations.create(provider: auth.provider, uid: auth.uid)
+    self
   end
 
   
