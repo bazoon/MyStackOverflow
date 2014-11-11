@@ -78,8 +78,10 @@ class @Answer
   showEditForm: ->
     this.$editForm.removeClass("hidden")
 
+  
   hideEditForm: ->
-    this.$editForm.addClass("hidden")    
+    this.$editForm.addClass("hidden")
+    @clearFormErrors(this.$editForm)
 
   showCommentForm: ->
     this.$commentForm.removeClass("hidden")
@@ -87,13 +89,6 @@ class @Answer
   hideCommentForm: ->
     this.$commentForm.addClass("hidden")
     this.$commentForm[0].reset()
-
-
-  hideEditForm: ->
-    this.$editForm.addClass("hidden")
-    @clearFormErrors(this.$editForm)
-
-
 
   update: (data) ->
     body = HandlebarsTemplates['answers/body'](data)
@@ -136,9 +131,3 @@ class @Answer
         formGroup.append("<span class='help-block error'>#{error[0]}</a>")
 
 
-
-
-
-  
-@foo = {}
-@foo.Answer = Answer
