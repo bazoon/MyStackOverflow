@@ -1,8 +1,9 @@
 require 'rails_helper'
 
-describe "Profiles API" do
+describe 'Profiles API' do
   describe 'Resource Owner Profile' do
-    # it_behaves_like "API Authenticable"
+
+    it_behaves_like 'API Authenticable'
 
     context 'authorized' do
       let(:me) { create(:user) }
@@ -29,6 +30,10 @@ describe "Profiles API" do
       end
 
 
+    end
+
+    def do_request(options = {})
+      get '/api/v1/profiles/me', { format: :json }.merge(options)
     end
 
 

@@ -13,19 +13,8 @@ describe 'Answers API' do
 
   describe 'GET index' do
 
-    context 'Access token is empty' do
-      it 'returns 401 status code' do
-        get "/api/v1/questions/#{question.id}/answers", format: :json
-        expect(response.status).to eq 401
-      end
-    end
-
-    context 'Access token is invalid' do
-      it 'returns 401 status code' do
-        get "/api/v1/questions/#{question.id}/answers", format: :json, access_token: 'khbewuihdwqh21e'
-        expect(response.status).to eq 401
-      end
-    end
+    it_behaves_like 'API Authenticable'
+    
     
     context 'Authorized' do
 
@@ -74,28 +63,17 @@ describe 'Answers API' do
       end
     end
 
+    def do_request(options = {})
+      get "/api/v1/questions/#{question.id}/answers", {format: :json}.merge(options)
+    end
+
   end
 
 
   describe 'GET show' do
+
+    it_behaves_like 'API Authenticable'
     
-    context 'Access token is empty' do
-      it 'returns 401 status code' do
-        get "/api/v1/answers/#{answer.id}", format: :json
-        expect(response.status).to eq 401
-      end
-    end
-
-    context 'Access token is invalid' do
-      it 'returns 401 status code' do
-        get "/api/v1/answers/#{answer.id}", format: :json, access_token: 'khbewuihdwqh21e'
-        expect(response.status).to eq 401
-      end
-    end
-
-
-
-
     context 'Authorized' do
 
 
@@ -145,31 +123,12 @@ describe 'Answers API' do
  
       end
 
+    end
 
-
-    end 
-
-    
-
+    def do_request(options = {})
+      get "/api/v1/answers/#{answer.id}", { format: :json }.merge(options)
+    end
 
   end
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-
-
 
 end
