@@ -1,5 +1,6 @@
 class Api::V1::ProfilesController < Api::V1::BaseController
   respond_to :json
+  skip_after_action :verify_authorized
 
   def me
     # respond_with UserSerializer.new(current_resource_owner).as_json

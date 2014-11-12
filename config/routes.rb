@@ -49,8 +49,8 @@ Rails.application.routes.draw do
       
       resources :answers, only: [:show]
 
-      resources :questions, only: [:index, :show] do
-        resources :answers, only: :index
+      resources :questions, only: [:index, :show, :create] do
+        resources :answers, only: [:index, :create]
       end
 
     end

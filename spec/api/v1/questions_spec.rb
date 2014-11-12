@@ -36,25 +36,6 @@ describe 'Question API' do
         end
       end
 
-
-
-
-      context 'answers' do
-        
-        it 'included in question object' do
-          expect(response.body).to have_json_size(1).at_path("questions/0/answers")
-        end
-
-        %w(id body created_at updated_at).each do |attr|
-          it "answer object contains #{attr}" do
-            expect(response.body).to be_json_eql(answer.send(attr.to_sym).to_json).at_path("questions/0/answers/0/#{attr}")
-          end
-        end
-
-      end
-
-
-
     end
 
     def do_request(options = {})
@@ -65,7 +46,7 @@ describe 'Question API' do
   end
 
 
-  describe '#show' do
+  describe 'GET #show' do
 
     it_behaves_like 'API Authenticable'
 
@@ -87,19 +68,7 @@ describe 'Question API' do
         end
       end
       
-      context 'answers' do
-        
-        it 'included in question object' do
-          expect(response.body).to have_json_size(1).at_path("question/answers")
-        end
-
-        %w(id body created_at updated_at).each do |attr|
-          it "answer object contains #{attr}" do
-            expect(response.body).to be_json_eql(answer.send(attr.to_sym).to_json).at_path("question/answers/0/#{attr}")
-          end
-        end
-
-      end
+      
     
     end
 
@@ -108,6 +77,36 @@ describe 'Question API' do
     end  
 
       
+  end
+
+
+  describe 'POST #create' do
+
+    let(:create_path) { '/api/v1/questions/' }
+    
+    # before do
+    #   post create_path, format: :json,question: attributes_for(:question), access_token: access_token.token
+    # end
+
+    it_behaves_like 'API Authenticable'
+
+    def do_request(options = {})
+      post create_path, { question: attributes_for(:question), format: :json }.merge(options)
+    end      
+    
+
+    context 'Authorized' do
+
+      it 'saves the new other_question in the database' do
+        expect { post create_path, format: :json, question: attributes_for(:question), format: :json, access_token: access_token.token }.to change(Question, :count).by(1)
+      end
+
+      it 'does not save the question if attributes are not valid' do
+        expect { post create_path, question: attributes_for(:invalid_question), format: :json, access_token: access_token.token }.to_not change(Question, :count)
+      end
+
+    end
+
   end
 
 

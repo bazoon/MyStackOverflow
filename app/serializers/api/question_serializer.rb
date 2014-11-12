@@ -3,7 +3,7 @@ class Api::QuestionSerializer < ActiveModel::Serializer
 
 
   has_many :attachments
-  has_many :comments
+  has_many :comments, serializer: Api::CommentSerializer
 
 
 end
