@@ -38,7 +38,7 @@ class AnswersController < ApplicationController
 
   def select
     authorize @answer
-    @answer.set_as_selected
+    RatingModifier.new(current_user).accept(@answer)
     respond_with @answer
   end
 

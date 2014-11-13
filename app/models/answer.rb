@@ -10,9 +10,15 @@ class Answer < ActiveRecord::Base
   has_many :attachments, as: :attachmentable, dependent: :destroy
   accepts_nested_attributes_for :attachments, allow_destroy: true
 
-  VOTE_WEIGHT = 10 #константы куда-то
-  VOTE_DOWN_WEIGHT = 2
-  ACCEPT_WEIGHT = 15
+  before_create :update_rating
+
+  VOTE_WEIGHT = 1 #константы куда-то
+  VOTE_DOWN_WEIGHT = 1
+  ACCEPT_WEIGHT = 3
+  FIRST_WEIGHT = 1
+  OWN_FIRST_WEIGHT = 3
+  OWN_WEIGHT = 2
+
 
   include Voteable
 
@@ -26,8 +32,10 @@ class Answer < ActiveRecord::Base
   end
 
   def set_as_selected
-    question.deselect_all_answers
-    update(selected: !selected)
+    unless selected
+      question.deselect_all_answers
+      update(selected: true)
+    end
   end
   
   def class_underscore
@@ -37,4 +45,20 @@ class Answer < ActiveRecord::Base
   def self.deselect
     update_all(selected: false)
   end
+
+  private
+
+  def update_rating
+    
+    if question.user == user
+      if question.answers.empty?
+        user.up_by(OWN_FIRST_WEIGHT) 
+      else
+        user.up_by(OWN_WEIGHT) 
+      end
+    else
+      user.up_by(FIRST_WEIGHT) if question.answers.empty?
+    end
+  end
+
 end

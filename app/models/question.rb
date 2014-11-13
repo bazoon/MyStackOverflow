@@ -20,7 +20,7 @@ class Question < ActiveRecord::Base
   include Voteable
 
   VOTE_DOWN_WEIGHT = 2
-  VOTE_WEIGHT = 5
+  VOTE_WEIGHT = 2
 
   def vote_weight
     VOTE_WEIGHT
