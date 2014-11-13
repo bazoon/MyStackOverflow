@@ -8,41 +8,48 @@ class @Question
     this.$commentsPanel = this.$el.find(".comments .panel-body") 
     this.$comment = this.$comments.find(".comment")
     this.$commentLink = this.$el.find(".comment-edit-link")
-    this.$cancelCommentLink = this.$el.find(".cancel-comment")
-    this.$commentForm = this.$el.find(".new_comment_form")
+    # this.$cancelCommentLink = this.$el.find(".cancel-comment")
+    this.$commentFormHolder = this.$el.find(".new_comment_form_holder")
+    
     this.$voteControls = this.$el.find(".vote_controls")
     this.$commentLink = this.$el.find(".comment-edit-link")
-    this.$cancelCommentLink = this.$el.find(".cancel-comment")
+    
     this.$answers = $(".answers")
     this.$answer = $(".answers .answer")
     this.$answerForm = this.$el.find(".answer_form form")
 
-    @question_id = this.$el.id
+    @question_id = this.$el.attr("id")
     @comments = {}
     @answers = {}
     @loadAnswers()
     @loadComments() 
-    @bindElements() 
+    @bindCommentLink() 
     @subscribeToPub()
     @setAjaxHooks()
+
+
+  setCommentAjaxHooks: ->
+    that = this
+    this.$commentForm = this.$el.find(".new_comment_form")
+    this.$commentForm.on "ajax:error", (e, xhr, status) ->
+      that.renderFormErrors($(this), xhr.responseJSON)  
 
   setAjaxHooks: ->
     that = this
 
-
-    this.$commentForm.on "ajax:error", (e, xhr, status) ->
-      that.renderFormErrors($(this), xhr.responseJSON)  
-
     this.$answerForm.on "ajax:error", (e, xhr, status) ->
       that.renderFormErrors($(this), xhr.responseJSON)  
   
+  
 
-  bindElements: ->
+  bindCommentLink: ->
     
     this.$commentLink.click (e) =>
       e.preventDefault()
       @showCommentForm()
 
+  bindCommentCancelLink: =>
+    this.$cancelCommentLink = this.$el.find(".cancel-comment")
     this.$cancelCommentLink.click (e) =>
       e.preventDefault()
       @hideCommentForm()  
@@ -173,10 +180,24 @@ class @Question
 
 
   showCommentForm: ->
+
+    if this.$commentFormHolder.children().length == 0
+      this.$commentFormHolder.append(HandlebarsTemplates['comments/form']({id: @question_id}))
+      # console.log  @bindElements
+
+
+    this.$commentForm = this.$el.find(".new_comment_form")
     this.$commentForm.removeClass("hidden")
+
+ 
+    @bindCommentCancelLink()
+    @setCommentAjaxHooks()
+    
+
 
   hideCommentForm: ->
     this.$commentForm.addClass("hidden")
+    @clearFormErrors(this.$commentForm)
 
 
 
