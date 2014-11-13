@@ -36,8 +36,8 @@
     = render partial: 'comments/comments', locals: { commentable: @question }
     - if policy(Comment).create?
       = link_to 'comment', '#', class: 'comment-edit-link'
-      = render partial: 'comments/form', locals: { commentable: @question, comment: @question.comments.new }
-      
+      .new_comment_form_holder
+        
   - if policy(Answer).create?
     .panel.panel-info.new-answer
       .panel-heading

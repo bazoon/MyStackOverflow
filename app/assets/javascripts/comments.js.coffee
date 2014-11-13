@@ -16,10 +16,11 @@ class @Comment
     this.$el = $(".comment#comment_#{@comment_id}")
     this.$body = this.$el.find(".body")
     this.$editLink = this.$el.find(".edit_comment")
-    this.$cancelLink = this.$el.find(".cancel-comment")
-    this.$updateForm = this.$el.find(".update_form")
+    
+    
+    this.$updateFormHolder = this.$el.find(".update_form_holder")
     @bindElements()
-    @setAjaxHooks()
+    # @setAjaxHooks()
 
     
 
@@ -27,63 +28,28 @@ class @Comment
   setAjaxHooks: ->
     that = this
 
-    this.$updateForm.on "ajax:error", (e, xhr, status) ->
+    this.$updateCommentForm.on "ajax:error", (e, xhr, status) ->
 
       that.renderFormErrors($(this), xhr.responseJSON)
 
   
 
-
-  bindElements: ->
+  bindCancelLink: ->
     that = this
 
-    # this.$updateForm.on "ajax:success", (e, data, status, xhr) ->
-    #   # that.$body.html('NEW23')
-    #   # that.$updateForm.addClass("hidden")
-
-
+    this.$cancelLink = this.$el.find(".cancel-comment")
     this.$cancelLink.on "click", (e) =>
       e.preventDefault()
       @hideCommentForm()
       false
 
-      # for k,v of that.$updateForm
-      #   if typeof v == "string"
-      #     console.log "#{k}: #{v}"
-      
-      # console.log "=================="
-
-      # for k,v of $(".update_form")
-      #   if typeof v == "string"
-      #     console.log "#{k}: #{v}"
-          
-      # that.$updateForm.hide()
-
-      # that.hideCommentForm()
-
-    # this.$el.parents(".comments").on "click", ".cancel-comment", (e) ->
-    #   e.preventDefault()
-    #   console.log 'Cancel'
-      
+  bindElements: ->
+    that = this
+  
     this.$editLink.on "click", (e) =>
       e.preventDefault()
       @showCommentForm()
       false
-      # $(".update_form").removeClass("hidden")
-      
-    #   $(".comment-form").slideUp()
-    #   $(".edit-form").prev().show().end().remove()
-    
-
-    # this.$el.on "click", (e) =>
-      
-    #   e.preventDefault()
-    #   @showCommentForm()
-
-    # this.$cancelLink.click (e) =>  
-    #   e.preventDefault()
-    #   console.log 'cancel'
-    #   @hideCommentForm()  
 
   update: (data) ->
     body = HandlebarsTemplates['comments/body'](data)
@@ -94,10 +60,21 @@ class @Comment
     this.$el.remove()
 
   showCommentForm: ->
-    this.$updateForm.removeClass("hidden")
+
+    if this.$updateFormHolder.children().length == 0
+      this.$updateFormHolder.append(HandlebarsTemplates['comments/update_form']({id: @comment_id, body: this.$body.text()}))
+
+    this.$updateCommentForm = this.$el.find(".update_form")
+    this.$updateCommentForm.removeClass("hidden")
+
+    @bindCancelLink()
+    @setAjaxHooks()
+
+
 
   hideCommentForm: ->
-    this.$updateForm.addClass("hidden")
+    this.$updateCommentForm.addClass("hidden")
+    clearFormErrors(this.$updateCommentForm)
     
     # $(".update_form").hide()
     # this.$updateForm.hide()

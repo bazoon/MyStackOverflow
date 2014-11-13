@@ -1,0 +1,13 @@
+form#new_comment.simple_form.new_comment_form accept-charset="UTF-8" action="/questions/{{id}}/comments" data-id="{{id}}" data-object="question" data-remote="true" data-type="json" method="post" novalidate="novalidate" 
+  div style="display:none" 
+    input name="utf8" type="hidden" value="✓" /
+  .form-group.text.required.comment_body
+    label.text.required.control-label for="comment_body" 
+      abbr title="required"  *
+      | Comment
+    textarea#comment_body.text.required.form-control name="comment[body]" 
+  .form-actions.center
+    input.btn.btn-primary name="commit" type="submit" value="submit" 
+    | &nbsp;&nbsp;
+    a.cancel-comment href="#"  Cancel
+

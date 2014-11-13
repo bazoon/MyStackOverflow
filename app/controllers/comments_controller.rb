@@ -19,11 +19,13 @@ class CommentsController < ApplicationController
   
   def create
     authorize Comment
+    
     @comment = @commentable.comments.create(comment_params.merge(user: current_user))
     respond_with @comment
   end
 
   def update
+
     authorize @comment
 
 
