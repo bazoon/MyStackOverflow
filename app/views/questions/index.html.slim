@@ -1,10 +1,18 @@
 h1 = t('.header')
-ul.list-group
-- @questions.each do |question|
-  li.list-group-item
-    = link_to question.title, question
-    span.pull-right 
+table.table
+  tr
+    th Title
+    th Answers 
+    th Votes
+    th
+    th
+  - @questions.each do |question|
+    tr
+      td= link_to question.title, question
+      td= question.answers.count
+      td= question.rating
+        
       - if policy(question).update?
-        = link_to(edit_icon, edit_question_path(question))
-        = link_to del_icon, question_path(question), id: "delete#{question.id}", method: :delete, data: { confirm: 'Are you sure?' }
+        td= link_to(edit_icon, edit_question_path(question))
+        td= link_to del_icon, question_path(question), id: "delete#{question.id}", method: :delete, data: { confirm: 'Are you sure?' }
 
