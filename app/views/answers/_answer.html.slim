@@ -7,8 +7,9 @@
           .label.label-info.space-right
             span class = "rating"
               =answer.rating
+          |&nbsp;
           small
-            = answer.user.email
+            = link_to answer.user.email, profile_path(answer.user)
     .panel-body
       .answer-body
         = answer.body

@@ -17,6 +17,7 @@ class User < ActiveRecord::Base
   VOTE_DOWN_PRICE = 1 #TODO 
 
   include Voteable  
+  mount_uploader :avatar, AvatarUploader
 
 
   def self.find_for_oauth(auth)

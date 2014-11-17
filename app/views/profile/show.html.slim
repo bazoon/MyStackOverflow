@@ -1,0 +1,10 @@
+h1 User profile
+
+= image_tag(@user.avatar_url(:thumb))
+
+
+.name = "Name: #{@user.name}"
+.email = "Email: #{@user.email}"
+.rating = "Rating: #{@user.rating}"
+
+= link_to 'edit', edit_user_registration_path 

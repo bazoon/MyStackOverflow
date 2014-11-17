@@ -7,8 +7,10 @@ div class = "answer" id = "answer_{{answer.id}}"
           .label.label-info.space-right
             span id = "answer_rating_{{answer.id}}"
               = "{{answer.rating}}"
+          |&nbsp;
           small
-            = "{{answer.user_email}}"
+            a href = "/profile/show/{{answer.user_id}}"
+              span = "{{answer.user_email}}"
 
     .panel-body
       .answer-body

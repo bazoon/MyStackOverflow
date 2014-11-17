@@ -1,5 +1,5 @@
 class AnswerSerializer < ActiveModel::Serializer
-  attributes :id, :body, :edit_path, :destroy_path, :select_path, :rating, :created_at, :user_email, :updated_at
+  attributes :id, :body, :edit_path, :destroy_path, :select_path, :rating, :created_at, :user_email, :updated_at, :user_id
   has_many :tags
   has_many :votes
   has_many :attachments
@@ -7,6 +7,9 @@ class AnswerSerializer < ActiveModel::Serializer
   has_many :comments
 
 
+  def user_id
+    object.user.id
+  end
 
   def user_email
     object.user.email if object.user

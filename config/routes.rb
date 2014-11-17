@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  
+  get 'profile/show/:user_id', to: 'profile#show', as: :profile
+
   use_doorkeeper
 
   default_url_options :host => "example.com" #TODO: why is that ?
@@ -15,7 +18,7 @@ Rails.application.routes.draw do
   # devise_for :users, controllers: { registrations: 'registrations' }
   devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks',
                                    confirmations: 'confirmations',
-                                    registrations: 'registrations' }
+                                    registrations: 'registrations' } 
 
   devise_scope :user do
     post 'save_email', to: 'omniauth_callbacks#save_email'

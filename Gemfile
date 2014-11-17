@@ -81,6 +81,7 @@ gem 'omniauth-twitter'
 
 gem "pundit"
 gem 'doorkeeper'
+gem 'rmagick', :require => 'RMagick'
 # gem 'oj'
 # gem 'oj_mimic_json'
 

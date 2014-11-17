@@ -1,12 +1,13 @@
-.panel.panel-primary
+.panel.panel-default
   .panel-heading 
     h3.panel-title.title
       = @question.title
       .pull-right
-        .label.label-info
+        .label.label-default
           span.rating
             =@question.rating
-        = @question.user_email
+        |&nbsp;&nbsp;
+        = link_to @question.user_email, profile_path(@question.user)
   .panel.body
     = @question.body
   .attachments
