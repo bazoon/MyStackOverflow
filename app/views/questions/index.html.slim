@@ -1,16 +1,21 @@
 h1 = t('.header')
+= will_paginate @questions
 table.table
-  tr
-    th Title
-    th Answers 
-    th Votes
+  tr.questions_order
+    th = sortable('title','Title')
+    th = sortable('created_at','Added')
+    th = sortable('answers_count', 'Answers')
+    th = sortable('rating', 'Votes')
+    th = sortable('impressions_count', 'Views')
     th
     th
   - @questions.each do |question|
     tr
       td= link_to question.title, question
+      td= ld question.created_at
       td= question.answers.count
       td= question.rating
+      td= question.impressionist_count(:filter=>:session_hash)
         
       - if policy(question).update?
         td= link_to(edit_icon, edit_question_path(question))

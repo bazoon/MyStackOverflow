@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'Question API' do
-  let!(:questions) { create_list(:question, 2) }
+  let!(:questions) { create_list(:question, 1) }
   let(:question) { questions.first }
   let(:access_token) { create(:access_token) }
   let!(:answer) { create(:answer, question: question) }
@@ -23,7 +23,7 @@ describe 'Question API' do
       end
 
       it 'returns list of questions' do
-        expect(response.body).to have_json_size(2).at_path('questions')
+        expect(response.body).to have_json_size(1).at_path('questions')
       end
 
       it "contains timestamp" do

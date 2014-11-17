@@ -3,18 +3,21 @@ class Question < ActiveRecord::Base
   validates :body, presence: true
   validates :user_id, presence: true
   
-  has_many :comments, as: :commentable
-  has_many :answers
+  has_many :comments, as: :commentable, dependent: :destroy
+  has_many :answers, dependent: :destroy
   belongs_to :user
   has_many :taggings, as: :taggable
   has_many :tags, through: :taggings
 
-  has_many :votes, as: :voteable
+  has_many :votes, as: :voteable, dependent: :destroy
 
   has_many :attachments, as: :attachmentable, dependent: :destroy
   accepts_nested_attributes_for :attachments, allow_destroy: true
 
   scope :selected_answers, -> { where(selected: true) }
+  
+  is_impressionable counter_cache: true, unique: :request_hash
+  
 
   include Taggable
   include Voteable

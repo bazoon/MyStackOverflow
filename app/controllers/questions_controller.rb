@@ -6,9 +6,13 @@ class QuestionsController < ApplicationController
 
   responders :location, :flash
   respond_to :html
+  impressionist actions: [:show]
   
   def index
-    @questions = Question.all.order('created_at desc')
+    # binding.pry
+    @questions = Question.paginate(page: params[:page], per_page: 15)                   
+                         .order(sort_column + ' ' + sort_direction)
+    
   end
 
   def show
@@ -62,5 +66,12 @@ class QuestionsController < ApplicationController
     params.require(:question).permit(:title, :body, :tag_tokens, attachments_attributes: [:file, :_destroy, :id])
   end
 
+  def sort_column
+    %w[title answers_count rating impressions_count].include?(params[:sort]) ? params[:sort] : 'created_at'
+  end
+
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : 'desc'
+  end
 
 end
