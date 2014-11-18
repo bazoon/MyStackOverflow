@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   
+
+
   get 'profile/show/:user_id', to: 'profile#show', as: :profile
 
   use_doorkeeper
@@ -59,6 +61,7 @@ Rails.application.routes.draw do
     end
   end
 
+  get 'search/index'
 
   root 'home#index'
 

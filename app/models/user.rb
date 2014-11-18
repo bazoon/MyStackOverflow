@@ -35,25 +35,28 @@ class User < ActiveRecord::Base
     
   end
 
-
-
   def send_confirmation_instructions(provider)
     generate_confirmation_token! if confirmation_token.nil?
     devise_mailer.send(:confirmation_instructions, self, confirmation_token, provider: provider).deliver
   end
 
-
   def confirm_and_authorize(provider, uid) #TODO: похожий внизу?
     confirm!
     authorizations.create(provider: provider, uid: uid)
   end
-
   
   def create_authorization(auth)
     self.authorizations.create(provider: auth.provider, uid: auth.uid)
     self
   end
 
+  def show_title
+    "User: #{email}"
+  end
+
+  def show_object
+    self
+  end
 
   private
 

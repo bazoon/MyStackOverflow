@@ -44,5 +44,13 @@ class Question < ActiveRecord::Base
   def deselect_all_answers
     answers.deselect
   end
-  
+
+  def show_title
+    "Question: #{title}"
+  end
+
+  def show_object
+    self
+  end
+
 end

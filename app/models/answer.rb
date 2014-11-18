@@ -46,6 +46,14 @@ class Answer < ActiveRecord::Base
     update_all(selected: false)
   end
 
+  def show_title
+    "Answer: #{body}"
+  end
+
+  def show_object
+    self.question
+  end
+
   private
 
   def update_rating

@@ -1,0 +1,9 @@
+= form_tag search_index_path, method: :get, class: "navbar-form navbar-left", role: 'search' do |f|
+  .form-group
+    = select_tag(:type, options_for_select([['All', 'ThinkingSphinx'],['Question','Question'], ['Answer', 'Answer'], ['Comment', 'Comment']]))
+    | &nbsp;
+    = text_field_tag :search
+  | &nbsp;
+  = submit_tag 'Find', class: "btn btn-primary"
+    
+    

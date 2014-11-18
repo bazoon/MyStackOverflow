@@ -1,0 +1,11 @@
+h1 Search
+-if @found_objects.empty?
+  h3
+    | Nothing found !
+-else
+  ul
+    - @found_objects.each do |obj|
+      - if obj.is_a?(User)
+        li = link_to obj.show_title, profile_path(obj.show_object)
+      -else
+        li = link_to obj.show_title, obj.show_object
