@@ -86,6 +86,8 @@ gem 'impressionist'
 gem 'will_paginate'
 gem 'orderly'
 
+gem 'mysql2',          '~> 0.3.13', :platform => :ruby
+gem 'thinking-sphinx', '~> 3.1.1'
 
 # gem 'oj'
 # gem 'oj_mimic_json'
