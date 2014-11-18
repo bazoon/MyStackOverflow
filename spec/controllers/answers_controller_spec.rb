@@ -182,11 +182,11 @@ RSpec.describe AnswersController, type: :controller do
         #   expect(response).to redirect_to question
         # end
 
-        it 'it renders destroy template if ajax' do
-          question = answer.question
-          delete :destroy, id: answer, format: :js
-          expect(response).to render_template :destroy
-        end
+        # it 'it renders destroy template if ajax' do
+        #   question = answer.question
+        #   delete :destroy, id: answer, format: :json
+        #   expect(response).to render_template :destroy
+        # end
 
       end
 
