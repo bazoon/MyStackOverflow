@@ -9,7 +9,7 @@ class SearchController < ApplicationController
   private
 
   def load_type
-     @search_object = params[:type].constantize if %w[ThinkingSphinx Question Answer Comment].include?(params[:type])
+     @search_object = params[:type].constantize if %w[ThinkingSphinx Question Answer Comment User].include?(params[:type])
   end
 
 end
