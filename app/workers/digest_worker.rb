@@ -1,12 +1,19 @@
 class DigestWorker
   
   include Sidekiq::Worker
+  include Sidetiq::Schedulable
+
+  # recurrence { hourly.minute_of_hour(56,57,58) }
+  recurrence { daily }
   
-  
-  #Параметры не могут быть сложными объектами
-  def perform(user_id)
-    user = User.find(user_id)
-    DigestMailer.every_day_questions(user, Question.last_24_hours).deliver
+
+  # it passes params here, though they are not used
+  def perform(*args)
+
+    User.find_each do |user|
+      UserDigestWorker.perform_async(user.id)
+    end
+    
   end
   
 end
