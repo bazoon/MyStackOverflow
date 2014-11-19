@@ -27,3 +27,7 @@
 
 # Mac OS files
 .DS_Store
+
+dump.rdb
+config/*.sphinx.conf
+db/sphinx
