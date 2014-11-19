@@ -15,6 +15,7 @@ class Question < ActiveRecord::Base
   accepts_nested_attributes_for :attachments, allow_destroy: true
 
   scope :selected_answers, -> { where(selected: true) }
+  scope :last_24_hours, -> { where('created_at > ?', 24.hours.ago) }
   
   is_impressionable counter_cache: true, unique: :request_hash
   
