@@ -12,6 +12,8 @@ class Question < ActiveRecord::Base
   has_many :votes, as: :voteable, dependent: :destroy
 
   has_many :attachments, as: :attachmentable, dependent: :destroy
+  has_many :question_subscriptions, dependent: :destroy
+  
   accepts_nested_attributes_for :attachments, allow_destroy: true
 
   scope :selected_answers, -> { where(selected: true) }
@@ -52,6 +54,16 @@ class Question < ActiveRecord::Base
 
   def show_object
     self
+  end
+
+  def notify_subscribers
+    question_subscriptions.each do |qs|
+      QuestionSubscriptionWorker.perform_async(qs.user.id, qs.question.id)
+    end
+  end
+
+  def notify_author(new_answer)
+    QuestionAuthorWorker.perform_async(user.id, new_answer.id)
   end
 
 end

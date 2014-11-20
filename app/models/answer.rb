@@ -10,6 +10,9 @@ class Answer < ActiveRecord::Base
   has_many :attachments, as: :attachmentable, dependent: :destroy
   accepts_nested_attributes_for :attachments, allow_destroy: true
 
+  after_commit :notify_subscribers
+
+
   before_create :update_rating
 
   VOTE_WEIGHT = 1 #константы куда-то
@@ -67,6 +70,12 @@ class Answer < ActiveRecord::Base
     else
       user.up_by(FIRST_WEIGHT) if question.answers.empty?
     end
+  end
+
+
+  def notify_subscribers
+    question.notify_subscribers
+    question.notify_author(self)
   end
 
 end

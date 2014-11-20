@@ -4,10 +4,11 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable, :confirmable, 
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable, omniauth_providers: [:facebook, :twitter]
 
-  has_many :questions
-  has_many :answers
-  has_many :comments
-  has_many :authorizations
+  has_many :questions, dependent: :destroy
+  has_many :answers, dependent: :destroy
+  has_many :comments, dependent: :destroy
+  has_many :authorizations, dependent: :destroy
+  has_many :question_subscriptions, dependent: :destroy
   validates :email, :name, presence: true
 
   before_create { skip_confirmation!  }
@@ -56,6 +57,10 @@ class User < ActiveRecord::Base
 
   def show_object
     self
+  end
+
+  def subscribed?(question)
+    question_subscriptions.where(question: question).first != nil
   end
 
   private

@@ -8,6 +8,11 @@
             =@question.rating
         |&nbsp;&nbsp;
         = link_to @question.user_email, profile_path(@question.user)
+        |&nbsp;&nbsp;
+        - if policy(Question).subscribe?
+          - label = current_user.subscribed?(@question) ? 'unsubscribe' : 'subscribe'
+          = link_to label, subscribe_path(@question), id: 'q_subscribe', remote: true, method: :patch, class: "small"
+
   .panel.body
     = @question.body
   .attachments
@@ -30,6 +35,7 @@
           | &nbsp
           = link_to vote_down_icon, question_vote_down_path(@question), method: :patch, remote: true, "data-type" => "json"
           | &nbsp
+
 
       
       

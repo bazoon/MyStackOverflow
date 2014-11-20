@@ -1,0 +1,9 @@
+|Hello
+|&nbsp;
+= @user.name
+p
+  |Question 
+  |&nbsp;
+  = link_to @question.title, controller: "questions", action: 'show', only_path: false, host: '127.0.0.1', id: @question.id
+  |&nbsp;
+  |has changed

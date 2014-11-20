@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  
 
+  patch 'subscription/subscribe/:question_id', to: 'subscriptions#subscribe', as: :subscribe
 
   get 'profile/show/:user_id', to: 'profile#show', as: :profile
 
