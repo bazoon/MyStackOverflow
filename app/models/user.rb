@@ -41,6 +41,7 @@ class User < ActiveRecord::Base
     devise_mailer.send(:confirmation_instructions, self, confirmation_token, provider: provider).deliver
   end
 
+  # Confirms user in db and create authorization
   def confirm_and_authorize(provider, uid) #TODO: похожий внизу?
     confirm!
     authorizations.create(provider: provider, uid: uid)
@@ -65,6 +66,7 @@ class User < ActiveRecord::Base
 
   private
 
+  # creates new user from auth record and creates authorization
   def self.create_user_from_oauth(auth, name)
     password = Devise.friendly_token[0, 20]
     user = User.create!(email: auth.info[:email], name: name, password: password, password_confirmation: password)

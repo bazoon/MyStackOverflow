@@ -9,6 +9,7 @@ RSpec.describe User, :type => :model do
   it { should have_many(:answers) }
   it { should have_many(:comments) }
 
+  let(:user) { create(:user) } 
 
 
   describe '.find_for_oauth' do
@@ -82,17 +83,8 @@ RSpec.describe User, :type => :model do
             expect(user.email).to be_empty
           end
 
-
-
         end
-
-
       end
-
-    
-
-
-
     end
   end
 
@@ -106,6 +98,12 @@ RSpec.describe User, :type => :model do
       expect(user.confirmation_token).to_not be_nil
     end
 
+    it 'generates token is its nil' do
+      expect(user).to receive(:generate_confirmation_token!)
+      user.confirmation_token = nil
+      user.send_confirmation_instructions(provider)
+    end
+    
     it 'Call devise_mailer to deliver confirmation_instructions' do
       mailer = double('mailer')
       allow(mailer).to receive(:deliver)
@@ -114,9 +112,53 @@ RSpec.describe User, :type => :model do
       expect(user.send(:devise_mailer)).to receive(:confirmation_instructions)
       user.send_confirmation_instructions(provider)
     end
+  end
 
+  describe 'confirm_and_authorize' do
+    let(:user) { create(:user, confirmation_token: nil) }
+    let(:provider) { 'twitter' }
+    let(:uid) { '123456' } 
+
+    it 'calls confirm!' do
+      expect(user).to receive(:confirm!)
+      user.confirm_and_authorize(provider, uid)
+    end
+    
+    it 'calls authorizations.create' do
+      expect(user.authorizations).to receive(:create).with({provider: provider, uid: uid })
+      user.confirm_and_authorize(provider, uid)
+    end
+  end
+
+  describe 'show_title' do
+    it 'returns email' do
+      expect(user.show_title).to eq("User: #{user.email}")
+    end
+  end
+
+   describe 'show_object' do
+    it 'returns self' do
+      expect(user.show_object).to eq(user)
+    end
+  end
+
+  describe 'subscribed?' do
+    let(:question) { create(:question) } 
+    let(:question_subscription) { create(:question_subscription, user: user, question: question)  } 
+
+    
+    it 'return false if no subscirptions found' do
+      expect(user.subscribed?(question)).to eq(false)
+    end
+
+    it 'returns true if it has one' do
+      question_subscription
+      expect(user.subscribed?(question)).to eq(true)
+    end
 
   end
+
+
 
 
 end

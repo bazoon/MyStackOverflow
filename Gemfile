@@ -92,7 +92,7 @@ gem 'thinking-sphinx', '~> 3.1.1'
 
 gem 'sidekiq'
 gem 'sidetiq'
-
+gem 'simplecov', :require => false, :group => :test
 # gem 'oj'
 # gem 'oj_mimic_json'
 
