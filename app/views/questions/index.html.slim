@@ -21,3 +21,7 @@ table.table
         td= link_to(edit_icon, edit_question_path(question))
         td= link_to del_icon, question_path(question), id: "delete#{question.id}", method: :delete, data: { confirm: 'Are you sure?' }
 
+
+.row
+  .col-md10
+    ul.nav.nav-tabs.questions-sorting.pull-right

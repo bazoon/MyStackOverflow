@@ -12,6 +12,19 @@ RSpec.describe User, :type => :model do
   let(:user) { create(:user) } 
 
 
+  describe '.with_token' do
+    
+    it 'find user by confirmation_token' do
+      expect(User.with_token(user.confirmation_token)).to eq(user)
+    end
+
+    it 'returns nil if nothing found' do
+      expect(User.with_token('dummy_token')).to be_nil
+    end
+
+  end
+
+
   describe '.find_for_oauth' do
     let!(:user) { create(:user) }
     let(:auth) { OmniAuth::AuthHash.new(provider: 'facebook', uid: '123456') }

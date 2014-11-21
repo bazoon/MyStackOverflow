@@ -42,6 +42,17 @@ Rails.application.routes.draw do
     resources :answers, except: [:new], concerns: [:votable, :commentable] do
       patch 'select', on: :member
     end
+
+    collection do
+      get "interesting(/page/:page)" => "questions#interesting", as: :interesting
+      get "unanswered(/page/:page)" => "questions#unanswered", as: :unanswered
+      get "hot(/page/:page)" => "questions#hot", as: :hot
+      get "week(/page/:page)" => "questions#hot", as: :week
+      get "month(/page/:page)" => "questions#hot", as: :month
+      
+
+    end
+
   end
   
 

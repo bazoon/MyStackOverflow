@@ -14,13 +14,18 @@ class User < ActiveRecord::Base
   before_create { skip_confirmation!  }
 
   scope :excluding, -> (idd) { where.not(id: idd) }
-  scope :with_token, -> (confirmation_token) { where(confirmation_token: confirmation_token).first }
+
+  #TODO: Ask: why it returns not nil if nothing found?
+  # scope :with_token, -> (confirmation_token) { where(confirmation_token: confirmation_token).first }
 
   VOTE_DOWN_PRICE = 1 #TODO 
 
   include Voteable  
   mount_uploader :avatar, AvatarUploader
 
+  def self.with_token(confirmation_token)
+    where(confirmation_token: confirmation_token).first
+  end
 
   def self.find_for_oauth(auth)
     authorization = Authorization.find_by_auth(auth)
