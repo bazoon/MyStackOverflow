@@ -57,8 +57,9 @@ class Question < ActiveRecord::Base
   end
 
   def notify_subscribers
+
     question_subscriptions.each do |qs|
-      QuestionSubscriptionWorker.perform_async(qs.user.id, qs.question.id)
+      QuestionSubscriptionWorker.perform_async(qs.user_id, qs.question.id)
     end
   end
 

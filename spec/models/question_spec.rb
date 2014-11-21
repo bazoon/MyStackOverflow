@@ -4,6 +4,7 @@ RSpec.describe Question, type: :model do
 
   let!(:question) {  create(:question) }
   let!(:question2) { create(:question) }
+  let(:question_subscription) { create(:question_subscription, question: question) }
 
   it { should validate_presence_of :title }
   it { should validate_presence_of :body }
@@ -47,6 +48,18 @@ RSpec.describe Question, type: :model do
   it 'can be voted against' do
     expect { question.down_by(1) }.to change(question, :rating).by(-1)
   end
+
+  it 'returns class underscore' do
+    expect(question.class_underscore).to eq(question.class.to_s.underscore)
+  end
+
+  it 'notify_subscribers' do
+    question_subscription
+    # allow(QuestionSubscriptionWorker).to receive(:perform_async)
+    expect(QuestionSubscriptionWorker).to receive(:perform_async)
+    question.notify_subscribers
+  end
+
 
 
 end

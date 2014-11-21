@@ -17,12 +17,12 @@ class AnswersController < ApplicationController
     respond_with @answer
   end
 
-  def show
-    authorize @answer
-    respond_to do |format|
-      format.json
-    end
-  end
+  # def show
+  #   authorize @answer
+  #   respond_to do |format|
+  #     format.json
+  #   end
+  # end
 
 
   def update

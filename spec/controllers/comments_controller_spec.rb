@@ -13,6 +13,17 @@ RSpec.describe CommentsController, type: :controller do
     sign_in_user
     let(:comment) { create(:comment, commentable: answer, user_id: @user.id) }
 
+    describe '#GET new' do
+
+      it 'creates instance of commentable class' do
+
+        # get :new  
+      end
+
+
+    end
+
+
     describe '#POST create' do
 
       context 'with valids attributes' do

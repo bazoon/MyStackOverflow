@@ -3,7 +3,7 @@ class CommentsController < ApplicationController
   
   skip_after_action :verify_authorized, only: :new
   before_action :load_commentable, only: :create
-  before_action :new_commentable, only: :new
+  # before_action :new_commentable, only: :new
   after_action :publish_new_comment, only: :create
   after_action :publish_updated_comment, only: :update
   after_action :publish_destroyed_comment, only: :destroy
@@ -12,9 +12,9 @@ class CommentsController < ApplicationController
 
   respond_to :json,:js
 
-  def new
+  # def new
 
-  end
+  # end
 
   
   def create
@@ -57,12 +57,12 @@ class CommentsController < ApplicationController
     @comment = Comment.find(params[:id])   
   end
 
-  def new_commentable
-    prefix = params[:commentable]
-    @model = prefix.constantize
-    @commentable = @model.find(params["commentable_id"])
-    @form_id = "#{@commentable.class.to_s.underscore}_#{@commentable.id}"
-  end
+  # def new_commentable
+  #   prefix = params[:commentable]
+  #   @model = prefix.constantize
+  #   @commentable = @model.find(params["commentable_id"])
+  #   @form_id = "#{@commentable.class.to_s.underscore}_#{@commentable.id}"
+  # end
 
   def load_commentable
     resource, id = request.path.split('/')[1,2]
