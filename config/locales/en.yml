@@ -20,6 +20,7 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
+  unconfirmed: 'Incorrect confirmation. Please reconfirm your email'
   search: "Search"
   sign_in: "signin"
   hello: "Hello world"

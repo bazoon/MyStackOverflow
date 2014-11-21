@@ -22,3 +22,4 @@
 18 style guides rails
 19 file_cache
 models/concerns -> модули
+20 падают тесты воркеров когда все разом

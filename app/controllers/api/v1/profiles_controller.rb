@@ -9,7 +9,7 @@ class Api::V1::ProfilesController < Api::V1::BaseController
   end
 
   def index
-    respond_with User.excluding(current_resource_owner), serializer: Api::UserSerializer
+    respond_with User.excluding(current_resource_owner), serializers: Api::UserSerializer
   end
 
 

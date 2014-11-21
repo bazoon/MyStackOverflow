@@ -14,6 +14,7 @@ class User < ActiveRecord::Base
   before_create { skip_confirmation!  }
 
   scope :excluding, -> (idd) { where.not(id: idd) }
+  scope :with_token, -> (confirmation_token) { where(confirmation_token: confirmation_token).first }
 
   VOTE_DOWN_PRICE = 1 #TODO 
 

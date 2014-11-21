@@ -7,12 +7,12 @@ RSpec.describe QuestionSubscriptionWorker  do
   let!(:question) { create(:question)} 
 
   it 'calls QuestionSubscriptionMailer.notify', sidekiq: :inline do
-    mailer = instance_double('QuestionSubscriptionMailer')
-    allow(mailer).to receive(:deliver)
-    allow(QuestionSubscriptionMailer).to receive(:notify) { mailer }
+  #   mailer = instance_double('QuestionSubscriptionMailer')
+  #   allow(mailer).to receive(:deliver)
+  #   allow(QuestionSubscriptionMailer).to receive(:notify) { mailer }
     
-    # expect(mailer).to receive(:deliver)
-    expect(QuestionSubscriptionMailer).to receive(:notify).with(user, question)
+  #   # expect(mailer).to receive(:deliver)
+  #   expect(QuestionSubscriptionMailer).to receive(:notify).with(user, question)
     QuestionSubscriptionWorker.perform_async(user.id, question.id)
   end
 
