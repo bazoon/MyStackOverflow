@@ -18,6 +18,13 @@ class Question < ActiveRecord::Base
 
   scope :selected_answers, -> { where(selected: true) }
   scope :last_24_hours, -> { where('created_at > ?', 24.hours.ago) }
+
+  scope :interesting, -> { order('impressions_count desc') }
+  scope :featured, -> { all }
+  scope :hot, -> { order('answers_count desc') }
+  scope :week, -> { where('created_at > ?', 7.days.ago) }
+  scope :month, -> { where('created_at > ?', 1.month.ago) }
+
   
   is_impressionable counter_cache: true, unique: :request_hash
   

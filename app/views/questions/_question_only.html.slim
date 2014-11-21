@@ -26,8 +26,11 @@
         | &nbsp
     |&nbsp
     .pull-right 
-      - if policy(@question).update?
-        = link_to(edit_icon, edit_question_path(@question), id: "edit_question_#{@question.id}")
+      small
+        - if policy(@question).update?
+          = link_to(edit_icon, edit_question_path(@question), id: "edit_question_#{@question.id}")
+          = link_to del_icon, question_path(@question), id: "delete#{@question.id}", method: :delete, data: { confirm: 'Are you sure?' }
+
         | &nbsp
       .vote_controls
          - if policy(@question).vote?
@@ -35,6 +38,8 @@
           | &nbsp
           = link_to vote_down_icon, question_vote_down_path(@question), method: :patch, remote: true, "data-type" => "json"
           | &nbsp
+
+
 
 
       

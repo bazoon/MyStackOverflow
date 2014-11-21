@@ -44,11 +44,12 @@ Rails.application.routes.draw do
     end
 
     collection do
-      get "interesting(/page/:page)" => "questions#interesting", as: :interesting
-      get "unanswered(/page/:page)" => "questions#unanswered", as: :unanswered
-      get "hot(/page/:page)" => "questions#hot", as: :hot
-      get "week(/page/:page)" => "questions#hot", as: :week
-      get "month(/page/:page)" => "questions#hot", as: :month
+      get "interesting(/page/:page)" => "questions#index", as: :interesting
+      get "unanswered(/page/:page)" => "questions#index", as: :unanswered
+      get "hot(/page/:page)" => "questions#index", as: :hot
+      get "featured(/page/:page)" => "questions#index", as: :featured
+      get "week(/page/:page)" => "questions#index", as: :week
+      get "month(/page/:page)" => "questions#index", as: :month
       
 
     end

@@ -1,27 +1,22 @@
-h1 = t('.header')
-= will_paginate @questions
-table.table
-  tr.questions_order
-    th = sortable('title','Title')
-    th = sortable('created_at','Added')
-    th = sortable('answers_count', 'Answers')
-    th = sortable('rating', 'Votes')
-    th = sortable('impressions_count', 'Views')
-    th
-    th
-  - @questions.each do |question|
-    tr
-      td= link_to question.title, question
-      td= ld question.created_at
-      td= question.answers.count
-      td= question.rating
-      td= question.impressionist_count(:filter=>:session_hash)
-        
-      - if policy(question).update?
-        td= link_to(edit_icon, edit_question_path(question))
-        td= link_to del_icon, question_path(question), id: "delete#{question.id}", method: :delete, data: { confirm: 'Are you sure?' }
 
+h1 = t('.header')
 
 .row
-  .col-md10
-    ul.nav.nav-tabs.questions-sorting.pull-right
+  .col-md-10
+    ul.nav.nav-tabs.pull-right
+      li class=(active?(@bound, 'interesting'))
+        = link_to "interesting", interesting_questions_path
+      li class=(active?(@bound, 'featured'))
+        = link_to "featured", featured_questions_path
+      li class=(active?(@bound, 'hot'))
+        = link_to "hot", hot_questions_path
+      li class=(active?(@bound, 'week'))
+        = link_to "week", week_questions_path
+      li class=(active?(@bound, 'month'))
+        = link_to "month", month_questions_path
+
+.row
+  .col-md-10
+    = render @questions
+    = will_paginate @questions    
+  

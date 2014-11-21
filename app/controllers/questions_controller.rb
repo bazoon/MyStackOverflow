@@ -2,6 +2,7 @@ class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   
   before_action :set_question, except: [:index, :new, :create]
+  before_action :set_bound, only: [:index]
   after_action :publish_question, only: [:update]
 
   responders :location, :flash
@@ -9,10 +10,7 @@ class QuestionsController < ApplicationController
   impressionist actions: [:show]
   
   def index
-    # binding.pry
-    @questions = Question.paginate(page: params[:page], per_page: 15)                   
-                         .order(sort_column + ' ' + sort_direction)
-    
+    @questions = Question.send(@bound).paginate(page: params[:page], per_page: 15)
   end
 
   def show
@@ -72,6 +70,11 @@ class QuestionsController < ApplicationController
 
   def sort_direction
     %w[asc desc].include?(params[:direction]) ? params[:direction] : 'desc'
+  end
+
+  def set_bound
+    _, bound = request.path.split('/')[1, 2]
+    @bound = %w(interesting featured hot week month).include?(bound) ? bound : "all"
   end
 
 end
