@@ -92,7 +92,7 @@ end
 
  
 after 'deploy:restart', 'private_pub:restart'
-after 'deploy:restart', 'ts:start'
+# after 'deploy:restart', 'ts:start'
 
 
 
