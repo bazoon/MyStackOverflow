@@ -1,7 +1,12 @@
 class AnswerPolicy < ApplicationPolicy
 
   def select?
-    @user && @record.question.user == @user || @user && @user.admin #TODO: скобки
+
+    if @user
+      @record.question.user == @user && @record.user != @user
+    else
+      false
+    end
 
   end
 

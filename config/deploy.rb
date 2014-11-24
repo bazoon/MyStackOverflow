@@ -76,23 +76,23 @@ namespace :private_pub do
   end
 end
 
-namespace :ts do
-  desc 'Start thinking sphinx'
-  task :start do
-    on roles(:app) do
-      within current_path do
-        with rails_env: fetch(:rails_env) do
-          execute :bundle, 'exec rake ts:start'
-        end
-      end
-    end
-  end
-end
+# namespace :ts do
+#   desc 'Start thinking sphinx'
+#   task :start do
+#     on roles(:app) do
+#       within current_path do
+#         with rails_env: fetch(:rails_env) do
+#           execute :bundle, 'exec rake ts:start'
+#         end
+#       end
+#     end
+#   end
+# end
 
 
  
 after 'deploy:restart', 'private_pub:restart'
-# after 'deploy:restart', 'ts:start'
+# after 'deploy:restart', 'thinking_sphinx:restart'
 
 
 

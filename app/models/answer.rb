@@ -39,6 +39,7 @@ class Answer < ActiveRecord::Base
       question.deselect_all_answers
       update(selected: true)
     end
+    
   end
   
   def class_underscore
