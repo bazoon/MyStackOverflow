@@ -31,7 +31,7 @@ gem 'spring',        group: :development
 # group :test, :development do
     gem 'rspec-rails'
     gem 'factory_girl_rails'
-    gem 'jazz_hands'
+    # gem 'jazz_hands', group: :test, :development
     gem 'capybara'
     
     gem 'launchy'
