@@ -14,7 +14,7 @@ set :scm, :git
 
 
 # Default value for :linked_files is []
-set :linked_files, %w{config/database.yml config/private_pub.yml .env}
+set :linked_files, %w{config/database.yml config/private_pub.yml .env config/private_pub_thin.yml}
 
 # Default value for linked_dirs is []
 set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system public/uploads}
@@ -35,3 +35,64 @@ namespace :deploy do
 
  
 end
+
+
+namespace :private_pub do
+  desc 'Start private_pub'
+  task :start do
+    on roles(:app) do
+      within current_path do
+        with rails_env: fetch(:rails_env) do
+          execute :bundle, 'exec thin -C config/private_pub_thin.yml start'
+        end
+      end
+    end
+  end
+end
+
+namespace :private_pub do
+  desc 'Stop private_pub'
+  task :stop do
+    on roles(:app) do
+      within current_path do
+        with rails_env: fetch(:rails_env) do
+          execute :bundle, 'exec thin -C config/private_pub_thin.yml stop'
+        end
+      end
+    end
+  end
+end
+
+namespace :private_pub do
+  desc 'ReStart private_pub'
+  task :restart do
+    on roles(:app) do
+      within current_path do
+        with rails_env: fetch(:rails_env) do
+          execute :bundle, 'exec thin -C config/private_pub_thin.yml restart'
+        end
+      end
+    end
+  end
+end
+
+namespace :ts do
+  desc 'Start thinking sphinx'
+  task :start do
+    on roles(:app) do
+      within current_path do
+        with rails_env: fetch(:rails_env) do
+          execute :bundle, 'exec rake ts:start'
+        end
+      end
+    end
+  end
+end
+
+
+ 
+after 'deploy:restart', 'private_pub:restart'
+after 'deploy:restart', 'ts:start'
+
+
+

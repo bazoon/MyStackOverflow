@@ -7,3 +7,7 @@ test:
   mysql41: 9313
 production:
   mysql41: 9312
+  pid_file: /home/deployer/so/shared/tmp/searchd.pid
+  indices_location: /home/deployer/so/shared/db/sphinx
+  configuration_file: /home/deployer/so/shared/production.sphinx.conf
+  binlog_path: /home/deployer/so/shared/binlog
