@@ -1,4 +1,4 @@
-source 'https://rubygems.org'
+source 'http://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
@@ -28,7 +28,7 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'spring',        group: :development
 
     
-group :test, :development do
+# group :test, :development do
     gem 'rspec-rails'
     gem 'factory_girl_rails'
     gem 'jazz_hands'
@@ -39,7 +39,7 @@ group :test, :development do
     gem "capybara-webkit"
     # gem 'selenium-webdriver'
     # gem 'poltergeist'
-end
+# end
 
 group :test do
     gem 'shoulda-matchers'
