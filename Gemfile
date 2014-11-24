@@ -93,6 +93,16 @@ gem 'thinking-sphinx', '~> 3.1.1'
 gem 'sidekiq'
 gem 'sidetiq'
 gem 'simplecov', :require => false, :group => :test
+gem 'faker'
+
+group :development do
+  gem 'capistrano', require: false
+  gem 'capistrano-bundler', require: false
+  gem 'capistrano-rails', require: false
+  gem 'capistrano-rvm', require: false 
+
+end
+
 # gem 'oj'
 # gem 'oj_mimic_json'
 

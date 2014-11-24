@@ -20,7 +20,7 @@ class Question < ActiveRecord::Base
   scope :last_24_hours, -> { where('created_at > ?', 24.hours.ago) }
 
   scope :interesting, -> { order('impressions_count desc') }
-  scope :featured, -> { all }
+  scope :featured, -> { order('rating desc') }
   scope :hot, -> { order('answers_count desc') }
   scope :week, -> { where('created_at > ?', 7.days.ago) }
   scope :month, -> { where('created_at > ?', 1.month.ago) }
