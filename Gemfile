@@ -94,6 +94,8 @@ gem 'sidekiq'
 gem 'sidetiq'
 gem 'simplecov', :require => false, :group => :test
 gem 'faker'
+gem 'dotenv'
+gem 'dotenv-deployment', require: 'dotenv/deployment'
 
 group :development do
   gem 'capistrano', require: false
