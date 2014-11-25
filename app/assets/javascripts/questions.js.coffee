@@ -129,6 +129,7 @@ class @Question
 
 
   createQuestionComment: (data) ->
+    console.log(data)
     comment = HandlebarsTemplates['comments/comment'](data)
     this.$commentsPanel.append(comment)
     @comments[data.id] = new Comment(data.id, "question", @question_id)
