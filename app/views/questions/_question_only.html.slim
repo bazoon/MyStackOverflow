@@ -32,7 +32,7 @@
   .panel-footer
     .tags
       - @question.tags.each do |t|
-        = link_to t.name, tag_search_path(t.name)
+        = tag_link(t)
         | &nbsp
     |&nbsp
     .pull-right 

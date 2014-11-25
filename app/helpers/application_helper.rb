@@ -51,7 +51,7 @@ module ApplicationHelper
     link_to title, sort: column, direction: direction
   end
 
-
+  
   def now
     Time.zone.now
   end
