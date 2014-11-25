@@ -1,10 +1,19 @@
-h1 User profile
-
-= image_tag(@user.avatar_url(:thumb))
+h1 = @user.real_name
 
 
-.name = "Name: #{@user.name}"
-.email = "Email: #{@user.email}"
-.rating = "Rating: #{@user.rating}"
+
+.row
+  .col-md-6
+    table.table
+      tr
+        td 
+        td = image_tag(@user.face)
+      - %w(name website age email rating).each do |field|
+        tr
+          td = field
+          td = @user.send(field)
+  .col-md-6
+   
+
 
 = link_to 'edit', edit_user_registration_path 

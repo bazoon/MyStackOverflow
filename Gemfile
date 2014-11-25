@@ -108,6 +108,7 @@ end
 
 gem 'whenever'
 gem "font-awesome-rails"
+gem 'gravatar-ultimate'
 
 # gem 'oj'
 # gem 'oj_mimic_json'

@@ -13,6 +13,7 @@
         .row
           .col-md-1
             .vote_controls
+              = policy(answer).vote?
               - up_class, down_class = vote_classes(answer)
               span.vote_up
                 = link_to vote_up_icon, answer_vote_up_path(answer), class: up_class, method: :patch, remote: true, "data-type" => "json"

@@ -78,6 +78,14 @@ class User < ActiveRecord::Base
     Vote.voted_down?(question, self)
   end
 
+  def age
+    birth_date.nil? ? "" : (Date.today - birth_date).to_i / 365
+  end
+
+  def face
+    avatar_url(:thumb) || avatar_web || Gravatar.new(email).image_url(size: 50)
+  end
+
   private
 
   # creates new user from auth record and creates authorization

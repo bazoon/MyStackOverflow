@@ -14,7 +14,6 @@
     .row
       .col-md-1
         .vote_controls
-          
             - up_class, down_class = vote_classes(@question)
             span.vote_up
               = link_to vote_up_icon, question_vote_up_path(@question), class: up_class, method: :patch, remote: true, "data-type" => "json"

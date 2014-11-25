@@ -36,7 +36,7 @@ class ApplicationPolicy
 
   def vote?
     # binding.pry
-    record.user != @user && !Vote.voted?(@record, @user)
+    @user && record.user != @user && !Vote.voted?(@record, @user)
   end
 
   # def scope

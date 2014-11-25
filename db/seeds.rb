@@ -16,7 +16,11 @@ USER_COUNT.times do
   user_params[:email] = Faker::Internet.email
   user_params[:password] = Faker::Internet.password
   user_params[:password_confirmation] = user_params[:password]
-  user_params[:name] = Faker::Name.name
+  user_params[:name] = Faker::Internet.user_name
+  user_params[:real_name] = Faker::Name.name
+  user_params[:website] = Faker::Internet.url
+  user_params[:birth_date] = Faker::Date.between(45.years.ago, 16.years.ago)
+  user_params[:avatar_web] = Faker::Avatar.image(SecureRandom.hex(20), "50x50", "jpg")
   user_params[:rating] = rand(32)
 
   user = User.new(user_params)
