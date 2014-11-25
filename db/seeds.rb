@@ -34,7 +34,7 @@ QUESTION_COUNT.times do
       impressions_count: rand(100),
       rating: rand(20)
     )
-  COMMENTS_COUNT.times do
+  rand(COMMENTS_COUNT).times do
     question.comments.create!(body: Faker::Lorem.sentence(14), user: User.all.sample)
   end
 
@@ -48,7 +48,7 @@ ANSWERS_COUNT.times do
                                     user: User.all.sample,
                                     rating: rand(20))
 
-  COMMENTS_COUNT.times do
+  rand(COMMENTS_COUNT).times do
     answer.comments.create!(body: Faker::Lorem.sentence(14), user: User.all.sample)
   end
 
