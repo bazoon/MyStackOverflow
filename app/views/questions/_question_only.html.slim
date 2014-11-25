@@ -25,16 +25,26 @@
 
       .col-md-11
         = @question.body
+
+    .comments
+      = render partial: 'comments/comments', locals: { commentable: @question }
+      .new_comment_form_holder
+
   .attachments
     ul
     - @question.attachments.each do |a|
         li= link_to a.file_name, a.file.url 
+
+      
   .panel-footer
     .tags
       - @question.tags.each do |t|
         = tag_link(t)
         | &nbsp
     |&nbsp
+    .new_comment
+      - if policy(Comment).create?
+            = link_to 'comment', '#', class: 'comment-edit-link'
     .pull-right 
       small
         - if policy(@question).update?
@@ -42,24 +52,24 @@
           = link_to del_icon, question_path(@question), id: "delete#{@question.id}", method: :delete, data: { confirm: 'Are you sure?' }
 
       
-  .comments
-    = render partial: 'comments/comments', locals: { commentable: @question }
-    - if policy(Comment).create?
-      = link_to 'comment', '#', class: 'comment-edit-link'
-      .new_comment_form_holder
-        
-  - if policy(Answer).create?
-    .panel.panel-info.new-answer
-      .panel-heading
-        ' Answer
-        .answer-errors
-      .panel-body
-        .answer_form
-          = render( partial: 'answers/form', locals: { question: @question, answer: @answer }) 
+          
+
+
+- if policy(Answer).create?
+  .panel.panel-info.new-answer
+    .panel-heading
+      ' Answer
+      .answer-errors
+    .panel-body
+      .answer_form
+        = render( partial: 'answers/form', locals: { question: @question, answer: @answer }) 
+
+.answers
+  = render @question.answers
+
+
+= subscribe_to "/questions"
 
 - if user_signed_in?
   script#answer-template[type="text/x-handlebars-template"]
     = render 'answers/answer.handlebars'
-
-= subscribe_to "/questions"
-

@@ -8,9 +8,10 @@ class @Question
     this.$body = this.$el.find(".body")
     this.$attachments = this.$el.find(".attachments")
     this.$comments = this.$el.find(".comments")
-    this.$commentsPanel = this.$el.find(".comments .panel-body") 
+    this.$commentsPanel = this.$el.find(".comments .comments_panel") 
     this.$comment = this.$comments.find(".comment")
-    this.$commentLink = this.$el.find(".comment-edit-link")
+    
+
     # this.$cancelCommentLink = this.$el.find(".cancel-comment")
     this.$commentFormHolder = this.$el.find(".new_comment_form_holder")
     
@@ -18,7 +19,7 @@ class @Question
     this.$voteUpLink = this.$voteControls.find(".vote_up a")
     this.$voteDownLink = this.$voteControls.find(".vote_down a")
 
-    this.$commentLink = this.$el.find(".comment-edit-link")
+    this.$commentLink = this.$el.find(".new_comment .comment-edit-link")
     
     this.$answers = $(".answers")
     this.$answer = $(".answers .answer")
@@ -201,7 +202,7 @@ class @Question
       # console.log  @bindElements
 
 
-    this.$commentForm = this.$el.find(".new_comment_form")
+    this.$commentForm = this.$el.find(".body .new_comment_form")
     this.$commentForm.removeClass("hidden")
 
  

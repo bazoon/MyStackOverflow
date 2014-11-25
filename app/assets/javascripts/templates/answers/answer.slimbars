@@ -4,9 +4,6 @@ div class = "answer" id = "answer_{{answer.id}}"
       h3.panel-title
         = "{{answer.created_at}}"
         .pull-right
-          .label.label-info.space-right
-            span id = "answer_rating_{{answer.id}}"
-              = "{{answer.rating}}"
           |&nbsp;
           small
             a href = "/profile/show/{{answer.user_id}}"
@@ -14,7 +11,19 @@ div class = "answer" id = "answer_{{answer.id}}"
 
     .panel-body
       .answer-body
-        | {{answer.body}}
+        .row
+          .col-md-1
+            .vote_controls
+              span.vote_up
+                a href = "" class = "link_disabled"
+                  i class="fa fa-sort-asc fa-3x"
+              strong.rating = 0
+              span.vote_down
+                a href = "" class = "link_disabled"
+                i class="fa fa-sort-desc fa-3x"
+
+          .col-md-11
+            | {{answer.body}}
       .attachments
         ul class="answer-attachments"
         | {{#each answer.attachments}}
@@ -53,10 +62,8 @@ div class = "answer" id = "answer_{{answer.id}}"
 
         
     .comments
-      .panel.panel-info
-          .panel-heading
-            ' Comments
-          .panel-body
+      .comments_panel
+        
     
       a href="#" class="comment-edit-link"
         | comment

@@ -1,12 +1,23 @@
 div.small.comment id = ("comment_#{comment.id}")
-  .body
-    = comment.body
+  .content
+    .row
+      .col-md-1
+              
+
+      .col-md-11
+        - if policy(comment).update?
+          - el = link_to edit_icon, "#", class: "edit_comment", id: "edit_comment_#{comment.id}" , remote: true
+          - dl = link_to del_icon, comment_path(comment), id: "destroy_comment#{comment.id}", method: :delete, data: { confirm: 'Are you sure?' }, "data-type" => "json", remote: true
+        span.body
+          = comment.body  
+        small.comment_poster
+          |. &mdash;
+          = link_to comment.user.name, profile_path(comment.user)    
+          | &nbsp;
+          = el
+          = dl
   br
-    |by 
-    = link_to comment.user.name, profile_path(comment.user)
-  - if policy(comment).update?
-    = link_to edit_icon, "#", class: "edit_comment", id: "edit_comment_#{comment.id}" , remote: true
-    = link_to del_icon, comment_path(comment), id: "destroy_comment#{comment.id}", method: :delete, data: { confirm: 'Are you sure?' }, "data-type" => "json", remote: true
+  
   
   - if policy(Comment).create?
     .update_form_holder  

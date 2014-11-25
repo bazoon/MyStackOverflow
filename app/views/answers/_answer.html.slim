@@ -5,14 +5,24 @@
         = l(answer.created_at)
         .pull-right
           .label.label-info.space-right
-            span class = "rating"
-              =answer.rating
           |&nbsp;
           small
             = link_to answer.user.email, profile_path(answer.user)
     .panel-body
       .answer-body
-        = answer.body
+        .row
+          .col-md-1
+            .vote_controls
+              - up_class, down_class = vote_classes(answer)
+              span.vote_up
+                = link_to vote_up_icon, answer_vote_up_path(answer), class: up_class, method: :patch, remote: true, "data-type" => "json"
+              strong.rating = answer.rating
+              span.vote_down
+                = link_to vote_down_icon, answer_vote_down_path(answer), class: down_class, method: :patch, remote: true, "data-type" => "json"
+              
+
+          .col-md-11
+            = answer.body
       .attachments
         ul
           - answer.attachments.each do |a|

@@ -7,10 +7,14 @@ class @Answer
     this.$attachments = this.$el.find(".attachments")
     this.$rating = this.$el.find(".rating")
     this.$voteControls = this.$el.find(".vote_controls")
+    this.$voteUpLink = this.$voteControls.find(".vote_up a")
+    this.$voteDownLink = this.$voteControls.find(".vote_down a")
     this.$comments = this.$el.find(".comments")
-    this.$commentsPanel = this.$el.find(".comments .panel-body") 
+    this.$commentsPanel = this.$el.find(".comments .comments_panel") 
     this.$comment = this.$el.find(".comment")
+    
     this.$commentLink = this.$el.find(".comment-edit-link")
+
     this.$cancelCommentLink = this.$el.find(".cancel-comment")
     this.$commentForm = this.$el.find(".new_comment_form")
     this.$editForm = this.$el.find(".edit_answer")
@@ -61,6 +65,7 @@ class @Answer
 
   createComment: (data) ->
     comment = HandlebarsTemplates['comments/comment'](data)
+    console.log this.$commentsPanel
     this.$commentsPanel.append(comment)  
     @comments[data.id] = new Comment(data.id, "answer", @answer_id)  
     @hideCommentForm()
@@ -104,12 +109,21 @@ class @Answer
   voteUp: ->
     rating = parseInt(this.$rating.text(), 10)
     this.$rating.text(rating + 1)
-    this.$voteControls.hide() 
+    this.disableVoteLinks()
+    this.$voteUpLink.addClass("voted_up")
 
   voteDown: ->
     rating = parseInt(this.$rating.text(), 10)
     this.$rating.text(rating - 1)
-    this.$voteControls.hide() 
+    this.disableVoteLinks()
+    this.$voteDownLink.addClass("voted_down")
+
+  disableVoteLinks: ->
+    this.$voteDownLink.removeClass()
+    this.$voteUpLink.removeClass()    
+    this.$voteUpLink.addClass("link_disabled")
+    this.$voteDownLink.addClass("link_disabled")
+
   
   clearFormErrors: (form) ->
     form.removeClass("has-error")
