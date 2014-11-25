@@ -36,14 +36,7 @@
       - if policy(answer).select?
         = link_to select_icon, select_answer_path(answer), method: :patch, id: "select_answer_#{answer.id}", remote: true 
 
-      .pull-right
-        .vote_controls
-            - if policy(answer).vote?
-              = link_to vote_up_icon, answer_vote_up_path(answer), method: :patch, remote: true, "data-type" => "json" 
-              | &nbsp
-              = link_to vote_down_icon, answer_vote_down_path(answer), method: :patch, remote: true, "data-type" => "json" 
-              | &nbsp  
-      ' &nbsp
+ 
       - if policy(answer).update?
         = render partial: 'answers/update_form', locals: { answer: answer } 
 
