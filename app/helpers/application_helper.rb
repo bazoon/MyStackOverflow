@@ -38,11 +38,11 @@ module ApplicationHelper
 
 
   def vote_up_icon
-    content_tag(:span,"",class: "glyphicon glyphicon-thumbs-up")
+    content_tag(:i,"",class: "fa fa-sort-asc fa-3x")
   end
 
   def vote_down_icon
-    content_tag(:span,"",class: "glyphicon glyphicon-thumbs-down")
+    content_tag(:i,"",class: "fa fa-sort-desc fa-3x")
   end
 
   def sortable(column, title = nil)

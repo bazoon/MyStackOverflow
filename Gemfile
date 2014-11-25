@@ -31,7 +31,7 @@ gem 'spring',        group: :development
 # group :test, :development do
     gem 'rspec-rails'
     gem 'factory_girl_rails'
-    # gem 'jazz_hands', group: :test, :development
+    gem 'jazz_hands'
     gem 'capybara'
     
     gem 'launchy'
@@ -107,6 +107,7 @@ group :development do
 end
 
 gem 'whenever'
+gem "font-awesome-rails"
 
 # gem 'oj'
 # gem 'oj_mimic_json'

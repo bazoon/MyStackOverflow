@@ -1,3 +1,45 @@
 // Place all the styles related to the question_vote controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.link_disabled {
+   pointer-events: none;
+   cursor: default;
+   color: gray;
+}
+.vote_controls {
+  display: block;
+  text-align: center;
+
+}
+
+.voted_up {
+  color: green;
+  /*padding-left: 10px;*/
+  /*display: block;*/
+}
+
+.voted_down {
+  color: red;
+  /*padding-left: 10px;*/
+  /*display: block;*/
+}
+
+.vote_up {
+  padding-left: 10px;
+  padding-top: 5px;
+  display: block;
+}
+
+.vote_down {
+  padding-left: 10px; 
+  padding-bottom: 5px;
+  display: block;
+}
+
+.vote_controls .rating {
+  display: block;
+  padding-left: 10px;
+  text-align: center;
+
+}

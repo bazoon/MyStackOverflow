@@ -12,6 +12,16 @@ class Vote < ActiveRecord::Base
     !where(voteable: object, user: user).first.nil? # TODO: exist?
   end
 
+  def self.voted_up?(object, user)
+    vote = where(voteable: object, user: user).first
+    vote.vote == 1 if vote
+  end
+
+  def self.voted_down?(object, user)
+    vote = where(voteable: object, user: user).first
+    vote.vote == -1 if vote
+  end
+
   def self.up(object, user)
     vote = find_vote(object, user)
     vote.update(vote: 1)

@@ -24,8 +24,8 @@ RSpec.describe ApplicationHelper do
       expect(del_icon).to eq content_tag(:span,"",class: "glyphicon glyphicon-trash", alt: "delete")
       expect(users_icon).to eq content_tag(:span,"",class: "glyphicon glyphicon-user")
       expect(select_icon).to eq content_tag(:span,"",class: "glyphicon glyphicon-star")
-      expect(vote_up_icon).to eq content_tag(:span,"",class: "glyphicon glyphicon-thumbs-up")
-      expect(vote_down_icon).to eq content_tag(:span,"",class: "glyphicon glyphicon-thumbs-down")
+      expect(vote_up_icon).to eq content_tag(:i,"",class: "fa fa-sort-asc fa-3x")
+      expect(vote_down_icon).to eq content_tag(:i,"",class: "fa fa-sort-desc fa-3x")
     end
   end
 

@@ -2,11 +2,8 @@ class AnswerPolicy < ApplicationPolicy
 
   def select?
 
-    if @user
-      @record.question.user == @user && @record.user != @user
-    else
-      false
-    end
+    @user ? (@record.question.user == @user) && (@record.user != @user) || @user.admin : false
+      
 
   end
 

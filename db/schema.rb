@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141119090552) do
+ActiveRecord::Schema.define(version: 20141125035409) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -137,7 +137,7 @@ ActiveRecord::Schema.define(version: 20141119090552) do
     t.integer  "user_id"
     t.integer  "rating",            default: 0
     t.integer  "answers_count"
-    t.integer  "impressions_count"
+    t.integer  "impressions_count", default: 0
   end
 
   create_table "reputations", force: true do |t|

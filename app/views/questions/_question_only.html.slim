@@ -3,9 +3,6 @@
     h3.panel-title.title
       = @question.title
       .pull-right
-        .label.label-default
-          span.rating
-            =@question.rating
         |&nbsp;&nbsp;
         = link_to @question.user_email, profile_path(@question.user)
         |&nbsp;&nbsp;
@@ -14,7 +11,20 @@
           = link_to label, subscribe_path(@question), id: 'q_subscribe', remote: true, method: :patch, class: "small"
 
   .panel.body
-    = @question.body
+    .row
+      .col-md-1
+        .vote_controls
+          
+            - up_class, down_class = vote_classes(@question)
+            span.vote_up
+              = link_to vote_up_icon, question_vote_up_path(@question), class: up_class, method: :patch, remote: true, "data-type" => "json"
+            strong.rating = @question.rating
+            span.vote_down
+              = link_to vote_down_icon, question_vote_down_path(@question), class: down_class, method: :patch, remote: true, "data-type" => "json"
+            
+
+      .col-md-11
+        = @question.body
   .attachments
     ul
     - @question.attachments.each do |a|
@@ -31,18 +41,6 @@
           = link_to(edit_icon, edit_question_path(@question), id: "edit_question_#{@question.id}")
           = link_to del_icon, question_path(@question), id: "delete#{@question.id}", method: :delete, data: { confirm: 'Are you sure?' }
 
-        | &nbsp
-      .vote_controls
-         - if policy(@question).vote?
-          = link_to vote_up_icon, question_vote_up_path(@question), method: :patch, remote: true, "data-type" => "json"
-          | &nbsp
-          = link_to vote_down_icon, question_vote_down_path(@question), method: :patch, remote: true, "data-type" => "json"
-          | &nbsp
-
-
-
-
-      
       
   .comments
     = render partial: 'comments/comments', locals: { commentable: @question }

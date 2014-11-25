@@ -70,6 +70,14 @@ class User < ActiveRecord::Base
     question_subscriptions.where(question: question).first != nil
   end
 
+  def voted_up_for?(question)
+    Vote.voted_up?(question, self)
+  end
+
+  def voted_down_for?(question)
+    Vote.voted_down?(question, self)
+  end
+
   private
 
   # creates new user from auth record and creates authorization

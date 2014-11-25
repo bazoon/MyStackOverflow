@@ -2,6 +2,9 @@ class @Question
   constructor: ->
     this.$el = $(".question")
     this.$rating = this.$el.find(".rating")
+
+
+
     this.$body = this.$el.find(".body")
     this.$attachments = this.$el.find(".attachments")
     this.$comments = this.$el.find(".comments")
@@ -12,6 +15,9 @@ class @Question
     this.$commentFormHolder = this.$el.find(".new_comment_form_holder")
     
     this.$voteControls = this.$el.find(".vote_controls")
+    this.$voteUpLink = this.$voteControls.find(".vote_up a")
+    this.$voteDownLink = this.$voteControls.find(".vote_down a")
+
     this.$commentLink = this.$el.find(".comment-edit-link")
     
     this.$answers = $(".answers")
@@ -170,13 +176,21 @@ class @Question
   voteUp: ->
     rating = parseInt(this.$rating.text(), 10)
     this.$rating.text(rating + 1)
-    this.$voteControls.hide() 
+    this.disableVoteLinks()
+    this.$voteUpLink.addClass("voted_up")
 
   voteDown: ->
     rating = parseInt(this.$rating.text(), 10)
     this.$rating.text(rating - 1)
-    this.$voteControls.hide() 
+    this.disableVoteLinks()
+    this.$voteDownLink.addClass("voted_down")
+    
       
+  disableVoteLinks: ->
+    this.$voteDownLink.removeClass()
+    this.$voteUpLink.removeClass()    
+    this.$voteUpLink.addClass("link_disabled")
+    this.$voteDownLink.addClass("link_disabled")
 
 
   showCommentForm: ->
