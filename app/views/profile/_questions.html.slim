@@ -1,0 +1,4 @@
+h3 = "questions (#{@user.questions_count})"
+ul
+- @user.questions.find_each do |q|
+  li = link_to q.title, q

@@ -1,6 +1,6 @@
 class Comment < ActiveRecord::Base
   belongs_to :commentable, polymorphic: true
-  belongs_to :user
+  belongs_to :user, counter_cache: true
   validates :body, presence: true
 
   def show_title

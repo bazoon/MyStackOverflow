@@ -1,6 +1,6 @@
 class Answer < ActiveRecord::Base
   belongs_to :question, counter_cache: true, touch: true
-  belongs_to :user
+  belongs_to :user, counter_cache: true
   validates :body, :user_id, :question_id, presence: true
   has_many :comments, as: :commentable
   has_many :taggings, as: :taggable
@@ -65,11 +65,14 @@ class Answer < ActiveRecord::Base
     if question.user == user
       if question.answers.empty?
         user.up_by(OWN_FIRST_WEIGHT) 
+        Vote.up_by(user, user, OWN_FIRST_WEIGHT)
       else
         user.up_by(OWN_WEIGHT) 
+        Vote.up_by(user, user, OWN_WEIGHT)
       end
     else
       user.up_by(FIRST_WEIGHT) if question.answers.empty?
+      Vote.up_by(user, user, FIRST_WEIGHT)
     end
   end
 

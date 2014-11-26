@@ -14,6 +14,10 @@ class User < ActiveRecord::Base
   before_create { skip_confirmation!  }
 
   scope :excluding, -> (idd) { where.not(id: idd) }
+  scope :alphabeticaly, -> { order('real_name') }
+  scope :active, -> { order('answers_count desc') }
+  scope :rating, -> { order('rating desc') }
+  scope :membership, -> { order('created_at') }
 
   #TODO: Ask: why it returns not nil if nothing found?
   # scope :with_token, -> (confirmation_token) { where(confirmation_token: confirmation_token).first }

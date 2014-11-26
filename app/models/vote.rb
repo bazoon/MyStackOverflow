@@ -32,4 +32,12 @@ class Vote < ActiveRecord::Base
     vote.update(vote: -1)
   end
 
+  def self.up_by(object, user, vote)
+    Vote.create!(voteable: object, user: user, vote: vote)
+  end
+
+  def self.down_by(object, user, vote)
+    Vote.create!(voteable: object, user: user, vote: -vote)
+  end
+
 end

@@ -1,0 +1,25 @@
+h1  Users
+= will_paginate @users, renderer: BootstrapPagination::Rails
+
+.row
+  .col-md-10
+    ul.nav.nav-tabs.pull-right.questions_order
+      li class=(active?(@bound, 'alphabeticaly'))
+        = link_to "alphabeticaly", profile_alphabeticaly_path
+      li class=(active?(@bound, 'active'))
+        = link_to "active", profile_active_path
+      li class=(active?(@bound, 'rating'))
+        = link_to "rating", profile_rating_path
+      li class=(active?(@bound, 'membership'))
+        = link_to "membership", profile_membership_path
+
+.row
+  .col-md-12
+    .row
+    - @users.each do |user|
+      .col-xs-6.col-md-3
+        .thumbnail
+          = link_to image_tag(user.face), profile_path(user), class: 'thumbnail'
+          .caption
+            = user.real_name
+            .rating = "rating: #{user.rating}"

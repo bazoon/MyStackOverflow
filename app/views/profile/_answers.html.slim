@@ -1,0 +1,4 @@
+h3 = "answers (#{@user.answers_count})"
+ul
+- @user.answers.find_each do |a|
+  li = link_to a.body, a.question

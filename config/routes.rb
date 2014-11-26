@@ -3,6 +3,12 @@ Rails.application.routes.draw do
   patch 'subscription/subscribe/:question_id', to: 'subscriptions#subscribe', as: :subscribe
 
   get 'profile/show/:user_id', to: 'profile#show', as: :profile
+  get 'profiles', to: 'profile#index'
+  get "profiles/alphabeticaly(/page/:page)" , to: 'profile#index', as: :profile_alphabeticaly
+  get "profiles/active(/page/:page)" , to: 'profile#index', as: :profile_active
+  get "profiles/rating(/page/:page)" , to: 'profile#index', as: :profile_rating
+  get "profiles/membership(/page/:page)" , to: 'profile#index', as: :profile_membership
+
 
   use_doorkeeper
 
@@ -11,6 +17,8 @@ Rails.application.routes.draw do
   get 'question_vote/up/:question_id', to: 'question_vote#up', as: :question_up
   get 'question_vote/down/:question_id', to: 'question_vote#down', as: :question_down
   
+
+
   get 'tags/search/:tag', to: 'tags#search', as: :tag_search
   get 'tags', to: 'tags#tags', as: :tags
 

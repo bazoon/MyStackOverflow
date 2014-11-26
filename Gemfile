@@ -85,6 +85,7 @@ gem 'doorkeeper'
 gem 'rmagick', :require => 'RMagick'
 gem 'impressionist'
 gem 'will_paginate'
+gem 'will_paginate-bootstrap'
 gem 'orderly'
 
 gem 'mysql2',          '~> 0.3.13', :platform => :ruby
@@ -109,6 +110,8 @@ end
 gem 'whenever'
 gem "font-awesome-rails"
 gem 'gravatar-ultimate'
+gem "chartkick"
+gem 'groupdate'
 
 # gem 'oj'
 # gem 'oj_mimic_json'

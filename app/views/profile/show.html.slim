@@ -13,7 +13,29 @@ h1 = @user.real_name
           td = field
           td = @user.send(field)
   .col-md-6
-   
+    = link_to 'edit', edit_user_registration_path    
 
 
-= link_to 'edit', edit_user_registration_path 
+
+div role="tabpanel" 
+  /! Nav tabs
+  ul.nav.nav-tabs role="tablist" 
+    li.active role="presentation" 
+      a aria-controls="home" data-toggle="tab" href="#summary" role="tab"  summary
+    li role="presentation" 
+      a aria-controls="profile" data-toggle="tab" href="#questions" role="tab"  questions
+    li role="presentation" 
+      a aria-controls="messages" data-toggle="tab" href="#answers" role="tab"  answers
+    li role="presentation" 
+      a aria-controls="settings" data-toggle="tab" href="#comments" role="tab"  comments
+  /! Tab panes
+  .tab-content
+    #summary.tab-pane.active role="tabpanel"  
+      = render 'profile/summary'
+    #questions.tab-pane role="tabpanel"  
+      = render 'profile/questions'
+    #answers.tab-pane role="tabpanel"  
+      = render 'profile/answers'
+    #comments.tab-pane role="tabpanel"  
+      = render 'profile/comments'
+

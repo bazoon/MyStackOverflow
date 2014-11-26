@@ -19,12 +19,14 @@ class RatingModifier
     Vote.down(object, @voter)
     object.vote_down(@voter)
     @voter.down_by(1)
+    Vote.down(@voter, @voter)
   end
 
   def accept(answer)
     return if answer.user == @voter
     answer.set_as_selected
     answer.user.up_by(Answer::ACCEPT_WEIGHT)
+    
   end
 
 

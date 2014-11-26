@@ -1,0 +1,4 @@
+h3 = "comments (#{@user.comments_count})"
+ul
+- @user.comments.find_each do |c|
+  li = link_to c.body, c.show_object

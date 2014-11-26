@@ -6,10 +6,11 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-USER_COUNT = 10
-QUESTION_COUNT = 40
+USER_COUNT = 60
+QUESTION_COUNT = 120
 ANSWERS_COUNT = 600
-COMMENTS_COUNT = 20
+COMMENTS_COUNT = 15
+VOTE_COUNT = 400
 
 USER_COUNT.times do 
   user_params = {}
@@ -20,13 +21,31 @@ USER_COUNT.times do
   user_params[:real_name] = Faker::Name.name
   user_params[:website] = Faker::Internet.url
   user_params[:birth_date] = Faker::Date.between(45.years.ago, 16.years.ago)
-  user_params[:avatar_web] = Faker::Avatar.image(SecureRandom.hex(20), "50x50", "jpg")
+
+  # uri = URI('http://api.randomuser.me/')
+  # Net::HTTP.get_response(uri).body
+  avatar_web =
+  rand(2) == 1 ? "http://api.randomuser.me/portraits/thumb/men/#{rand(99)}.jpg" :
+                 "http://api.randomuser.me/portraits/thumb/women/#{rand(99)}.jpg" 
+  
+  user_params[:avatar_web] = avatar_web
   user_params[:rating] = rand(32)
 
   user = User.new(user_params)
   user.skip_confirmation!
   user.save!
+  user.update(created_at: Faker::Date.between(6.years.ago, 2.years.ago))
 end
+
+VOTE_COUNT.times do
+  
+  user = User.all.sample
+  vote = Vote.create!(voteable: user, user_id: user.id, vote: rand(-10..30))
+  vote.update(created_at: Faker::Date.between(5.years.ago, 1.day.ago))
+
+end
+
+
 
 QUESTION_COUNT.times do
 
@@ -57,7 +76,6 @@ ANSWERS_COUNT.times do
   end
 
 end
-
 
 
 
