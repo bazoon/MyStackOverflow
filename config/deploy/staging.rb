@@ -4,10 +4,12 @@
 # is considered to be the first unless any hosts have the primary
 # property set.  Don't declare `role :all`, it's a meta role.
 
-role :app, %w{deploy@example.com}
-role :web, %w{deploy@example.com}
-role :db,  %w{deploy@example.com}
+role :app, %w{deployer@185.31.161.45}
+role :web, %w{deployer@185.31.161.45}
+role :db,  %w{deployer@185.31.161.45}
 
+set :rails_env, :staging
+set :stage, :production
 
 # Extended Server Syntax
 # ======================
@@ -15,7 +17,7 @@ role :db,  %w{deploy@example.com}
 # server list. The second argument is a, or duck-types, Hash and is
 # used to set extended properties on the server.
 
-server 'example.com', user: 'deploy', roles: %w{web app}, my_property: :my_value
+server '185.31.161.45', user: 'deployer', roles: %w{web app db}, primary: true 
 
 
 # Custom SSH Options
@@ -25,21 +27,11 @@ server 'example.com', user: 'deploy', roles: %w{web app}, my_property: :my_value
 #
 # Global options
 # --------------
-#  set :ssh_options, {
-#    keys: %w(/home/rlisowski/.ssh/id_rsa),
-#    forward_agent: false,
-#    auth_methods: %w(password)
-#  }
-#
-# And/or per server (overrides global)
-# ------------------------------------
-# server 'example.com',
-#   user: 'user_name',
-#   roles: %w{web app},
-#   ssh_options: {
-#     user: 'user_name', # overrides user setting above
-#     keys: %w(/home/user_name/.ssh/id_rsa),
-#     forward_agent: false,
-#     auth_methods: %w(publickey password)
-#     # password: 'please use keys'
-#   }
+# TODO: ASK about rsa keys, github
+ set :ssh_options, {
+   keys: %w(/Users/vitaliynesterenko/.ssh/id_rsa),
+   forward_agent: true,
+   auth_methods: %w(publickey password), 
+   port: 2222
+ }
+
