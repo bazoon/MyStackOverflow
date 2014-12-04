@@ -64,7 +64,8 @@
         = render( partial: 'answers/form', locals: { question: @question, answer: @answer }) 
 
 .answers
-  = render @question.answers
+  -cache @question.answers
+    = render @question.answers
 
 
 = subscribe_to "/questions"

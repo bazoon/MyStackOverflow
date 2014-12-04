@@ -1,5 +1,6 @@
-div.question id = @question.id
-  = render 'question_only'
+-cache question_cache_key(@question) do
+  div.question id = @question.id
+    = render 'question_only'
   
   
 

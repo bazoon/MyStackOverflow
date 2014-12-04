@@ -28,4 +28,10 @@ module QuestionsHelper
     
   end
 
+
+  def question_cache_key(question)
+    "question-#{question.updated_at}-v2"
+  end
+
+
 end

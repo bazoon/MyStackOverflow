@@ -105,6 +105,7 @@ group :development do
   gem 'capistrano-rvm', require: false 
   gem 'capistrano-sidekiq', require: false
   gem 'capistrano3-unicorn', require: false
+  gem 'quiet_assets'
 
 end
 
@@ -114,6 +115,7 @@ gem 'gravatar-ultimate'
 gem "chartkick"
 gem 'groupdate'
 gem 'unicorn'
+gem 'redis-rails'
 
 # gem 'oj'
 # gem 'oj_mimic_json'
